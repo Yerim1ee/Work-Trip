@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_activity_detail_course"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!--상단-->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp">
+            <TextView
+                android:id="@+id/tv_activity_detail_course_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/icon_picker_blue_filled"
+                    android:layout_marginRight="4dp"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_activity_detail_course_location" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center">
+                
+                <ImageView
+                    android:id="@+id/tv_activity_detail_course_star1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:background="@drawable/icon_star_gray"/>
+
+                <ImageView
+                    android:id="@+id/tv_activity_detail_course_star2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:background="@drawable/icon_star_gray"/>
+
+                <ImageView
+                    android:id="@+id/tv_activity_detail_course_star3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:background="@drawable/icon_star_gray"/>
+
+                <ImageView
+                    android:id="@+id/tv_activity_detail_course_star4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:background="@drawable/icon_star_gray"/>
+
+                <ImageView
+                    android:id="@+id/tv_activity_detail_course_star5"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:background="@drawable/icon_star_gray"/>
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_course_rate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="4dp"
+
+                    android:text="0"/>
+
+            </LinearLayout>
+            </LinearLayout>
+            <!--상단 끝-->
+
+            <!--개요-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="16dp">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_activity_detail_course_mainImage"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="32dp"
+                app:riv_corner_radius="8dp" />
+
+
+            <TextView
+                android:id="@+id/tv_activity_detail_course_keyword"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/chips_keyword2"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="12dp"
+
+                android:text="힐링 코스"/>
+
+            <TextView
+                android:id="@+id/tv_activity_detail_course_overview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="12dp"
+
+                android:text="힐링 코스" />
+        </LinearLayout>
+            <!--개요 끝-->
+
+            <!--지도-->
+            <!--<fragment
+                android:id="@+id/tv_activity_detail_course_map"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:layout_marginTop="16dp"
+                />-->
+            <!--지도 끝-->
+
+            <!--코스-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="16dp"
+            android:background="@color/gray9">
+
+            <TextView
+                android:id="@+id/tv_activity_detail_course_listTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+
+                android:text="코스"/>
+
+            <TextView
+                android:id="@+id/tv_activity_detail_course_listOverview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"
+
+                android:text="힐링 코스" />
+
+
+
+        </LinearLayout>
+            <!--코스 끝-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="68dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_list_image_title_overview_img"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:adjustViewBounds="true"
+        app:riv_corner_radius="8dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="68dp"
+        android:layout_marginLeft="8dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_list_image_title_overview_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+        <TextView
+            android:id="@+id/tv_list_image_title_overview_overview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+    </LinearLayout>
+</LinearLayout>
