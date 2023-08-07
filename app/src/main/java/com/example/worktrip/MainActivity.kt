@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
+import com.example.worktrip.My.MyFragment
 import com.example.worktrip.ui.theme.WorkTripTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -25,12 +26,11 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment by lazy { fragment_home() }
     private val planFragment by lazy { fragment_home() }
     private val communityFragment by lazy { fragment_home() }
-    private val myFragment by lazy { fragment_home() }
+    private val myFragment by lazy { MyFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         //toolbar 설정
         setSupportActionBar(findViewById(R.id.tb_activity_main))
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         // BottomNavigationView
         var bnv_activity_main = findViewById(R.id.bnv_activity_main) as BottomNavigationView
+
 
         // 바텀네비게이션 아이콘 클릭 이벤트
         bnv_activity_main.run { setOnNavigationItemSelectedListener {

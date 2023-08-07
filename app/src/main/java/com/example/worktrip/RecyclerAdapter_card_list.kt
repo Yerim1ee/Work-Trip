@@ -41,7 +41,8 @@ class RecyclerAdapter_card_list (private val items: ArrayList<data_card_list>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         //viewHolder.binding.ivCardListImg.setImageDrawable(items[position].img)
-        viewHolder.binding.ivCardListImg.setImageBitmap(items[position].img)
+        // 수정한 부분
+        // viewHolder.binding.ivCardListImg.setImageBitmap(items[position].img)
         viewHolder.binding.tvCardListTitle.text = items[position].title
         viewHolder.binding.tvCardListLocation.text = items[position].location
 
