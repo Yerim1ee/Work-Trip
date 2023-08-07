@@ -1,8 +1,10 @@
 package com.example.worktrip
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.ComponentActivity
@@ -75,14 +77,18 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.it_toolbar_ns_notice -> {
-                //검색 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "알림 실행", Toast.LENGTH_LONG).show()
+                //알림 버튼 눌렀을 때
+                //Toast.makeText(applicationContext, "알림 실행", Toast.LENGTH_LONG).show()
+                intent = Intent(this, NoticeActivity::class.java)
+                startActivity(intent)
                 return super.onOptionsItemSelected(item)
             }
 
             R.id.it_toolbar_ns_search -> {
-                //공유 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
+                //검색 버튼 눌렀을 때
+                //Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
+                intent = Intent(this, HomeSearchActivity::class.java)
+                startActivity(intent)
                 return super.onOptionsItemSelected(item)
             }
 

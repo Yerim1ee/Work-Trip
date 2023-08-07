@@ -67,7 +67,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ib_fragment_home_cate_corse"
+                        android:id="@+id/ib_fragment_home_cate_course"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:background="@drawable/icon_cate_corse"/>
