@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_activity_detail_program"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!--상단-->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp">
+                <TextView
+                    android:id="@+id/tv_activity_detail_program_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@drawable/icon_people_blue"
+                        android:layout_marginRight="4dp"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_activity_detail_program_people" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <RatingBar
+                        android:id="@+id/rb_activity_detail_program_ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="3"
+                        android:isIndicator="true"
+                        android:stepSize="0.5"
+                        android:layout_gravity="center"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:progressTint="@color/main_pink"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_activity_detail_program_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="4dp"
+                        android:layout_gravity="center"
+
+                        android:text="0"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--상단 끝-->
+
+            <!--개요-->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv_activity_detail_program_mainImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="32dp"
+                    app:riv_corner_radius="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"/>
+
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_program_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/chips_keyword2"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_program_overview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/black"
+                    android:layout_marginVertical="12dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/gray4"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="36dp"
+                        android:text="인원"/>
+
+                    <TextView
+                        android:id="@+id/tv_activity_detail_program_overviewPeople"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="2dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/gray4"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="36dp"
+                        android:text="시간"/>
+
+                    <TextView
+                        android:id="@+id/tv_activity_detail_program_overviewTime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--개요 끝-->
+
+            <!--순서-->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="40dp"
+                android:paddingHorizontal="16dp"
+                android:background="@color/gray9">
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_program_listTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+                    android:text="진행 방법"/>
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_program_listOverview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/black" />
+
+
+            </LinearLayout>
+            <!--순서 끝-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

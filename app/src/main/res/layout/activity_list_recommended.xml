@@ -14,15 +14,12 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/tb_activity_list_recommended_title"
+            android:id="@+id/tv_activity_list_recommended_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-
-            android:text="여행 코스"/>
-
+            android:textColor="@color/black" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -34,58 +31,21 @@
         android:layout_marginHorizontal="16dp">
 
         <!--칩 영역-->
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:scrollbars="none"
+            >
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/cps_activity_list_recommended"
+            app:singleLine="true"
+            app:singleSelection="true">
 
-            <CheckBox
-                android:id="@+id/thema1"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:background="@drawable/chips_keyword"
-                android:button="@null"
-                android:paddingHorizontal="12dp"
-                android:text="힐링 코스"
-                android:textAlignment="center"
-                android:textColor="@drawable/text_selectcolor" />
-
-            <CheckBox
-                android:id="@+id/thema2"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/chips_keyword"
-                android:button="@null"
-                android:paddingHorizontal="12dp"
-                android:text="도보 코스"
-                android:textAlignment="center"
-                android:textColor="@drawable/text_selectcolor" />
-
-            <CheckBox
-                android:id="@+id/thema3"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/chips_keyword"
-                android:button="@null"
-                android:paddingHorizontal="12dp"
-                android:text="맛 코스"
-                android:textAlignment="center"
-                android:textColor="@drawable/text_selectcolor" />
-
-            <CheckBox
-                android:id="@+id/thema4"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/chips_keyword"
-                android:button="@null"
-                android:paddingHorizontal="12dp"
-                android:text="캠핑 코스"
-                android:textAlignment="center"
-                android:textColor="@drawable/text_selectcolor" />
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
         <!--칩 영역 끝-->
 
     <ScrollView
@@ -104,10 +64,7 @@
             android:layout_height="fill_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/tv"/>
+
 
         </LinearLayout>
         <!--인기 끝-->

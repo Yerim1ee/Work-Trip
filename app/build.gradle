@@ -96,4 +96,9 @@ dependencies {
     //implementation 'com.github.bumptech.glide:glide:4.9.0'
     //annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //kakao map
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/libDaumMapAndroid.jar')
+
+
 }

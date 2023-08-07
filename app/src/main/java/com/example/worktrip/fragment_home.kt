@@ -22,11 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_home.newInstance] factory method to
- * create an instance of this fragment.
- */
 class fragment_home : Fragment() {
     //recyclerView
     val list1: ArrayList<data_card_image_title> = ArrayList()
@@ -65,15 +60,88 @@ class fragment_home : Fragment() {
         recyclerView_recommendedKeyword.adapter=RecyclerAdapter_list_image_title_overview(list2)
 
         //category intent
-        val categoryCorse = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_corse)
-        categoryCorse.setOnClickListener(object :View.OnClickListener {
+        val categoryCourse = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_course)
+        val categoryLodging = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_lodging)
+        val categoryFood = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_food)
+        val categoryProgram = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_program)
+
+        var contentTypeId=""
+        //var contentCat1=""
+        //var contentCat2=""
+
+
+        categoryCourse.setOnClickListener(object :View.OnClickListener {
             override fun onClick(v: View?) {
+                contentTypeId="&contentTypeId=25" //여행 코스
+                //contentCat1="&cat1=C01" //분류 코드 1
+
                 val intent = Intent(context, ListRecommendedActivity::class.java)
+                intent.putExtra("contentTypeId", contentTypeId)
+                //intent.putExtra("contentCat1", contentCat1)
+
                 startActivity(intent)
+
+                contentTypeId=""
+                //contentCat1=""
                 // 다른 액티비티에서 전환할 때
                 // activity?.finish()
             }
         })
+
+        categoryLodging.setOnClickListener(object :View.OnClickListener {
+            override fun onClick(v: View?) {
+                contentTypeId="&contentTypeId=32" //숙소
+                //contentCat1="&cat1=B02" //분류 코드 1
+                //contentCat2="&cat2=B0201" //분류 코드 2
+
+                val intent = Intent(context, ListRecommendedActivity::class.java)
+                intent.putExtra("contentTypeId", contentTypeId)
+                //intent.putExtra("contentCat1", contentCat1)
+                //intent.putExtra("contentCat2", contentCat2)
+
+                startActivity(intent)
+
+                contentTypeId=""
+                //contentCat1=""
+                //contentCat2=""
+                // 다른 액티비티에서 전환할 때
+                // activity?.finish()
+            }
+        })
+
+        categoryProgram.setOnClickListener(object :View.OnClickListener {
+            override fun onClick(v: View?) {
+                contentTypeId="program" //프로그램
+                val intent = Intent(context, ListProgramActivity::class.java)
+                //intent.putExtra("contentTypeId", contentTypeId)
+                startActivity(intent)
+                contentTypeId=""
+                // 다른 액티비티에서 전환할 때
+                // activity?.finish()
+            }
+        })
+
+        categoryFood.setOnClickListener(object :View.OnClickListener {
+            override fun onClick(v: View?) {
+                contentTypeId="&contentTypeId=39" //맛집
+                //contentCat1="&cat1=A05" //분류 코드 1
+                //contentCat2="&cat1=A0502" //분류 코드 2
+
+                val intent = Intent(context, ListRecommendedActivity::class.java)
+                intent.putExtra("contentTypeId", contentTypeId)
+                //intent.putExtra("contentCat1", contentCat1)
+                //intent.putExtra("contentCat2", contentCat2)
+
+                startActivity(intent)
+
+                contentTypeId=""
+                //contentCat1=""
+                //contentCat2=""
+                // 다른 액티비티에서 전환할 때
+                // activity?.finish()
+            }
+        })
+
         return view
     }
 
@@ -97,4 +165,5 @@ class fragment_home : Fragment() {
                 }
             }
     }
+
 }
