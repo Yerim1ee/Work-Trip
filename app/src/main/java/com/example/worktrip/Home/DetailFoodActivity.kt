@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,12 +7,38 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.example.worktrip.BottomsheetShareUrl
+import com.example.worktrip.NetworkThread_categoryCode1
+import com.example.worktrip.NetworkThread_detailCommon1
+import com.example.worktrip.NetworkThread_detailIntroFood
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailFoodBinding
+//import com.example.worktrip.detail_bitmap
+import com.example.worktrip.detail_contentCat1
+import com.example.worktrip.detail_contentCat2
+import com.example.worktrip.detail_contentCat3
+import com.example.worktrip.detail_contentClose
+import com.example.worktrip.detail_contentFirstmenu
+import com.example.worktrip.detail_contentKeyword
+import com.example.worktrip.detail_contentLocation
+import com.example.worktrip.detail_contentOpen
+import com.example.worktrip.detail_contentOverview
+import com.example.worktrip.detail_contentParkingFod
+import com.example.worktrip.detail_contentReservationFod
+import com.example.worktrip.detail_contentTel
+import com.example.worktrip.detail_contentTitle
+import com.example.worktrip.detail_contentTreatmenu
+import com.example.worktrip.detail_imgURL
+import com.example.worktrip.detail_locationX
+import com.example.worktrip.detail_locationY
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -24,9 +50,6 @@ import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
 private lateinit var binding : ActivityDetailFoodBinding
-
-
-
 
 class DetailFoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,7 +167,12 @@ class DetailFoodActivity : AppCompatActivity() {
 
         titleTextView.text = detail_contentTitle
         locationTextView.text = detail_contentLocation
-        imgImageView.setImageBitmap(detail_bitmap)
+        //imgImageView.setImageBitmap(detail_bitmap)
+        Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        if (!(detail_imgURL.equals("")))
+        {
+            findViewById<ImageView>(R.id.iv_activity_detail_food_nullImage).visibility= View.GONE
+        }
         overviewTextView.text = detail_contentOverview
         keywordTextView.text=detail_contentKeyword
 
@@ -251,7 +279,10 @@ class DetailFoodActivity : AppCompatActivity() {
 
             R.id.it_toolbar_bs_share -> {
                 //공유 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "공유 실행", Toast.LENGTH_LONG).show()
+                //Toast.makeText(applicationContext, "공유 실행", Toast.LENGTH_LONG).show()
+                val bottomSheet = BottomsheetShareUrl()
+                bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
                 return super.onOptionsItemSelected(item)
             }
             else -> return super.onOptionsItemSelected(item)

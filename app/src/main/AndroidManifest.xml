@@ -79,42 +79,54 @@
 
 
         <activity
-            android:name=".ListRecommendedActivity"
-            android:exported="false" />
+            android:name=".Home.ListRecommendedActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
 
         <activity
-            android:name=".ListProgramActivity"
-            android:exported="false" />
+            android:name=".Home.ListProgramActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
 
         <activity
-            android:name=".DetailCourseActivity"
-            android:exported="false" />
+            android:name=".Home.DetailCourseActivity"
+            android:exported="false"
+            android:parentActivityName=".Home.ListRecommendedActivity" >
+
+        </activity>
 
         <activity
-            android:name=".DetailLodgingActivity"
-            android:exported="false" />
+            android:name=".Home.DetailLodgingActivity"
+            android:exported="false"
+            android:parentActivityName=".Home.ListRecommendedActivity"/>
 
         <activity
-            android:name=".DetailProgramActivity"
-            android:exported="false" />
+            android:name=".Home.DetailProgramActivity"
+            android:exported="false"
+            android:parentActivityName=".Home.ListProgramActivity"/>
 
         <activity
-            android:name=".DetailFoodActivity"
-            android:exported="false" />
+            android:name=".Home.DetailFoodActivity"
+            android:exported="false"
+            android:parentActivityName=".Home.ListRecommendedActivity"/>
 
         <activity
-            android:name=".HomeSearchActivity"
+            android:name=".Home.HomeSearchActivity"
             android:exported="false" />
 
         <activity
             android:name=".NoticeActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".My.BookmarkActivity"
+            android:exported="false" />
 
         <!--kakaoMap-->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+            android:value="c31ebaa9db9fc1ca6c838a6e540e5fdf" />
+
     </application>
 
 </manifest>

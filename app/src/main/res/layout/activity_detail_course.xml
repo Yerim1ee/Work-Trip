@@ -30,105 +30,91 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="16dp">
-            <TextView
-                android:id="@+id/tv_activity_detail_course_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@drawable/icon_picker_blue_filled"
-                    android:layout_marginRight="4dp"/>
-
                 <TextView
+                    android:id="@+id/tv_activity_detail_course_title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:id="@+id/tv_activity_detail_course_location" />
-            </LinearLayout>
-            
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:gravity="center">
-
-                <RatingBar
-                    android:id="@+id/rb_activity_detail_course_ratingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:rating="3"
-                    android:isIndicator="true"
-                    android:stepSize="0.5"
-                    android:layout_gravity="center"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:progressTint="@color/main_pink"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_activity_detail_course_rate"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginLeft="4dp"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp" />
 
-                    android:text="0"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@drawable/icon_picker_blue_filled"
+                        android:layout_marginRight="4dp"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_activity_detail_course_location" />
+                </LinearLayout>
             </LinearLayout>
             <!--상단 끝-->
 
             <!--개요-->
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="16dp">
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_activity_detail_course_mainImage"
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="260dp"
-                android:layout_marginTop="32dp"
-                app:riv_corner_radius="8dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"/>
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_activity_detail_course_keyword"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/chips_keyword2"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:layout_marginTop="12dp" />
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/iv_activity_detail_course_mainImage"
+                        android:layout_width="fill_parent"
+                        android:layout_height="260dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_corner_radius="8dp" />
 
-            <TextView
-                android:id="@+id/tv_activity_detail_course_overview"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:textColor="@color/black"
-                android:layout_marginVertical="12dp" />
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_activity_detail_course_nullImage"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/icon_img_null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="visible"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_course_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/chips_keyword2"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_activity_detail_course_overview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/black"
+                    android:layout_marginVertical="12dp" />
+            </LinearLayout>
             <!--개요 끝-->
 
             <!--지도-->
@@ -142,43 +128,43 @@
             <!--지도 끝-->
 
             <!--상세-->
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="40dp"
-            android:paddingHorizontal="16dp"
-            android:background="@color/gray9">
-
-            <TextView
-                android:id="@+id/tv_activity_detail_course_listTitle"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
+                android:orientation="vertical"
+                android:paddingVertical="40dp"
+                android:paddingHorizontal="16dp"
+                android:background="@color/gray9">
 
-                android:text="코스"/>
+                <TextView
+                    android:id="@+id/tv_activity_detail_course_listTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
 
-            <TextView
-                android:id="@+id/tv_activity_detail_course_listOverview"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp"
-                android:textColor="@color/black" />
+                    android:text="코스"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_activity_detail_course_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:scrollbars="vertical"
-                android:orientation="vertical"/>
+                <TextView
+                    android:id="@+id/tv_activity_detail_course_listOverview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:textColor="@color/black" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_activity_detail_course_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:scrollbars="vertical"
+                    android:orientation="vertical"/>
                 <!--tools:listitem="@layout/list_num_title_location"-->
 
 
-        </LinearLayout>
+            </LinearLayout>
             <!--상세 끝-->
 
         </LinearLayout>

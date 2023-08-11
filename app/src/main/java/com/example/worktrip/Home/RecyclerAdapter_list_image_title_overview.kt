@@ -1,15 +1,16 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ListImageTitleOverviewBinding
 
 
 data class data_list_image_title_overview(
-    var img: Bitmap?,
+    var img: String,
     var title: String,
     var overview: String)
 
@@ -30,13 +31,14 @@ class RecyclerAdapter_list_image_title_overview (private val items: ArrayList<da
     //데이터 연결
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.binding.ivListImageTitleOverviewImg.setImageBitmap(items[position].img)
+        //viewHolder.binding.ivListImageTitleOverviewImg.setImageBitmap(items[position].img)
+        Glide.with(viewHolder.binding.ivListImageTitleOverviewImg).load(items[position].img).centerInside().into(viewHolder.binding.ivListImageTitleOverviewImg)
         viewHolder.binding.tvListImageTitleOverviewTitle.text=items[position].title
         viewHolder.binding.tvListImageTitleOverviewOverview.text=items[position].overview
 
     }
 
-    override fun onViewRecycled(holder: RecyclerAdapter_list_image_title_overview.ViewHolder) {
+    override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,12 +10,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.Toast
 import android.widget.Toolbar
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.Home.ListRecommendedActivity
+import com.example.worktrip.NoticeActivity
+import com.example.worktrip.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,15 +33,16 @@ class fragment_home : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        list1.add(data_card_image_title(null, "11111"))
-        list1.add(data_card_image_title(null, "22222"))
-        list1.add(data_card_image_title(null, "33333"))
 
-        list2.add(data_list_image_title_overview(null, "11111", "11111111111111111111111111111111111111111111111"))
-        list2.add(data_list_image_title_overview(null, "22222", "22222222222222222222222222222222222222222222222"))
-        list2.add(data_list_image_title_overview(null, "33333", "33333333333333333333333333333333333333333333333"))
+        list1.add(data_card_image_title("null", "11111"))
+        list1.add(data_card_image_title("null", "22222"))
+        list1.add(data_card_image_title("null", "33333"))
 
-    }
+        list2.add(data_list_image_title_overview("null", "11111", "11111111111111111111111111111111111111111111111"))
+        list2.add(data_list_image_title_overview("null", "22222", "22222222222222222222222222222222222222222222222"))
+        list2.add(data_list_image_title_overview("null", "33333", "33333333333333333333333333333333333333333333333"))
+
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,15 +51,20 @@ class fragment_home : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        //toolbar
+        (activity as AppCompatActivity).setSupportActionBar(view.findViewById(R.id.tb_fragment_home))
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
+        setHasOptionsMenu(true)
+
         //recyclerView
         recyclerView_recommendedCourse=view.findViewById(R.id.rv_fragment_home_recommendedCourse!!)as RecyclerView
         recyclerView_recommendedCourse.layoutManager=LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView_recommendedCourse.adapter=RecyclerAdapter_card_image_title(list1)
+        recyclerView_recommendedCourse.adapter= RecyclerAdapter_card_image_title(list1)
 
         //
         recyclerView_recommendedKeyword=view.findViewById(R.id.rv_fragment_home_recommendedKeyword!!)as RecyclerView
         recyclerView_recommendedKeyword.layoutManager=LinearLayoutManager(requireContext())
-        recyclerView_recommendedKeyword.adapter=RecyclerAdapter_list_image_title_overview(list2)
+        recyclerView_recommendedKeyword.adapter= RecyclerAdapter_list_image_title_overview(list2)
 
         //category intent
         val categoryCourse = view.findViewById<ImageButton>(R.id.ib_fragment_home_cate_course)
@@ -165,5 +172,35 @@ class fragment_home : Fragment() {
                 }
             }
     }
+    //toolbar
+    //툴바 메뉴 연결
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
+        inflater.inflate(R.menu.toolbar_notice_search, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //툴바 아이콘 클릭 이벤트
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.it_toolbar_ns_notice -> {
+                //알림 버튼 눌렀을 때
+                //Toast.makeText(applicationContext, "알림 실행", Toast.LENGTH_LONG).show()
+                val intent = Intent(context, NoticeActivity::class.java)
+                startActivity(intent)
+                return super.onOptionsItemSelected(item)
+            }
+
+            R.id.it_toolbar_ns_search -> {
+                //검색 버튼 눌렀을 때
+                //Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
+                val intent = Intent(context, HomeSearchActivity::class.java)
+                startActivity(intent)
+                return super.onOptionsItemSelected(item)
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+
+        }
+    }
 }

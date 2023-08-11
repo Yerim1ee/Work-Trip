@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -12,14 +12,23 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.Home.HomeSearchActivity
+import com.example.worktrip.Home.RecyclerAdapter_card_list
+import com.example.worktrip.NetworkThread_list
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityListRecommendedBinding
+import com.example.worktrip.list_card_list
+import com.example.worktrip.list_contentId
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import org.w3c.dom.Document
@@ -53,6 +62,7 @@ private val listYN="&listYN=Y"
 private val arrange="&arrange=O"
 //관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
 private lateinit var contentTypeId: String
+private var areaCode="&areaCode=1"
 
 var url_list=""
 
@@ -79,7 +89,6 @@ class ListRecommendedActivity  : AppCompatActivity() {
 
         //intent
         getContentTypeId = intent.getStringExtra("contentTypeId").toString()
-
 
         if (getContentTypeId.equals("&contentTypeId=25")) //여행 코스
         {
@@ -134,10 +143,10 @@ class ListRecommendedActivity  : AppCompatActivity() {
         //관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
         contentTypeId=getContentTypeId
 
-        if(getContentTypeId.equals("&contentTypeId=32")) //숙소
+        /*if(getContentTypeId.equals("&contentTypeId=32")) //숙소
         {
             //API 정보를 가지고 있는 주소
-            url_list="https://apis.data.go.kr/B551011/KorService1/searchStay1?serviceKey="+key+mobileOS+mobileApp+_type
+            url_list="https://apis.data.go.kr/B551011/KorService1/searchStay1?serviceKey=" + key + mobileOS + mobileApp + _type
 
             //쓰레드 생성
             val thread = Thread(NetworkThread_list(url_list))
@@ -147,19 +156,91 @@ class ListRecommendedActivity  : AppCompatActivity() {
         else //나머지
         {
             //API 정보를 가지고 있는 주소
-            url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey="+key+numOfRows+mobileOS+mobileApp+_type+listYN+arrange+contentTypeId
+            url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + key + numOfRows + mobileOS + mobileApp + _type + listYN + arrange + contentTypeId + areaCode
 
             //쓰레드 생성
             val thread = Thread(NetworkThread_list(url_list))
             thread.start() // 쓰레드 시작
             thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+        }*/
+
+        //spinner
+        val spinner_location = findViewById<Spinner>(R.id.sp_activity_home_search_location)
+        val locationItems = resources.getStringArray(R.array.locationItems)
+        val SpinnerAdapter_location =
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, locationItems)
+
+        spinner_location.adapter = SpinnerAdapter_location
+        spinner_location.setSelection(0)
+        spinner_location.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when (p2)
+                {
+                    0->{ //서울
+                        //Toast.makeText(applicationContext, "0", Toast.LENGTH_LONG).show()
+                        areaCode="&areaCode=1"
+                        list_card_list.clear()
+                    }
+                    1->{ //인천
+                        areaCode="&areaCode=2"
+                        list_card_list.clear()
+                    }
+                    2->{ //대전
+                        areaCode="&areaCode=3"
+                        list_card_list.clear()
+                    }
+                    3->{ //대구
+                        areaCode="&areaCode=4"
+                        list_card_list.clear()
+                    }
+                    4->{ //광주
+                        areaCode="&areaCode=5"
+                        list_card_list.clear()
+                    }
+                    5->{ //부산
+                        areaCode="&areaCode=6"
+                        list_card_list.clear()
+                    }
+                    6->{ //울산
+                        areaCode="&areaCode=7"
+                        list_card_list.clear()
+                    }
+                    7->{ //세종특별자치시
+                        areaCode="&areaCode=8"
+                        list_card_list.clear()
+                    }
+                    8->{ //경기도
+                        areaCode="&areaCode=9"
+                        list_card_list.clear()
+                    }
+                    9->{ //강원특별자치도
+                        areaCode="&areaCode=10"
+                        list_card_list.clear()
+                    }
+                }
+
+                //API 정보를 가지고 있는 주소
+                url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + key + numOfRows + mobileOS + mobileApp + _type + listYN + arrange + contentTypeId + areaCode
+                println(url_list)
+
+                //쓰레드 생성
+                val thread = Thread(NetworkThread_list(url_list))
+                thread.start() // 쓰레드 시작
+                thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                //recycler view
+                recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
+                recyclerView_list.layoutManager= GridLayoutManager(parent, 2)
+                //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
+                recyclerView_list.adapter=adapter
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                spinner_location.setSelection(0)
+            }
         }
 
-        //recycler view
-        recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
-        recyclerView_list.layoutManager= GridLayoutManager(this, 2)
-        //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
-        recyclerView_list.adapter=adapter
 
         adapter.setOnClickListener( object : RecyclerAdapter_card_list.ItemClickListener{
             override fun onClick(view: View, position: Int) {
@@ -180,6 +261,7 @@ class ListRecommendedActivity  : AppCompatActivity() {
         super.onDestroy()
         //초기화
         list_card_list.clear()
+        areaCode="&areaCode=1"
     }
 
 
@@ -257,8 +339,6 @@ class ListRecommendedActivity  : AppCompatActivity() {
                     //Toast.makeText(applicationContext, "${chip.id}번째 칩", Toast.LENGTH_LONG).show()
                     //if 이 카테고리에서->칩이 이거면->url을 위한 캣코드는 이거고->캣코드 넣은 url은 이렇게 해서 쓰레드 돌리기
 
-                    list_card_list.clear()
-
                     if (getContentTypeId.equals("&contentTypeId=25")) //코스, 0..3
                     {
                         contentCat1="&cat1=C01"
@@ -266,14 +346,17 @@ class ListRecommendedActivity  : AppCompatActivity() {
                         if (chip.id==0) //힐링코스
                         {
                             //Toast.makeText(applicationContext, "${chip.id}번째 칩-코스", Toast.LENGTH_LONG).show()
+                            list_card_list.clear()
                             contentCat2="&cat2=C0114"
                         }
                         else if (chip.id==1) //도보코스
                         {
+                            list_card_list.clear()
                             contentCat2="&cat2=C0115"
                         }
                         else if (chip.id==2) //캠핑코스
                         {
+                            list_card_list.clear()
                             contentCat2="&cat2=C0116"
                         }
                         /*else if (chip.id==3) //맛코스: 3개밖에 없기도 하고 오류가 나서 일단 삭제
@@ -282,6 +365,15 @@ class ListRecommendedActivity  : AppCompatActivity() {
                         }*/
 
                         url_list_cat=url_list+ contentCat1+ contentCat2
+                        val thread = Thread(NetworkThread_list(url_list_cat))
+                        thread.start() // 쓰레드 시작
+                        thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        //recycler view
+                        recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
+                        recyclerView_list.layoutManager= GridLayoutManager(parent, 2)
+                        //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
+                        recyclerView_list.adapter=adapter
 
                     }
                     else if (getContentTypeId.equals("&contentTypeId=32")) //숙소, 0..8
@@ -292,42 +384,59 @@ class ListRecommendedActivity  : AppCompatActivity() {
                         if (chip.id==0) //관광호텔
                         {
                             //Toast.makeText(applicationContext, "${chip.id}번째 칩-숙소", Toast.LENGTH_LONG).show()
+                            list_card_list.clear()
                             contentCat3="&cat3=B02010100"
                         }
                         else if (chip.id==1) //콘도미니엄
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02010500"
                         }
                         else if (chip.id==2) //유스호스텔
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02010600"
                         }
                         else if (chip.id==3) //펜션
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02010700"
                         }
                         else if (chip.id==4) //모텔
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02010900"
                         }
                         else if (chip.id==5) //민박
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02011000"
                         }
                         else if (chip.id==6) //게스트하우스
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02011100"
                         }
                         else if (chip.id==7) //서비스드레지던스
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02011300"
                         }
                         else if (chip.id==8) //한옥
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=B02011600"
                         }
 
                         url_list_cat=url_list+ contentCat1+ contentCat2+ contentCat3
+                        val thread = Thread(NetworkThread_list(url_list_cat))
+                        thread.start() // 쓰레드 시작
+                        thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+                        //recycler view
+                        recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
+                        recyclerView_list.layoutManager= GridLayoutManager(parent, 2)
+                        //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
+                        recyclerView_list.adapter=adapter
                     }
                     else if (getContentTypeId.equals("&contentTypeId=39")) //음식점, 0..5
                     {
@@ -337,34 +446,46 @@ class ListRecommendedActivity  : AppCompatActivity() {
                         if (chip.id==0) //한식
                         {
                             //Toast.makeText(applicationContext, "${chip.id}번째 칩-맛집", Toast.LENGTH_LONG).show()
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020100"
                         }
                         else if (chip.id==1) //서양식
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020200"
                         }
                         else if (chip.id==2) //일식
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020300"
                         }
                         else if (chip.id==3) //중식
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020400"
                         }
                         else if (chip.id==4) //이색음식점
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020700"
                         }
                         else if (chip.id==5) //카페/전통찻집
                         {
+                            list_card_list.clear()
                             contentCat3="&cat3=A05020900"
                         }
                         url_list_cat=url_list+ contentCat1+ contentCat2+ contentCat3
+                        val thread = Thread(NetworkThread_list(url_list_cat))
+                        thread.start() // 쓰레드 시작
+                        thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+                        //recycler view
+                        recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
+                        recyclerView_list.layoutManager= GridLayoutManager(parent, 2)
+                        //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
+                        recyclerView_list.adapter=adapter
                     }
 
-                    val thread = Thread(NetworkThread_list(url_list_cat))
-                    thread.start() // 쓰레드 시작
-                    thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
                 }
                 if(!chip.isChecked)
                 {
@@ -372,6 +493,11 @@ class ListRecommendedActivity  : AppCompatActivity() {
                     val thread = Thread(NetworkThread_list(url_list))
                     thread.start() // 쓰레드 시작
                     thread.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+                    //recycler view
+                    recyclerView_list=findViewById(R.id.rv_activity_list_recommended_list!!)as RecyclerView
+                    recyclerView_list.layoutManager= GridLayoutManager(parent, 2)
+                    //recyclerView_list.adapter=RecyclerAdapter_card_list(list_card_list)
+                    recyclerView_list.adapter=adapter
                 }
             }
 

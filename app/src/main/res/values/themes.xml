@@ -9,4 +9,22 @@
 
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView"/>
 
+    <!--바텀시트-->
+    <style name="RoundCornerBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/RoundCornerModalStyle</item>
+    </style>
+
+    <style name="RoundCornerModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottomsheet_background</item>
+    </style>
+
+    <!--tap layout-->
+    <style name="merchandise_tab_text_appearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">32dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
 </resources>

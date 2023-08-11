@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,13 +7,42 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.example.worktrip.BottomsheetShareUrl
+import com.example.worktrip.NetworkThread_categoryCode1
+import com.example.worktrip.NetworkThread_detailCommon1
+import com.example.worktrip.NetworkThread_detailIntroLodging
+import com.example.worktrip.R
 
 import com.example.worktrip.databinding.ActivityDetailLodgingBinding
+//import com.example.worktrip.detail_bitmap
+import com.example.worktrip.detail_contentCat1
+import com.example.worktrip.detail_contentCat2
+import com.example.worktrip.detail_contentCat3
+import com.example.worktrip.detail_contentCook
+import com.example.worktrip.detail_contentIn
+import com.example.worktrip.detail_contentKeyword
+import com.example.worktrip.detail_contentLocation
+import com.example.worktrip.detail_contentOut
+import com.example.worktrip.detail_contentOverview
+import com.example.worktrip.detail_contentParkingLod
+import com.example.worktrip.detail_contentRoomCount
+import com.example.worktrip.detail_contentRoomType
+import com.example.worktrip.detail_contentSeminar
+import com.example.worktrip.detail_contentTelDeskLod
+import com.example.worktrip.detail_contentTelReservationLod
+import com.example.worktrip.detail_contentTitle
+import com.example.worktrip.detail_contentUrl
+import com.example.worktrip.detail_imgURL
+import com.example.worktrip.detail_locationX
+import com.example.worktrip.detail_locationY
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -135,7 +164,12 @@ class DetailLodgingActivity : AppCompatActivity() {
 
         titleTextView.text = detail_contentTitle
         locationTextView.text = detail_contentLocation
-        imgImageView.setImageBitmap(detail_bitmap)
+        //imgImageView.setImageBitmap(detail_bitmap)
+        Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        if (!(detail_imgURL.equals("")))
+        {
+            findViewById<ImageView>(R.id.iv_activity_detail_lodging_nullImage).visibility= View.GONE
+        }
         overviewTextView.text = detail_contentOverview
         keywordTextView.text=detail_contentKeyword
 
@@ -225,7 +259,7 @@ class DetailLodgingActivity : AppCompatActivity() {
         when (item?.itemId) {
 
             R.id.it_toolbar_bs_bookmark -> {
-            //북마크 버튼 눌렀을 때
+                //북마크 버튼 눌렀을 때
                 if (item.isChecked==false)
                 {
                     item.isChecked=true
@@ -247,6 +281,7 @@ class DetailLodgingActivity : AppCompatActivity() {
                 //공유 버튼 눌렀을 때
                 //Toast.makeText(applicationContext, "공유 실행", Toast.LENGTH_LONG).show()
                 val bottomSheet = BottomsheetShareUrl()
+                bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
                 bottomSheet.show(supportFragmentManager, bottomSheet.tag)
                 return super.onOptionsItemSelected(item)
             }

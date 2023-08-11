@@ -12,12 +12,13 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         tools:ignore="MissingConstraints"/>
-<!--검색창-->
+    <!--검색창-->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_activity_home_search"
         android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/searchview_filled"
         app:queryBackground="@null"
         app:queryHint="검색어를 입력해 주세요."
@@ -58,35 +59,35 @@
             android:gravity="center"
             android:layout_weight="1">
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            >
-            <CheckBox
-                android:id="@+id/cb_activity_home_search_course"
-                android:layout_width="76dp"
-                android:layout_height="92dp"
-                android:background="@drawable/chips_keyword"
-                android:button="@null"
-                android:layout_gravity="center"
-                />
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon_cate_corse"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:textSize="12sp"
-                android:textColor="@color/main_blue"
-                android:layout_gravity="center_horizontal"
-                android:text="코스"/>
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                >
+                <CheckBox
+                    android:id="@+id/cb_activity_home_search_course"
+                    android:layout_width="76dp"
+                    android:layout_height="92dp"
+                    android:background="@drawable/chips_keyword"
+                    android:button="@null"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/icon_cate_corse"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/main_blue"
+                    android:layout_gravity="center_horizontal"
+                    android:text="코스"/>
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -203,7 +204,7 @@
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>
-        <!--카테고리 끝-->
+    <!--카테고리 끝-->
 
     <!--지역-->
     <TextView
@@ -215,15 +216,28 @@
         android:textColor="@color/black"
         android:text="지역"/>
 
-    <Spinner
-        android:id="@+id/sp_activity_home_search_location"
-        android:layout_marginVertical="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:paddingHorizontal="16dp"
-        android:layout_centerHorizontal="true"
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@drawable/chips_keyword"/>
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="16dp">
+        <Spinner
+            android:id="@+id/sp_activity_home_search_location"
+
+            android:paddingHorizontal="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/chips_keyword"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/icon_arrow_bottom"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="24dp"/>
+
+    </FrameLayout>
 
     <!--지역 끝-->
 

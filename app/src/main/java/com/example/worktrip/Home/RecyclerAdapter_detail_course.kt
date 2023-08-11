@@ -1,15 +1,16 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ListDistanceBinding
 import com.example.worktrip.databinding.ListNumTitleLocationBinding
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
 data class data_list_ntl_d(
     var location_num: String,
     var location_title: String,
@@ -18,7 +19,7 @@ data class data_list_ntl_d(
     var distance: String,
     var distance_time: String,
 
-    var type: Int): Parcelable
+    var type: Int)
 
 class RecyclerAdapter_detail_course : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val list = mutableListOf<data_list_ntl_d>()
@@ -31,12 +32,14 @@ class RecyclerAdapter_detail_course : RecyclerView.Adapter<RecyclerView.ViewHold
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             LIST_NTL->{
-                listNTLBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),R.layout.list_num_title_location,parent,false)
+                listNTLBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    R.layout.list_num_title_location,parent,false)
                 ListNTLViewHolder(listNTLBinding)
             }
 
             LIST_D->{
-                listDBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),R.layout.list_distance,parent,false)
+                listDBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    R.layout.list_distance,parent,false)
                 ListDViewHolder(listDBinding)
             }
 
@@ -76,7 +79,7 @@ class RecyclerAdapter_detail_course : RecyclerView.Adapter<RecyclerView.ViewHold
         :RecyclerView.ViewHolder(binding.root){
     }
 
-    fun addItem(item:data_list_ntl_d){
+    fun addItem(item: data_list_ntl_d){
         list.add(item)
     }
 

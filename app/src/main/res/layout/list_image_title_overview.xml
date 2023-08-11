@@ -13,7 +13,9 @@
         android:layout_height="68dp"
         android:adjustViewBounds="true"
         app:riv_corner_radius="8dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:background="@drawable/img_null"
+        />
 
     <LinearLayout
         android:layout_width="fill_parent"

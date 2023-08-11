@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,6 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.example.worktrip.BottomsheetShareUrl
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailProgramBinding
 
 private lateinit var binding : ActivityDetailProgramBinding
@@ -17,7 +20,7 @@ private var contentTitle: String=""
 private var contentPeople: String=""
 private var contentTime: String=""
 private var contentKeyword: String=""
-private lateinit var bitmap: Bitmap
+//private lateinit var bitmap: Bitmap
 private var contentOverview: String=""
 
 
@@ -117,7 +120,10 @@ class DetailProgramActivity : AppCompatActivity() {
 
             R.id.it_toolbar_bs_share -> {
                 //공유 버튼 눌렀을 때
-                Toast.makeText(applicationContext, "공유 실행", Toast.LENGTH_LONG).show()
+                //Toast.makeText(applicationContext, "공유 실행", Toast.LENGTH_LONG).show()
+                val bottomSheet = BottomsheetShareUrl()
+                bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
                 return super.onOptionsItemSelected(item)
             }
 

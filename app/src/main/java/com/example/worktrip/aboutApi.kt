@@ -1,9 +1,24 @@
 package com.example.worktrip
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.os.AsyncTask
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.transition.Transition.ViewAdapter
+import com.example.worktrip.Home.ListRecommendedActivity
+import com.example.worktrip.Home.RecyclerAdapter_card_list
+import com.example.worktrip.Home.data_card_list
+import com.example.worktrip.databinding.ActivityListRecommendedBinding
+import com.example.worktrip.databinding.CardListBinding
+import kotlinx.coroutines.withContext
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -13,12 +28,14 @@ import javax.xml.parsers.DocumentBuilderFactory
 //*****스레드 클래스 안 for문이 작동하지 않으면 Log.d("??", url) 찍은 후 브라우저로 링크 이상 없는지 확인*****
 //코스+숙소+맛집 목록 (지역기반 관광정보조회)
 val list_card_list: ArrayList<data_card_list> = ArrayList()
-lateinit var list_bitmap: Bitmap
+//lateinit var list_bitmap: Bitmap
 lateinit var list_contentTitle: String
 lateinit var list_contentLocation: String
 lateinit var list_contentId: String
 
-class NetworkThread_list(var url: String): Runnable {
+var list_imgURL=""
+
+class NetworkThread_list(var url: String): Runnable { //, var activity: Activity)
 
     override fun run() {
 
@@ -44,13 +61,15 @@ class NetworkThread_list(var url: String): Runnable {
                         map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
                     }
 
-                    var imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
-                    var img : URLtoBitmapTask = URLtoBitmapTask()
+                    list_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
+
+                    /*var img : URLtoBitmapTask = URLtoBitmapTask()
                     img = URLtoBitmapTask().apply {
                         url = URL(imgURL)
                     }
-                    list_bitmap = img.execute().get()
+                    list_bitmap = img.execute().get()*/
 
+                    //list_image=Glide.with(activity).load(imgURL).into(binding.ivCardListImg)
 
                     list_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
                     list_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
@@ -62,7 +81,7 @@ class NetworkThread_list(var url: String): Runnable {
                         list_contentLocation="주소 정보 없음"
                     }
 
-                    list_card_list.add(data_card_list(list_bitmap, list_contentTitle, list_contentLocation, list_contentId))
+                    list_card_list.add(data_card_list(list_imgURL, list_contentTitle, list_contentLocation, list_contentId))
 
                 }
             }
@@ -76,7 +95,8 @@ class NetworkThread_list(var url: String): Runnable {
 //상세 정보
 var detail_contentTitle: String=""
 var detail_contentLocation: String=""
-lateinit var detail_bitmap: Bitmap
+//lateinit var detail_bitmap: Bitmap
+var detail_imgURL: String=""
 
 var detail_locationX: String=""
 var detail_locationY: String=""
@@ -115,12 +135,12 @@ class NetworkThread_detailCommon1(
                         map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
                     }
 
-                    var imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
-                    var img : URLtoBitmapTask = URLtoBitmapTask()
+                    detail_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
+                    /*var img : URLtoBitmapTask = URLtoBitmapTask()
                     img = URLtoBitmapTask().apply {
                         url = URL(imgURL)
                     }
-                    detail_bitmap = img.execute().get()
+                    detail_bitmap = img.execute().get()*/
 
                     detail_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
                     detail_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
@@ -369,6 +389,7 @@ class NetworkThread_detailIntroLodging(
 
 //-----------------------------------------------------------------------------------
 //url->bitmap
+/*
 class URLtoBitmapTask() : AsyncTask<Void, Void, Bitmap>() {
     lateinit var url: URL
     override fun doInBackground(vararg params: Void?): Bitmap {
@@ -383,3 +404,4 @@ class URLtoBitmapTask() : AsyncTask<Void, Void, Bitmap>() {
         super.onPostExecute(result)
     }
 }
+*/

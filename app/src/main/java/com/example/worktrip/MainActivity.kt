@@ -4,22 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
+import com.example.worktrip.Home.HomeSearchActivity
+import com.example.worktrip.Home.fragment_home
 import com.example.worktrip.My.MyFragment
-import com.example.worktrip.ui.theme.WorkTripTheme
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("UNREACHABLE_CODE")
@@ -34,13 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //toolbar 설정
-        setSupportActionBar(findViewById(R.id.tb_activity_main))
-        supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
-
         // BottomNavigationView
         var bnv_activity_main = findViewById(R.id.bnv_activity_main) as BottomNavigationView
-
 
         // 바텀네비게이션 아이콘 클릭 이벤트
         bnv_activity_main.run { setOnNavigationItemSelectedListener {
@@ -66,35 +52,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //toolbar
-    //툴바 메뉴 연결
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_notice_search, menu)
-        return true
-    }
-
-    //툴바 아이콘 클릭 이벤트
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            R.id.it_toolbar_ns_notice -> {
-                //알림 버튼 눌렀을 때
-                //Toast.makeText(applicationContext, "알림 실행", Toast.LENGTH_LONG).show()
-                intent = Intent(this, NoticeActivity::class.java)
-                startActivity(intent)
-                return super.onOptionsItemSelected(item)
-            }
-
-            R.id.it_toolbar_ns_search -> {
-                //검색 버튼 눌렀을 때
-                //Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
-                intent = Intent(this, HomeSearchActivity::class.java)
-                startActivity(intent)
-                return super.onOptionsItemSelected(item)
-            }
-
-            else -> return super.onOptionsItemSelected(item)
-        }
-
-    }
 
 }

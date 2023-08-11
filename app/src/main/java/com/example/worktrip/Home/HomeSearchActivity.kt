@@ -1,18 +1,19 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.worktrip.NoticeActivity
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityHomeSearchBinding
 import com.google.android.material.search.SearchBar
 
@@ -33,7 +34,7 @@ class HomeSearchActivity : AppCompatActivity() {
         //toolbar 설정
         setSupportActionBar(findViewById(R.id.tb_activity_home_search))
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false) // 뒤로가기 버튼
 
         //intent
         var check = intent.getStringExtra("searchCheck")
@@ -127,7 +128,7 @@ class HomeSearchActivity : AppCompatActivity() {
         //searchbar **findViewById 안 됨
         //searchBar=findViewById<SearchBar>(R.id.sv_activity_home_search)
 
-
+        //spinner
         val spinner_location = findViewById<Spinner>(R.id.sp_activity_home_search_location)
         val locationItems = resources.getStringArray(R.array.locationItems)
 
@@ -135,6 +136,48 @@ class HomeSearchActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, locationItems)
 
         spinner_location.adapter = SpinnerAdapter_location
+
+        spinner_location.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when (p2)
+                {
+                    0->{ //서울
+                        Toast.makeText(applicationContext, "0", Toast.LENGTH_LONG).show()
+                    }
+                    1->{ //인천
+                        Toast.makeText(applicationContext, "1", Toast.LENGTH_LONG).show()
+                    }
+                    2->{ //대전
+                        Toast.makeText(applicationContext, "2", Toast.LENGTH_LONG).show()
+                    }
+                    3->{ //대구
+                        Toast.makeText(applicationContext, "3", Toast.LENGTH_LONG).show()
+                    }
+                    4->{ //광주
+                        Toast.makeText(applicationContext, "4", Toast.LENGTH_LONG).show()
+                    }
+                    5->{ //부산
+                        Toast.makeText(applicationContext, "5", Toast.LENGTH_LONG).show()
+                    }
+                    6->{ //울산
+                        Toast.makeText(applicationContext, "6", Toast.LENGTH_LONG).show()
+                    }
+                    7->{ //세종특별자치시
+                        Toast.makeText(applicationContext, "7", Toast.LENGTH_LONG).show()
+                    }
+                    8->{ //경기도
+                        Toast.makeText(applicationContext, "8", Toast.LENGTH_LONG).show()
+                    }
+                    9->{ //강원특별자치도
+                        Toast.makeText(applicationContext, "9", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         //droplist를 spinner와 간격을 두고 나오도록
         //spinner_location.dropDownVerticalOffset = dipToPixels(500f).toInt()
@@ -179,8 +222,21 @@ class HomeSearchActivity : AppCompatActivity() {
     //toolbar
     //툴바 메뉴 연결
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_null, menu)
+        menuInflater.inflate(R.menu.toolbar_x, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.it_toolbar_x_clear -> {
+                //x 버튼 눌렀을 때
+                //Toast.makeText(applicationContext, "x 실행", Toast.LENGTH_LONG).show()
+                finish()
+                return super.onOptionsItemSelected(item)
+            }
+            else -> return super.onOptionsItemSelected(item)
+
+        }
     }
 }
 

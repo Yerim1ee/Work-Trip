@@ -7,8 +7,8 @@ plugins {
     // id("com.google.devtools.ksp")
 
     //id
-    //id 'kotlin-android-extensions'
-    id 'kotlin-parcelize'
+    id 'kotlin-android-extensions'
+    //id 'kotlin-parcelize'
 
 }
 
@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
 
+
     implementation "com.kakao.sdk:v2-all:2.14.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.14.0" // 카카오 로그인
     // implementation "com.kakao.sdk:v2-talk:2.14.0" // 친구, 메시지(카카오톡)
@@ -98,7 +99,7 @@ dependencies {
 
     //bottom navigation
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.9.0' //1.9.0->1.4.0로 낮춰야 탭레이아웃 보임
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     //fragment
@@ -110,8 +111,8 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //url image
-    //implementation 'com.github.bumptech.glide:glide:4.9.0'
-    //annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //kakao map
     implementation fileTree(include: ['*.jar'], dir: 'libs')

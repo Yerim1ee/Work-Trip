@@ -59,40 +59,6 @@
                         android:textColor="@color/black"
                         android:id="@+id/tv_activity_detail_food_location" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center">
-
-                    <RatingBar
-                        android:id="@+id/rb_activity_detail_food_ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:rating="3"
-                        android:isIndicator="true"
-                        android:stepSize="0.5"
-                        android:layout_gravity="center"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:progressTint="@color/main_pink"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_activity_detail_food_rate"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="4dp"
-                        android:layout_gravity="center"
-
-                        android:text="0"/>
-
-                </LinearLayout>
             </LinearLayout>
             <!--상단 끝-->
 
@@ -101,16 +67,36 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical"
-                android:layout_marginHorizontal="16dp">
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/iv_activity_detail_food_mainImage"
-                    android:layout_width="fill_parent"
-                    android:layout_height="260dp"
-                    android:layout_marginTop="32dp"
-                    app:riv_corner_radius="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"/>
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/iv_activity_detail_food_mainImage"
+                        android:layout_width="fill_parent"
+                        android:layout_height="260dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_corner_radius="8dp" />
+
+                    <ImageView
+                        android:id="@+id/iv_activity_detail_food_nullImage"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/icon_img_null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="visible"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_activity_detail_food_keyword"
@@ -161,7 +147,7 @@
                     android:layout_marginBottom="24dp"
 
                     android:text="메뉴"/>
-                
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.worktrip
+package com.example.worktrip.Home
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -9,12 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.Home.DetailProgramActivity
+import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityListProgramBinding
-import com.example.worktrip.databinding.ActivityListRecommendedBinding
 import com.google.android.material.chip.Chip
 
 
@@ -45,30 +45,30 @@ class ListProgramActivity: AppCompatActivity() {
         toolbarTitle.text = "프로그램"
 
         //칩 추가
-        categoryArray= listOf("게임", "??", "??")
+        categoryArray = listOf("게임", "??", "??")
         CategoryChips(categoryArray)
         //
 
         //recyclerView
-        list_card_list_people.add(data_card_list_people(null, "무슨 게임 1", "2명~4명", "1"))
-        list_card_list_people.add(data_card_list_people(null, "무슨 게임 2", "2명", "2"))
-        list_card_list_people.add(data_card_list_people(null, "무슨 게임 3", "2명", "3"))
+        list_card_list_people.add(data_card_list_people("null", "무슨 게임 1", "2명~4명", "1"))
+        list_card_list_people.add(data_card_list_people("null", "무슨 게임 2", "2명", "2"))
+        list_card_list_people.add(data_card_list_people("null", "무슨 게임 3", "2명", "3"))
 
-        recyclerView_list_people=findViewById(R.id.rv_activity_list_program_list!!)as RecyclerView
+        recyclerView_list_people =findViewById(R.id.rv_activity_list_program_list!!)as RecyclerView
         recyclerView_list_people.layoutManager= GridLayoutManager(this, 2)
         recyclerView_list_people.adapter=adapter
 
 
         intent = Intent(this, DetailProgramActivity::class.java)
 
-        adapter.setOnClickListener( object : RecyclerAdapter_card_list_people.ItemClickListener{
+        adapter.setOnClickListener( object : RecyclerAdapter_card_list_people.ItemClickListener {
             override fun onClick(view: View, position: Int) {
                 //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
 
                 intent.putExtra("contentId", list_card_list_people[position].id)
 
                 startActivity(intent)
-                contentId=""
+                contentId =""
             }
         })
 
@@ -111,7 +111,7 @@ class ListProgramActivity: AppCompatActivity() {
     fun CategoryChips(list:List<String>)
     {
 
-        categoryArray= list
+        categoryArray = list
         for (i in 0..list.size-1)
         {
             val chip = Chip(this).apply {

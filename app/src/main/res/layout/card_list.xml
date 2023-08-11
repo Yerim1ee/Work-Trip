@@ -26,6 +26,7 @@
             android:adjustViewBounds="true"
             app:riv_corner_radius="8dp"
             android:scaleType="centerCrop"
+            android:background="@drawable/img_null"
             />
 
         <LinearLayout
@@ -42,8 +43,8 @@
 
             <CheckBox
                 android:id="@+id/ib_card_list_bookmark"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
