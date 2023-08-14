@@ -11,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.worktrip.Home.HomeSearchActivity
 import com.example.worktrip.Home.fragment_home
 import com.example.worktrip.My.MyFragment
+import com.example.worktrip.Plan.PlanFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("UNREACHABLE_CODE")
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { fragment_home() }
-    private val planFragment by lazy { fragment_home() }
+    private val planFragment by lazy { PlanFragment() }
     private val communityFragment by lazy { fragment_home() }
     private val myFragment by lazy { MyFragment() }
 

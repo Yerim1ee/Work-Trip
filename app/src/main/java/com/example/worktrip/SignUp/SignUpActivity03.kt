@@ -10,6 +10,8 @@ import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivitySignUp03Binding
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.MainActivity
+import com.example.worktrip.PreferenceUtil
+import com.example.worktrip.SocketApplication
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,7 +52,7 @@ class SignUpActivity03 : Activity() {
 
 
         db = FirebaseFirestore.getInstance()
-        auth = Firebase.auth // 객체 정의
+        auth = Firebase.auth
 
 
 
@@ -60,15 +62,6 @@ class SignUpActivity03 : Activity() {
         }
     }
 
-    fun checkAuth():Boolean{
-        val currentUser = auth.currentUser
-        return currentUser?.let{
-            email = currentUser.email
-            currentUser.isEmailVerified
-        } ?: let{
-            false
-        }
-    }
 
     fun signUpEmail(){
         // createUserWithEmailAndPassword() 이용하여 사용자 생성
@@ -90,12 +83,12 @@ class SignUpActivity03 : Activity() {
                         ?.document(auth?.uid.toString())
                         ?.set(userInfo)
 
-                    Toast.makeText(this,"회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show() // 토스트 메세지 띄우기
+                    // 이름 저장
+                    SocketApplication.prefs.setString("user-name", name)
+
 
                     // 메인으로 이동
-                    val nextIntent = Intent(this, LoginActivity::class.java)
-                    nextIntent.putExtra("name",name)
-                    nextIntent.putExtra("mail",id)
+                    val nextIntent = Intent(this, SignUpActivity04::class.java)
                     startActivity(nextIntent)
                 }
                 else{ // 생성을 못했다면

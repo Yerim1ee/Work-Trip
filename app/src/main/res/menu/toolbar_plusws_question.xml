@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/it_toolbar_ns_plusws"
+        android:icon="@drawable/plan_main_plus"
+        android:title="plus_workshop"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/it_toolbar_ns_search"
+        android:icon="@drawable/plan_main_question"
+        android:title="search"
+        app:showAsAction="always" />
+
+</menu>

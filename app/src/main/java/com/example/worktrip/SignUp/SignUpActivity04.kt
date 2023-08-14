@@ -3,6 +3,7 @@ package com.example.worktrip.SignUp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.ActivitySignUp04Binding
 
 class SignUpActivity04 : Activity() {
@@ -17,8 +18,9 @@ class SignUpActivity04 : Activity() {
         binding= ActivitySignUp04Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var name = intent.getStringExtra("name").toString()
-        binding.tvSignupNameCheck.setText(name)
+        // 이름 가져오기
+        var name = SocketApplication.prefs.getString("user-name", "익명")
+        binding.tvSignupNameCheck.setText("${name} 님")
 
         binding.btSingupStart.setOnClickListener {
             val nextIntent = Intent(this, LoginActivity::class.java)

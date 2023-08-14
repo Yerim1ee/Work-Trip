@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Plan.PlanFragment"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_plan_item"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_plan_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_plan_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="2023.12.12 ~ 2323.2323"
+            android:textColor="#626262"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_plan_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="기획팀 친목도모 워크숍 A안"
+            android:textColor="#363636"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_plan_date" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_plan_title">
+
+            <ImageView
+                android:id="@+id/iv_plan_people"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:background="@drawable/plan_item_people" />
+
+            <TextView
+                android:id="@+id/tv_plan_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="인원 측정"
+                android:textColor="#8F8F8F"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:id="@+id/iv_plan_budget"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/plan_item_budget" />
+
+            <TextView
+                android:id="@+id/tv_plan_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="100만원 이상"
+                android:textColor="#8F8F8F"
+                android:textSize="11sp" />
+
+
+            <ImageView
+                android:id="@+id/iv_plan_filter"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/plan_item_filter" />
+
+            <TextView
+                android:id="@+id/tv_plan_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="체험"
+                android:textColor="#8F8F8F"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/ib_plan_btn1"
+                android:layout_width="130.05dp"
+                android:layout_height="37.37dp"
+                android:background="@drawable/plan_item_button_1" />
+
+            <ImageButton
+                android:id="@+id/ib_plan_btn2"
+                android:layout_width="130.05dp"
+                android:layout_height="37.37dp"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/plan_item_button_2" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

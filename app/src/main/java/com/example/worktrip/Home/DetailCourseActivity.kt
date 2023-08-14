@@ -43,12 +43,6 @@ import com.example.worktrip.detail_locationY
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
-import java.net.URL
-import javax.xml.parsers.DocumentBuilderFactory
 
 
 private lateinit var binding : ActivityDetailCourseBinding

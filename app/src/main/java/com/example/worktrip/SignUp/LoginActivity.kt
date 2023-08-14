@@ -11,10 +11,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.constraintlayout.widget.StateSet.TAG
+import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityLoginBinding
-import com.example.worktrip.DataClass.UserKakaoData
 import com.example.worktrip.MainActivity
+import com.example.worktrip.SocketApplication
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -25,6 +26,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.kakao.util.maps.helper.Utility
 
 
 class LoginActivity :  Activity(), View.OnClickListener  {
@@ -40,7 +42,6 @@ class LoginActivity :  Activity(), View.OnClickListener  {
         } else if (token != null) {
             Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
             kakao_firebase_login(token.accessToken)
-            startActivity(Intent(this, MainActivity::class.java))
 
         }
     }
@@ -52,7 +53,8 @@ class LoginActivity :  Activity(), View.OnClickListener  {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater) // 뷰 바인딩 클래스의 인스턴스를 생성합니다.
         setContentView(binding.root) // 생성된 뷰를 액티비티에 표시합니다.
-        auth = Firebase.auth // 객체 정의
+        auth = Firebase.auth // auth 정의
+        db = FirebaseFirestore.getInstance() // db 정의
 
         binding.ibLoginKakaologin.setOnClickListener(this);
 
@@ -61,11 +63,11 @@ class LoginActivity :  Activity(), View.OnClickListener  {
             signin()
         }
 
+
         binding.ibLoginSignup.setOnClickListener{
             val nextIntent = Intent(this, SignUpActivity01::class.java)
             startActivity(nextIntent)
         }
-        db = FirebaseFirestore.getInstance()
 
 
 
@@ -114,7 +116,6 @@ class LoginActivity :  Activity(), View.OnClickListener  {
                             } else if (token != null) {
                                 Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
                                 kakao_firebase_login(token.accessToken)
-                                startActivity(Intent(this, MainActivity::class.java))
 
                             }
                         }
@@ -140,11 +141,11 @@ class LoginActivity :  Activity(), View.OnClickListener  {
         auth?.sendPasswordResetEmail(email)
             ?.addOnCompleteListener(this){
                 if(it.isSuccessful){
-                    Toast.makeText(this, "메일을 확인해주세요", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "메일을 확인해주세요", Toast.LENGTH_LONG).show()
                 }
             }
             ?.addOnFailureListener {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_LONG)
+                Toast.makeText(this, it.toString(), Toast.LENGTH_LONG).show()
 
             }
     }
@@ -181,29 +182,32 @@ class LoginActivity :  Activity(), View.OnClickListener  {
 
         // 사용자 정보 요청 (기본)
         UserApiClient.instance.me { user, error ->
-            Log.i("aaa", "${user?.kakaoAccount?.profile?.nickname}")
-
             if (error != null) {
                 Log.e("aaa", "사용자 정보 요청 실패", error)
             }
             else if (user != null) {
                 var name = user.kakaoAccount?.profile?.nickname
                 var kakao_number = user.id
+
                 auth.signInAnonymously()
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            // 데이터 베이스에 카카오 넘버가 있는지 검사하기
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInAnonymously:success")
-                            val user = auth.currentUser
-                            var userInfo = UserKakaoData() // 데이터 구조
+                            var userInfo = UserBaseData() // 데이터 구조
                             userInfo.userID = auth?.uid
                             userInfo.userName = name
                             userInfo.kakaonumber = kakao_number.toString()
 
-                            db?.collection("user_kakao")
+                            db?.collection("user")
                                 ?.document(auth?.uid.toString())
                                 ?.set(userInfo)
+                            startActivity(Intent(this, MainActivity::class.java))
 
+                            // 이름 저장
+                            SocketApplication.prefs.setString("user-name", name.toString())
 
                         } else {
                             // If sign in fails, display a message to the user.
