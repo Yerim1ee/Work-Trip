@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_activity_detail_food"
+        android:id="@+id/tb_activity_detail_sight"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -32,7 +32,7 @@
                 android:orientation="vertical"
                 android:layout_marginHorizontal="16dp">
                 <TextView
-                    android:id="@+id/tv_activity_detail_food_title"
+                    android:id="@+id/tv_activity_detail_sight_title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@color/black"
-                        android:id="@+id/tv_activity_detail_food_location"
+                        android:id="@+id/tv_activity_detail_sight_location"
                         android:text="location"
                         />
                 </LinearLayout>
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/iv_activity_detail_food_mainImage"
+                        android:id="@+id/iv_activity_detail_sight_mainImage"
                         android:layout_width="fill_parent"
                         android:layout_height="260dp"
                         android:adjustViewBounds="true"
@@ -91,7 +91,7 @@
 
 
                     <ImageView
-                        android:id="@+id/iv_activity_detail_food_nullImage"
+                        android:id="@+id/iv_activity_detail_sight_nullImage"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:background="@drawable/icon_img_null"
@@ -103,7 +103,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/tv_activity_detail_food_keyword"
+                    android:id="@+id/tv_activity_detail_sight_keyword"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:background="@drawable/chips_keyword2"
@@ -114,7 +114,7 @@
                     android:text="category"/>
 
                 <TextView
-                    android:id="@+id/tv_activity_detail_food_overview"
+                    android:id="@+id/tv_activity_detail_sight_overview"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="8dp"
@@ -126,7 +126,7 @@
 
             <!--지도-->
             <RelativeLayout
-                android:id="@+id/rl_activity_detail_food_map"
+                android:id="@+id/rl_activity_detail_sight_map"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
@@ -141,10 +141,11 @@
                 android:orientation="vertical"
                 android:paddingVertical="40dp"
                 android:paddingHorizontal="16dp"
-                android:background="@color/gray9">
+                android:background="@color/gray9"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/tv_activity_detail_food_listTitle"
+                    android:id="@+id/tv_activity_detail_sight_listTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
@@ -170,7 +171,7 @@
                         android:text="대표"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_firstMenu"
+                        android:id="@+id/tv_activity_detail_sight_firstMenu"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -197,7 +198,7 @@
                         android:text="그 외"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_treatMenu"
+                        android:id="@+id/tv_activity_detail_sight_treatMenu"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -234,7 +235,7 @@
                         android:text="영업시간"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_open"
+                        android:id="@+id/tv_activity_detail_sight_open"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -259,7 +260,7 @@
                         android:text="휴무일자"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_close"
+                        android:id="@+id/tv_activity_detail_sight_close"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -285,7 +286,7 @@
                         android:text="주차시설"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_parking"
+                        android:id="@+id/tv_activity_detail_sight_parking"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -310,7 +311,7 @@
                         android:text="전화번호"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_tel"
+                        android:id="@+id/tv_activity_detail_sight_tel"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -334,7 +335,7 @@
                         android:text="예약정보"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_food_reservation"
+                        android:id="@+id/tv_activity_detail_sight_reservation"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -349,28 +350,5 @@
         </LinearLayout>
 
     </ScrollView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_centerInParent="true"
-        android:background="@color/gray9"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="76dp"
-        android:orientation="vertical"
-        android:background="@color/white">
 
-        <Button
-            android:id="@+id/btn_activity_detail_food_more"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/chips_keyword2"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:text="전화 문의" />
-
-    </LinearLayout>
 </LinearLayout>

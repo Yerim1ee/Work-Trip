@@ -82,8 +82,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Home.DetailCourseActivity"
-            android:exported="false"
-            android:parentActivityName=".Home.ListRecommendedActivity"></activity>
+            android:exported="false"/>
         <activity
             android:name=".Home.DetailLodgingActivity"
             android:exported="false"
@@ -96,6 +95,9 @@
             android:name=".Home.DetailFoodActivity"
             android:exported="false"
             android:parentActivityName=".Home.ListRecommendedActivity" />
+        <activity
+            android:name=".Home.DetailSightActivity"
+            android:exported="false" />
         <activity
             android:name=".Home.HomeSearchActivity"
             android:exported="false" />

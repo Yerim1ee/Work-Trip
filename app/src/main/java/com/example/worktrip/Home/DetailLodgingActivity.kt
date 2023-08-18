@@ -16,6 +16,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
+import com.example.worktrip.DataClass.data_bookmark_list
+import com.example.worktrip.DataClass.dbContentId
+import com.example.worktrip.DataClass.dbContentImage
+import com.example.worktrip.DataClass.dbContentLocation
+import com.example.worktrip.DataClass.dbContentOverview
+import com.example.worktrip.DataClass.dbContentTitle
+import com.example.worktrip.DataClass.dbContentTypeID
 import com.example.worktrip.NetworkThread_categoryCode1
 import com.example.worktrip.NetworkThread_detailCommon1
 import com.example.worktrip.NetworkThread_detailIntroLodging
@@ -43,19 +50,27 @@ import com.example.worktrip.detail_contentUrl
 import com.example.worktrip.detail_imgURL
 import com.example.worktrip.detail_locationX
 import com.example.worktrip.detail_locationY
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
 private lateinit var binding : ActivityDetailLodgingBinding
 
+
+private var isSaved=false
+
 class DetailLodgingActivity : AppCompatActivity() {
+    lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailLodgingBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         //setContentView(R.layout.activity_detail_lodging)
+        mAuth =FirebaseAuth.getInstance()
 
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_activity_detail_lodging))
@@ -223,55 +238,78 @@ class DetailLodgingActivity : AppCompatActivity() {
         reservationTextView.text=detail_contentTelReservationLod
         deskTextView.text=detail_contentTelDeskLod
 
-        //하단 버튼
-        var moreButton: TextView = findViewById<Button>(R.id.btn_activity_detail_lodging_more)
 
-        if (detail_contentUrl.equals("url 정보 없음"))
-        {
-            moreButton.setBackgroundResource(R.drawable.chips_keyword3)
-            moreButton.setText("웹사이트가 없습니다")
-        }
-        else if(!(detail_contentUrl.startsWith("http://"))) //split 처리가 의미 없는 데이터가 들어가 있을 경우 그냥 버튼 비활성화
-        {
-            moreButton.setBackgroundResource(R.drawable.chips_keyword3)
-            moreButton.setText("웹사이트를 찾을 수 없습니다")
-        }
-        else
-        {
-            moreButton.setOnClickListener{
-
-                var intentMore = Intent(Intent.ACTION_VIEW, Uri.parse(detail_contentUrl))
-                startActivity(intentMore)
-            }
-        }
-
+        dbContentTypeID="&contentTypeId=32"
+        dbContentTitle= detail_contentTitle
+        dbContentOverview= detail_contentOverview
+        dbContentLocation= detail_contentLocation
+        dbContentId=getContentId.toString()
+        dbContentImage= detail_imgURL
     }
 
     //toolbar
     //툴바 메뉴 연결
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_bookmark_share, menu)
+        firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").get()
+            .addOnSuccessListener { task ->
+                for (document in task) {
+
+                    var id = document.data["contentID"].toString() //필드 데이터
+                    if (id.equals(dbContentId))
+                    {
+                        isSaved=true
+                        break
+                    } else { isSaved = false }
+                }
+
+                if (isSaved==true)
+                {
+                    if (menu != null) {
+                        var bookmark=menu.getItem(0)
+                        if (bookmark!=null)
+                        {
+                            bookmark.setIcon(R.drawable.icon_bookmark_black_filled)
+                        }
+                    }
+                }
+            }
+
         return true
     }
 
     //툴바 아이콘 클릭 이벤트
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
-
             R.id.it_toolbar_bs_bookmark -> {
                 //북마크 버튼 눌렀을 때
-                if (item.isChecked==false)
+
+                if (isSaved==true)
+                {
+                    item.isChecked=true
+                }
+
+
+                if (item.isChecked==false||isSaved==false) //item.isChecked==false
                 {
                     item.isChecked=true
                     item.setIcon(R.drawable.icon_bookmark_black_filled)
-                    Toast.makeText(applicationContext, "북마크 o", Toast.LENGTH_LONG).show()
+
+                    //정보를 파이어베이스에 저장
+                    firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).set(data_bookmark_list)
+
+                    isSaved=true
+                    Toast.makeText(applicationContext, "해당 정보가 북마크에 추가되었습니다.", Toast.LENGTH_LONG).show()
+
                 }
-                else if (item.isChecked==true)
+
+                else if (item.isChecked==true||isSaved==true) //item.isChecked==true
                 {
                     item.isChecked=false
                     item.setIcon(R.drawable.icon_bookmark_black)
-                    Toast.makeText(applicationContext, "북마크 x", Toast.LENGTH_LONG).show()
 
+                    //firestore_bookmark.collection("user_bookmark").document(/*유저 id*/).collection("list").document(dbContentId).delete()
+                    deleteBookmark()
                 }
 
                 return super.onOptionsItemSelected(item)
@@ -288,5 +326,20 @@ class DetailLodgingActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
 
+    }
+    private fun deleteBookmark()
+    {
+        firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).delete()
+            ?.addOnCompleteListener(this)
+            { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        applicationContext,
+                        "해당 정보의 북마크를 제거했습니다.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        isSaved=false
     }
 }

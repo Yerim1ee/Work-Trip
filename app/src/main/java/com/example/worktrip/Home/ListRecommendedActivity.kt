@@ -95,7 +95,7 @@ class ListRecommendedActivity  : AppCompatActivity() {
             toolbarTitle.text="코스"
             searchCheck="course"
             //칩 추가
-            categoryArray= listOf("힐링 코스", "도보 코스", "캠핑 코스")
+            categoryArray= listOf("힐링 코스", "도보 코스", "캠핑 코스", "맛 코스", "가족 코스")
             CategoryChips(categoryArray)
             //
             intent = Intent(this, DetailCourseActivity::class.java)
@@ -221,7 +221,7 @@ class ListRecommendedActivity  : AppCompatActivity() {
 
                 //API 정보를 가지고 있는 주소
                 url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + key + numOfRows + mobileOS + mobileApp + _type + listYN + arrange + contentTypeId + areaCode
-                println(url_list)
+                //println(url_list)
 
                 //쓰레드 생성
                 val thread = Thread(NetworkThread_list(url_list))
@@ -339,7 +339,7 @@ class ListRecommendedActivity  : AppCompatActivity() {
                     //Toast.makeText(applicationContext, "${chip.id}번째 칩", Toast.LENGTH_LONG).show()
                     //if 이 카테고리에서->칩이 이거면->url을 위한 캣코드는 이거고->캣코드 넣은 url은 이렇게 해서 쓰레드 돌리기
 
-                    if (getContentTypeId.equals("&contentTypeId=25")) //코스, 0..3
+                    if (getContentTypeId.equals("&contentTypeId=25")) //코스, 0..4
                     {
                         contentCat1="&cat1=C01"
 
@@ -359,10 +359,14 @@ class ListRecommendedActivity  : AppCompatActivity() {
                             list_card_list.clear()
                             contentCat2="&cat2=C0116"
                         }
-                        /*else if (chip.id==3) //맛코스: 3개밖에 없기도 하고 오류가 나서 일단 삭제
+                        else if (chip.id==3) //맛코스
                         {
                             contentCat2="&cat2=C0117"
-                        }*/
+                        }
+                        else if (chip.id==4) //가족코스
+                        {
+                            contentCat2="&cat2=C0112"
+                        }
 
                         url_list_cat=url_list+ contentCat1+ contentCat2
                         val thread = Thread(NetworkThread_list(url_list_cat))

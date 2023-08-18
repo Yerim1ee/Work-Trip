@@ -38,7 +38,8 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:text="title"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -57,7 +58,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@color/black"
-                        android:id="@+id/tv_activity_detail_lodging_location" />
+                        android:id="@+id/tv_activity_detail_lodging_location"
+                        android:text="location"/>
                 </LinearLayout>
             </LinearLayout>
             <!--상단 끝-->
@@ -106,7 +108,8 @@
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:textColor="@color/white"
-                    android:layout_marginTop="12dp" />
+                    android:layout_marginTop="12dp"
+                    android:text="category"/>
 
                 <TextView
                     android:id="@+id/tv_activity_detail_lodging_overview"
@@ -114,7 +117,8 @@
                     android:layout_height="wrap_content"
                     android:paddingVertical="8dp"
                     android:textColor="@color/black"
-                    android:layout_marginVertical="12dp" />
+                    android:layout_marginVertical="12dp"
+                    android:text="overview"/>
             </LinearLayout>
             <!--개요 끝-->
 
@@ -395,28 +399,4 @@
         </LinearLayout>
 
     </ScrollView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_centerInParent="true"
-        android:background="@color/gray9"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="76dp"
-        android:orientation="vertical"
-        android:background="@color/white">
-
-        <Button
-            android:id="@+id/btn_activity_detail_lodging_more"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/chips_keyword2"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:text="웹사이트로 이동" />
-
-    </LinearLayout>
 </LinearLayout>

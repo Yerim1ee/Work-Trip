@@ -1,6 +1,7 @@
 package com.example.worktrip
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.worktrip.databinding.ActivityNoticeBinding
 
@@ -18,4 +19,11 @@ class NoticeActivity : AppCompatActivity(){
             supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
             supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼
         }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

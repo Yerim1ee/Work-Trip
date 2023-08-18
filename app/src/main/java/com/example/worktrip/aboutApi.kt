@@ -16,6 +16,7 @@ import com.bumptech.glide.request.transition.Transition.ViewAdapter
 import com.example.worktrip.Home.ListRecommendedActivity
 import com.example.worktrip.Home.RecyclerAdapter_card_list
 import com.example.worktrip.Home.data_card_list
+import com.example.worktrip.Home.data_list_num_title_overview
 import com.example.worktrip.databinding.ActivityListRecommendedBinding
 import com.example.worktrip.databinding.CardListBinding
 import kotlinx.coroutines.withContext
@@ -26,71 +27,6 @@ import org.w3c.dom.NodeList
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 //*****스레드 클래스 안 for문이 작동하지 않으면 Log.d("??", url) 찍은 후 브라우저로 링크 이상 없는지 확인*****
-//코스+숙소+맛집 목록 (지역기반 관광정보조회)
-val list_card_list: ArrayList<data_card_list> = ArrayList()
-//lateinit var list_bitmap: Bitmap
-lateinit var list_contentTitle: String
-lateinit var list_contentLocation: String
-lateinit var list_contentId: String
-
-var list_imgURL=""
-
-class NetworkThread_list(var url: String): Runnable { //, var activity: Activity)
-
-    override fun run() {
-
-        try {
-
-            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
-            xml.documentElement.normalize()
-
-            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
-            val list: NodeList = xml.getElementsByTagName("item")
-
-            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
-            for(i in 0..list.length-1){
-
-                val n: Node = list.item(i)
-
-                if(n.getNodeType() == Node.ELEMENT_NODE){
-                    val elem = n as Element
-                    val map = mutableMapOf<String,String>()
-
-
-                    for(j in 0..elem.attributes.length - 1) {
-                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
-                    }
-
-                    list_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
-
-                    /*var img : URLtoBitmapTask = URLtoBitmapTask()
-                    img = URLtoBitmapTask().apply {
-                        url = URL(imgURL)
-                    }
-                    list_bitmap = img.execute().get()*/
-
-                    //list_image=Glide.with(activity).load(imgURL).into(binding.ivCardListImg)
-
-                    list_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
-                    list_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
-                    list_contentId="${elem.getElementsByTagName("contentid").item(0).textContent}"
-
-
-                    if ((list_contentLocation).equals(""))
-                    {
-                        list_contentLocation="주소 정보 없음"
-                    }
-
-                    list_card_list.add(data_card_list(list_imgURL, list_contentTitle, list_contentLocation, list_contentId))
-
-                }
-            }
-        } catch (e: Exception) {
-            Log.d("TTT", "API 에러: "+e.toString())
-        }
-    }
-
-}
 
 //상세 정보
 var detail_contentTitle: String=""
@@ -169,6 +105,114 @@ class NetworkThread_detailCommon1(
             Log.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
+}
+
+//공통정보조회(overview only)
+class NetworkThread_detailCommon2(
+    var url: String): Runnable {
+
+    override fun run() {
+
+        try {
+
+            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
+            xml.documentElement.normalize()
+
+            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
+            val list: NodeList = xml.getElementsByTagName("item")
+
+            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
+            for(i in 0..list.length-1){
+
+                val n: Node = list.item(i)
+
+                if(n.getNodeType() == Node.ELEMENT_NODE){
+                    val elem = n as Element
+                    val map = mutableMapOf<String,String>()
+
+
+                    for(j in 0..elem.attributes.length - 1) {
+                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
+                    }
+
+                    detail_contentOverview="${elem.getElementsByTagName("overview").item(0).textContent}"
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("TTT", "오픈API 에러: "+e.toString())
+        }
+    }
+}
+
+//코스+숙소+맛집 목록 (지역기반 관광정보조회)
+val list_card_list: ArrayList<data_card_list> = ArrayList()
+//lateinit var list_bitmap: Bitmap
+lateinit var list_contentTitle: String
+lateinit var list_contentLocation: String
+lateinit var list_contentId: String
+lateinit var list_contentTypeId: String
+
+
+var list_imgURL=""
+
+class NetworkThread_list(var url: String): Runnable { //, var activity: Activity)
+
+    override fun run() {
+
+        try {
+
+            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
+            xml.documentElement.normalize()
+
+            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
+            val list: NodeList = xml.getElementsByTagName("item")
+
+            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
+            for(i in 0..list.length-1){
+
+                val n: Node = list.item(i)
+
+                if(n.getNodeType() == Node.ELEMENT_NODE){
+                    val elem = n as Element
+                    val map = mutableMapOf<String,String>()
+
+
+                    for(j in 0..elem.attributes.length - 1) {
+                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
+                    }
+
+                    list_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
+
+                    /*var img : URLtoBitmapTask = URLtoBitmapTask()
+                    img = URLtoBitmapTask().apply {
+                        url = URL(imgURL)
+                    }
+                    list_bitmap = img.execute().get()*/
+
+                    //list_image=Glide.with(activity).load(imgURL).into(binding.ivCardListImg)
+
+                    list_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
+                    list_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
+                    list_contentId="${elem.getElementsByTagName("contentid").item(0).textContent}"
+                    list_contentTypeId="${elem.getElementsByTagName("contenttypeid").item(0).textContent}"
+
+
+                    if ((list_contentLocation).equals(""))
+                    {
+                        list_contentLocation="주소 정보 없음"
+                    }
+
+
+
+                    list_card_list.add(data_card_list(list_imgURL, list_contentTitle, list_contentLocation, list_contentId, list_contentTypeId))
+
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("TTT", "API 에러: "+e.toString())
+        }
+    }
+
 }
 
 var detail_contentKeyword: String=""
@@ -337,7 +381,7 @@ class NetworkThread_detailIntroLodging(
                     detail_contentTelReservationLod="${elem.getElementsByTagName("reservationlodging").item(0).textContent}"
                     detail_contentTelDeskLod="${elem.getElementsByTagName("infocenterlodging").item(0).textContent}"
 
-                    detail_contentUrl="${elem.getElementsByTagName("reservationurl").item(0).textContent}"
+                    //detail_contentUrl="${elem.getElementsByTagName("reservationurl").item(0).textContent}"
 
                     if ((detail_contentSeminar).equals(""))
                     {
@@ -370,14 +414,14 @@ class NetworkThread_detailIntroLodging(
                     {
                         detail_contentTelDeskLod="데스크 전화번호 정보 없음"
                     }
-                    if ((detail_contentUrl).equals(""))
+                    /*if ((detail_contentUrl).equals(""))
                     {
                         detail_contentUrl="url 정보 없음"
                     }else if(!(detail_contentUrl.startsWith("http://"))) //<a href="http://...형식의 데이터 해결
                     {
                         var split=detail_contentUrl.split("\"")
                         detail_contentUrlSplit[0]= split[1]
-                    }
+                    }*/
                 }
             }
         } catch (e: Exception) {
@@ -386,6 +430,67 @@ class NetworkThread_detailIntroLodging(
     }
 }
 
+val list_num_title_overview: ArrayList<data_list_num_title_overview> = ArrayList()
+var detail_subnum=""
+var detail_subtitle=""
+var detail_suboverview=""
+var detail_subImg=""
+var detail_contentId=""
+var detail_contentTypeId=""
+var detail_subcontentId=""
+
+
+//반복정보조회 (코스)
+class NetworkThread_detailInfo1(
+    var url: String): Runnable {
+
+    override fun run() {
+
+        try {
+
+            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
+            xml.documentElement.normalize()
+
+            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
+            val list: NodeList = xml.getElementsByTagName("item")
+
+            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
+            for(i in 0..list.length-1){
+
+                val n: Node = list.item(i)
+
+                if(n.getNodeType() == Node.ELEMENT_NODE){
+                    val elem = n as Element
+                    val map = mutableMapOf<String,String>()
+
+
+                    for(j in 0..elem.attributes.length - 1) {
+                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
+                    }
+
+                    detail_subImg="${elem.getElementsByTagName("subdetailimg").item(0).textContent}"
+                    /*var img : URLtoBitmapTask = URLtoBitmapTask()
+                    img = URLtoBitmapTask().apply {
+                        url = URL(imgURL)
+                    }
+                    detail_bitmap = img.execute().get()*/
+
+                    detail_subnum=(i+1).toString()
+                    detail_subtitle="${elem.getElementsByTagName("subname").item(0).textContent}"
+                    detail_contentId="${elem.getElementsByTagName("contentid").item(0).textContent}"
+                    detail_contentTypeId="${elem.getElementsByTagName("contenttypeid").item(0).textContent}"
+                    detail_subcontentId="${elem.getElementsByTagName("subcontentid").item(0).textContent}"
+                    detail_suboverview="${elem.getElementsByTagName("subdetailoverview").item(0).textContent}"
+
+                    list_num_title_overview.add(data_list_num_title_overview(detail_subnum, detail_subtitle, detail_suboverview, detail_subImg, detail_contentId, detail_contentTypeId, detail_subcontentId))
+
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("TTT", "오픈API 에러: "+e.toString())
+        }
+    }
+}
 
 //-----------------------------------------------------------------------------------
 //url->bitmap
