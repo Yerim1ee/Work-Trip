@@ -24,15 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
-import com.example.worktrip.DataClass.data_bookmark_list
-import com.example.worktrip.DataClass.dbContentId
-import com.example.worktrip.DataClass.dbContentImage
-import com.example.worktrip.DataClass.dbContentLocation
-import com.example.worktrip.DataClass.dbContentOverview
-import com.example.worktrip.DataClass.dbContentTitle
-import com.example.worktrip.DataClass.dbContentTypeID
 import com.example.worktrip.Home.RecyclerAdapter_detail_course
 import com.example.worktrip.My.RecyclerAdapter_card_image_title_overview_location
+import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.My.list_card_image_title_overview_location
 import com.example.worktrip.NetworkThread_categoryCode1
 import com.example.worktrip.NetworkThread_detailCommon1
@@ -70,10 +64,16 @@ private lateinit var binding : ActivityDetailCourseBinding
 //private lateinit var recyclerView_detail_course: RecyclerView
 private lateinit var recyclerView_detail_course: RecyclerView
 
+private var dbContentTypeID=""
+private var dbContentId=""
+private var dbContentTitle=""
+private var dbContentOverview=""
+private var dbContentLocation=""
+private var dbContentImage=""
+
 //var changeType = false
 
 private var isSaved=false
-val firestore_bookmark_list= Firebase.firestore
 
 class DetailCourseActivity : AppCompatActivity(){
     //private var adapter= RecyclerAdapter_detail_course()
@@ -254,7 +254,6 @@ class DetailCourseActivity : AppCompatActivity(){
                 //intent.putExtra("subcontentId", list_num_title_overview[position].subcontentId)
                 intent.putExtra("isSubcontent", isSubcontent)
 
-
                 startActivity(intent)
                 detail_subcontentId =""
                 //contentTypeId=""
@@ -309,7 +308,14 @@ class DetailCourseActivity : AppCompatActivity(){
         when (item?.itemId) {
             R.id.it_toolbar_bs_bookmark -> {
                 //북마크 버튼 눌렀을 때
-
+                val data_bookmark_list= hashMapOf(
+                    "contentID" to dbContentId,
+                    "contentTitle" to dbContentTitle,
+                    "contentLocation" to dbContentLocation,
+                    "contentOverview" to dbContentOverview,
+                    "contentImage" to dbContentImage,
+                    "contentTypeID" to dbContentTypeID
+                )
 
                 if (isSaved==true)
                 {

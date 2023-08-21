@@ -105,6 +105,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:background="@drawable/icon_picker"
+            android:id="@+id/iv_card_image_title_overview_location_icon"
             android:layout_marginRight="4dp"/>
 
         <TextView

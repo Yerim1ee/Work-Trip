@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.worktrip.Home.data_card_list
-import com.example.worktrip.Home.firestore_bookmark_list
 import com.example.worktrip.R
 import com.example.worktrip.databinding.CardImageTitleOverviewLocationBinding
 import com.example.worktrip.list_card_list
 import com.google.firebase.auth.FirebaseAuth
-
 
 data class data_card_image_title_overview_location(
     var img: String, //Bitmap?
@@ -52,23 +51,29 @@ class RecyclerAdapter_card_image_title_overview_location (private val items: Arr
         {
             viewHolder.binding.ivCardImageTitleOverviewLocationNull.visibility=View.GONE
         }
+        if (items[position].typeid.equals("program"))
+        {
+            viewHolder.binding.ivCardImageTitleOverviewLocationIcon.setBackgroundResource(R.drawable.icon_people)
+        }
 
         //추가
         //view에 onClickListner를 달고, 그 안에서 직접 만든 itemClickListener를 연결
         viewHolder.itemView.setOnClickListener {
             itemClickListner.onClick(it, position)
         }
-        viewHolder.binding.ibCardImageTitleOverviewLocationBookmark.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(compoundButton: CompoundButton?, isChecked: Boolean) {
-                if (!isChecked)
-                {
-                    firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).delete()
-                    //Toast.makeText(parent@ListRecommendedActivity(), "해당 정보의 북마크를 제거했습니다.", Toast.LENGTH_LONG).show()
-                    removeItem(position)
-                }
-
+        viewHolder.binding.ibCardImageTitleOverviewLocationBookmark.setOnClickListener{
+            if (!(viewHolder.binding.ibCardImageTitleOverviewLocationBookmark.isChecked))
+            {
+                removeItem(position)
+                firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).delete()
+                Toast.makeText(viewHolder.itemView.context, "해당 정보의 북마크를 제거했습니다. (창을 재실행할 시 반영됩니다.)", Toast.LENGTH_LONG).show()
+                //viewHolder.binding.cardImageTitleOverviewLocation.visibility=View.GONE
             }
-        })
+        }
+        /*viewHolder.binding.ibCardImageTitleOverviewLocationBookmark.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(compoundButton: CompoundButton?, isChecked: Boolean) {
+            }
+        })*/
 
     //
 
@@ -79,8 +84,6 @@ class RecyclerAdapter_card_image_title_overview_location (private val items: Arr
     //클릭 인터페이스 정의
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
-
-
     }
 
     //클릭리스너 선언
@@ -92,16 +95,11 @@ class RecyclerAdapter_card_image_title_overview_location (private val items: Arr
         itemClickListner = itemClickListener
     }
 
-    fun removeItem(position: Int)
-    {
-        if (position>0)
-        {
-            //list_card_image_title_overview_location.clear()
+    fun removeItem(position: Int) {
+        if (position > 0) {
             notifyItemRemoved(position)
             notifyDataSetChanged()
-
         }
     }
-    //
 
 }

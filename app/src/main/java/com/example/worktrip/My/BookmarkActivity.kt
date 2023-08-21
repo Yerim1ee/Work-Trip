@@ -17,7 +17,6 @@ import com.example.worktrip.Home.DetailFoodActivity
 import com.example.worktrip.Home.DetailLodgingActivity
 import com.example.worktrip.Home.DetailProgramActivity
 import com.example.worktrip.Home.RecyclerAdapter_card_list
-import com.example.worktrip.Home.firestore_bookmark_list
 import com.example.worktrip.NetworkThread_detailCommon2
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityBookmarkBinding
@@ -35,22 +34,14 @@ private lateinit var binding : ActivityBookmarkBinding
 private lateinit var viewPager_bookmark: ViewPager2
 private lateinit var tabLayout_bookmark: TabLayout
 
-private lateinit var recyclerView_bookmark: RecyclerView
-val list_card_image_title_overview_location: ArrayList<data_card_image_title_overview_location> = ArrayList()
-
-var bookmarkImg=""
-var bookmarkTitle=""
-var bookmarkOverview=""
-var bookmarkLocation=""
-var bookmarkId=""
-var bookmarkTypeId=""
+val firestore_bookmark_list= Firebase.firestore
 
 class BookmarkActivity  : AppCompatActivity() {
-    lateinit var mAuth: FirebaseAuth
-    private var adapter= RecyclerAdapter_card_image_title_overview_location(list_card_image_title_overview_location)
+    //lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
-        mAuth =FirebaseAuth.getInstance()
-        updateOverview()
+        //mAuth =FirebaseAuth.getInstance()
+
+        //updateOverview()
 
         super.onCreate(savedInstanceState)
         binding = ActivityBookmarkBinding.inflate(layoutInflater)
@@ -92,16 +83,8 @@ class BookmarkActivity  : AppCompatActivity() {
                 else -> tab.text = "Tab ${position + 1}"
             }
         }.attach()
-        //----------------------------------------------------
+        //getFirestoreData()
 
-        getFirestoreData()
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //초기화
-        list_card_image_title_overview_location.clear()
     }
 
     //toolbar
@@ -133,7 +116,7 @@ class BookmarkActivity  : AppCompatActivity() {
 
     }
 
-fun updateOverview(){
+    /*fun updateOverview(){
     firestore_bookmark_list.collection("user_bookmark")
         .document("${mAuth.currentUser?.uid.toString()}").collection("list").get()
         .addOnSuccessListener { task ->
@@ -163,8 +146,8 @@ fun updateOverview(){
                 }
             }
         }
-}
-    fun getFirestoreData() {
+}*/
+    /*fun getFirestoreData() {
         firestore_bookmark_list.collection("user_bookmark")
             .document("${mAuth.currentUser?.uid.toString()}").collection("list").get()
             .addOnSuccessListener { task ->
@@ -231,7 +214,7 @@ fun updateOverview(){
                     })
                 }
             }
-    }
+    }*/
 
 }
 

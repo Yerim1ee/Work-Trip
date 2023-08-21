@@ -157,8 +157,8 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:scrollbars="vertical"
-                    android:orientation="vertical"/>
-                <!--tools:listitem="@layout/list_num_title_location"-->
+                    android:orientation="vertical" />
+                <!--tools:listitem="@layout/list_num_title_overview"-->
 
 
             </LinearLayout>

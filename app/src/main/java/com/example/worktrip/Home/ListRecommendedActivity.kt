@@ -491,7 +491,7 @@ class ListRecommendedActivity  : AppCompatActivity() {
 
 
                 }
-                if(!chip.isChecked)
+                else if(!chip.isChecked)
                 {
                     list_card_list.clear()
                     val thread = Thread(NetworkThread_list(url_list))

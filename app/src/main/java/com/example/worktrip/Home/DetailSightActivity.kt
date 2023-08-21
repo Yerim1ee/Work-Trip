@@ -11,13 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
-import com.example.worktrip.DataClass.data_bookmark_list
-import com.example.worktrip.DataClass.dbContentId
-import com.example.worktrip.DataClass.dbContentImage
-import com.example.worktrip.DataClass.dbContentLocation
-import com.example.worktrip.DataClass.dbContentOverview
-import com.example.worktrip.DataClass.dbContentTitle
-import com.example.worktrip.DataClass.dbContentTypeID
+import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailSightBinding
 import com.example.worktrip.detail_contentKeyword
@@ -33,6 +27,13 @@ import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
 private lateinit var binding : ActivityDetailSightBinding
+
+private var dbContentTypeID=""
+private var dbContentId=""
+private var dbContentTitle=""
+private var dbContentOverview=""
+private var dbContentLocation=""
+private var dbContentImage=""
 
 private var isSaved=false
 private var getSubcontent="false"
@@ -199,7 +200,14 @@ class DetailSightActivity : AppCompatActivity(){
             when (item?.itemId) {
                 R.id.it_toolbar_bs_bookmark -> {
                     //북마크 버튼 눌렀을 때
-
+                    val data_bookmark_list= hashMapOf(
+                        "contentID" to dbContentId,
+                        "contentTitle" to dbContentTitle,
+                        "contentLocation" to dbContentLocation,
+                        "contentOverview" to dbContentOverview,
+                        "contentImage" to dbContentImage,
+                        "contentTypeID" to dbContentTypeID
+                    )
                     if (isSaved==true)
                     {
                         item.isChecked=true

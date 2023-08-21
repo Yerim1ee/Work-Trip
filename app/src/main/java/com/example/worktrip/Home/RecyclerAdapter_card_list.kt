@@ -13,12 +13,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.transition.Transition
-import com.example.worktrip.DataClass.dbContentId
-import com.example.worktrip.DataClass.dbContentImage
-import com.example.worktrip.DataClass.dbContentLocation
-import com.example.worktrip.DataClass.dbContentOverview
-import com.example.worktrip.DataClass.dbContentTitle
-import com.example.worktrip.DataClass.dbContentTypeID
+import com.example.worktrip.My.bookmarkId
+import com.example.worktrip.My.bookmarkTypeId
+import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.NetworkThread_detailCommon2
 import com.example.worktrip.R
 import com.example.worktrip.databinding.CardListBinding
@@ -26,6 +23,8 @@ import com.example.worktrip.detail_contentOverview
 import com.google.firebase.auth.FirebaseAuth
 //import com.example.worktrip.list_bitmap
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.NonDisposableHandle.parent
+import java.security.AccessController.getContext
 
 
 data class data_card_list(
@@ -64,7 +63,6 @@ class RecyclerAdapter_card_list (private val items: ArrayList<data_card_list>) :
         viewHolder.binding.tvCardListTitle.text = items[position].title
         viewHolder.binding.tvCardListLocation.text = items[position].location
 
-        //추가_따로 불러와야 제대로 값이 저장됨
         var dbContentTypeID = "&contentTypeId="+items[position].typeid
         var dbContentTitle = items[position].title
         var dbContentOverview = ""
@@ -86,37 +84,49 @@ class RecyclerAdapter_card_list (private val items: ArrayList<data_card_list>) :
             itemClickListner.onClick(it, position)
         }
 
+
         firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").get()
             .addOnSuccessListener { task ->
                 for (document in task) {
                     var id = document.data["contentID"].toString() //필드 데이터
                     if (id.equals(dbContentId))
                     {
-                        viewHolder.binding.ibCardListBookmark.isChecked=true
+                        viewHolder.binding.cbCardListBookmark.isChecked=true
                         //onViewRecycled(viewHolder)
                         break
                     }
                     else{
-                        viewHolder.binding.ibCardListBookmark.isChecked=false
+                        viewHolder.binding.cbCardListBookmark.isChecked=false
                     }
                 }
             }
 
-        viewHolder.binding.ibCardListBookmark.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
+        viewHolder.binding.cbCardListBookmark.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(compoundButton: CompoundButton?, isChecked: Boolean) {
                 if (isChecked)
                 {
-
+                    viewHolder.binding.cbCardListBookmark.isChecked=true
                     //정보를 파이어베이스에 저장
                     firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).set(data_bookmark_list)
+                    //overview 정보 추가 저장
+                    updateOverview()
 
-                    //Toast.makeText(parent@ListRecommendedActivity(), "해당 정보가 북마크에 추가되었습니다.", Toast.LENGTH_LONG).show()
+                    //직접 클릭할때만 토스트가 보이도록
+                    viewHolder.binding.cbCardListBookmark.setOnClickListener{
+                        Toast.makeText(viewHolder.itemView.context, "해당 정보가 북마크에 추가되었습니다.", Toast.LENGTH_LONG).show()
+                    }
                     //isSaved=true
                 }
                 else
                 {
+                    viewHolder.binding.cbCardListBookmark.isChecked=false
+
                     firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("list").document(dbContentId).delete()
-                    //Toast.makeText(parent@ListRecommendedActivity(), "해당 정보의 북마크를 제거했습니다.", Toast.LENGTH_LONG).show()
+
+                    //직접 클릭할때만 토스트가 보이도록
+                    viewHolder.binding.cbCardListBookmark.setOnClickListener{
+                        Toast.makeText(viewHolder.itemView.context, "해당 정보의 북마크를 제거했습니다.", Toast.LENGTH_LONG).show()
+                    }
                     //isSaved=false
 
                 }
@@ -151,6 +161,37 @@ class RecyclerAdapter_card_list (private val items: ArrayList<data_card_list>) :
     }
     //
 
+    fun updateOverview(){
+        firestore_bookmark_list.collection("user_bookmark")
+            .document("${mAuth.currentUser?.uid.toString()}").collection("list").get()
+            .addOnSuccessListener { task ->
+                for (document in task) {
+                    bookmarkId = document.data["contentID"].toString() //필드 데이터
+                    bookmarkTypeId = document.data["contentTypeID"].toString() //필드 데이터
+
+                    if (document.data["contentOverview"].toString().equals("")) {
+                        //overview 추가로 불러오기
+                        val url_detailCommon2 =
+                            "https://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=" + "599o%2FfnKg8hgR51clnKMjz0ZVncf2Gg%2FahikrqN3gDaUMlsAfyA80I%2BDNj40Q%2FKYQv66DOcIZ9OvOMg%2Fuq86IA%3D%3D" + "&MobileOS=AND" + "&MobileApp=WorkTrip" + "&_type=xml&contentId=" + bookmarkId + bookmarkTypeId + "&defaultYN=N" + "&firstImageYN=N" + "&areacodeYN=N" + "&catcodeYN=N" + "&addrinfoYN=N" + "&mapinfoYN=N" + "&overviewYN=Y" + "&pageNo=1"
+                        val thread_detailCommon2 =
+                            Thread(NetworkThread_detailCommon2(url_detailCommon2))
+                        thread_detailCommon2.start() // 쓰레드 시작
+                        thread_detailCommon2.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        firestore_bookmark_list.collection("user_bookmark")
+                            .document("${mAuth.currentUser?.uid.toString()}").collection("list")
+                            .document(bookmarkId).update("contentOverview", detail_contentOverview)
+
+                        detail_contentOverview=document.data["contentOverview"].toString()
+                    }
+                    else
+                    {
+                        bookmarkId=""
+                        bookmarkTypeId=""
+                    }
+                }
+            }
+    }
 }
 
 

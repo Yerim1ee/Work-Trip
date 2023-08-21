@@ -9,23 +9,37 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.worktrip.Home.DetailProgramActivity
+import com.example.worktrip.My.firestore_bookmark_list
+import com.example.worktrip.NetworkThread_list
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityListProgramBinding
+import com.example.worktrip.list_card_list
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 
 
 private lateinit var binding : ActivityListProgramBinding
 private val list_card_list_people: ArrayList<data_card_list_people> = ArrayList()
 private lateinit var recyclerView_list_people: RecyclerView
 
-private lateinit var contentId: String
+//private lateinit var contentId: String
 
 private lateinit var categoryArray: List<String>
 private var searchCheck="program"
+
+private var programId=""
+private var programKeyword=""
+private var programTitle=""
+private var programImg=""
+private var programPeople=""
+private var programOverview=""
+
 
 class ListProgramActivity: AppCompatActivity() {
     private var adapter = RecyclerAdapter_card_list_people(list_card_list_people)
@@ -45,34 +59,65 @@ class ListProgramActivity: AppCompatActivity() {
         toolbarTitle.text = "프로그램"
 
         //칩 추가
-        categoryArray = listOf("게임", "??", "??")
+        categoryArray = listOf("아이스브레이킹", "단합", "레크레이션")
         CategoryChips(categoryArray)
         //
 
         //recyclerView
-        list_card_list_people.add(data_card_list_people("null", "무슨 게임 1", "2명~4명", "1"))
-        list_card_list_people.add(data_card_list_people("null", "무슨 게임 2", "2명", "2"))
-        list_card_list_people.add(data_card_list_people("null", "무슨 게임 3", "2명", "3"))
+        firestore_bookmark_list.collection("category_program")
+            .get()
+            .addOnSuccessListener { task ->
+                for (document in task) {
+                    programId = document.data["id"].toString() //필드 데이터
+                    programKeyword = document.data["keyword"].toString() //필드 데이터
+                    programTitle = document.data["title"].toString() //필드 데이터
+                    programImg = document.data["image"].toString() //필드 데이터
+                    programPeople = document.data["people"].toString() //필드 데이터
+                    programOverview = document.data["overview"].toString() //필드 데이터
 
-        recyclerView_list_people =findViewById(R.id.rv_activity_list_program_list!!)as RecyclerView
-        recyclerView_list_people.layoutManager= GridLayoutManager(this, 2)
-        recyclerView_list_people.adapter=adapter
+                    list_card_list_people.add(
+                        data_card_list_people(
+                            programId,
+                            programKeyword,
+                            programTitle,
+                            programImg,
+                            programPeople,
+                            programOverview
+                        )
+                    )
+                }
+                //샘플 데이터 삭제
+                list_card_list_people.removeLast()
+
+                //recycler view
+                recyclerView_list_people =
+                    findViewById(R.id.rv_activity_list_program_list!!) as RecyclerView
+                recyclerView_list_people.layoutManager = GridLayoutManager(this, 2)
+                recyclerView_list_people.adapter = adapter
 
 
-        intent = Intent(this, DetailProgramActivity::class.java)
+                var intent = Intent(this, DetailProgramActivity::class.java)
 
-        adapter.setOnClickListener( object : RecyclerAdapter_card_list_people.ItemClickListener {
-            override fun onClick(view: View, position: Int) {
-                //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+                adapter.setOnClickListener(object :
+                    RecyclerAdapter_card_list_people.ItemClickListener {
+                    override fun onClick(view: View, position: Int) {
+                        //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
 
-                intent.putExtra("contentId", list_card_list_people[position].id)
+                        adapter.setOnClickListener(object :
+                            RecyclerAdapter_card_list_people.ItemClickListener {
+                            override fun onClick(view: View, position: Int) {
+                                //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+                                intent.putExtra("contentId", list_card_list_people[position].id)
 
-                startActivity(intent)
-                contentId =""
+                                startActivity(intent)
+                                //contentId = ""
+                            }
+                        })
+                    }
+                })
+
+
             }
-        })
-
-
     }
 
     override fun onDestroy() {
@@ -146,6 +191,155 @@ class ListProgramActivity: AppCompatActivity() {
                 )
             }
             binding.cpsActivityListProgram.addView(chip)
+
+            chip.setOnClickListener{
+                if(chip.isChecked)
+                {
+                    //Toast.makeText(applicationContext, "${chip.id}번째 칩", Toast.LENGTH_LONG).show()
+                    var keyword=""
+                    if (chip.id==1) //아이스브레이킹
+                    {
+                        //Toast.makeText(applicationContext, "${chip.id}번째 칩-프로그램", Toast.LENGTH_LONG).show()
+                        list_card_list_people.clear()
+                        keyword="아이스브레이킹"
+                        keywordList(keyword)
+                    }
+                    else if (chip.id==2) //단합
+                    {
+                        //Toast.makeText(applicationContext, "${chip.id}번째 칩-프로그램", Toast.LENGTH_LONG).show()
+
+                        list_card_list_people.clear()
+                        keyword="단합"
+                        keywordList(keyword)
+                    }
+                    else if (chip.id==3) //레크레이션
+                    {
+                        //Toast.makeText(applicationContext, "${chip.id}번째 칩-프로그램", Toast.LENGTH_LONG).show()
+
+                        list_card_list_people.clear()
+                        keyword="레크레이션"
+                        keywordList(keyword)
+                    }
+
+                }
+
+                else if(!chip.isChecked)
+                {
+                    list_card_list_people.clear()
+                    //recyclerView
+                    firestore_bookmark_list.collection("category_program")
+                        .get()
+                        .addOnSuccessListener { task ->
+                            for (document in task) {
+                                programId = document.data["id"].toString() //필드 데이터
+                                programKeyword = document.data["keyword"].toString() //필드 데이터
+                                programTitle = document.data["title"].toString() //필드 데이터
+                                programImg = document.data["image"].toString() //필드 데이터
+                                programPeople = document.data["people"].toString() //필드 데이터
+                                programOverview = document.data["overview"].toString() //필드 데이터
+
+                                list_card_list_people.add(
+                                    data_card_list_people(
+                                        programId,
+                                        programKeyword,
+                                        programTitle,
+                                        programImg,
+                                        programPeople,
+                                        programOverview
+                                    )
+                                )
+                            }
+                            //샘플 데이터 삭제
+                            list_card_list_people.removeLast()
+
+                            //recycler view
+                            recyclerView_list_people =
+                                findViewById(R.id.rv_activity_list_program_list!!) as RecyclerView
+                            recyclerView_list_people.layoutManager = GridLayoutManager(this, 2)
+                            recyclerView_list_people.adapter = adapter
+
+
+                            var intent = Intent(this, DetailProgramActivity::class.java)
+
+                            adapter.setOnClickListener(object :
+                                RecyclerAdapter_card_list_people.ItemClickListener {
+                                override fun onClick(view: View, position: Int) {
+                                    //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+
+                                    adapter.setOnClickListener(object :
+                                        RecyclerAdapter_card_list_people.ItemClickListener {
+                                        override fun onClick(view: View, position: Int) {
+                                            //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+                                            intent.putExtra("contentId", list_card_list_people[position].id)
+
+                                            startActivity(intent)
+                                            //contentId = ""
+                                        }
+                                    })
+                                }
+                            })
+
+                        }
+                }
+            }
+
         }
     }
+
+    private fun keywordList(keyword: String)
+    {
+        //recyclerView
+        firestore_bookmark_list.collection("category_program")
+            .get()
+            .addOnSuccessListener { task ->
+                for (document in task) {
+                    if (document.data["keyword"].toString().equals(keyword)) {
+                        programId = document.data["id"].toString() //필드 데이터
+                        programKeyword = document.data["keyword"].toString() //필드 데이터
+                        programTitle = document.data["title"].toString() //필드 데이터
+                        programImg = document.data["image"].toString() //필드 데이터
+                        programPeople = document.data["people"].toString() //필드 데이터
+                        programOverview = document.data["overview"].toString() //필드 데이터
+
+                        list_card_list_people.add(
+                            data_card_list_people(
+                                programId,
+                                programKeyword,
+                                programTitle,
+                                programImg,
+                                programPeople,
+                                programOverview
+                            )
+                        )
+                    }
+                }
+                //recycler view
+                recyclerView_list_people =
+                    findViewById(R.id.rv_activity_list_program_list!!) as RecyclerView
+                recyclerView_list_people.layoutManager = GridLayoutManager(this, 2)
+                recyclerView_list_people.adapter = adapter
+
+
+                var intent = Intent(this, DetailProgramActivity::class.java)
+
+                adapter.setOnClickListener(object :
+                    RecyclerAdapter_card_list_people.ItemClickListener {
+                    override fun onClick(view: View, position: Int) {
+                        //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+
+                        adapter.setOnClickListener(object :
+                            RecyclerAdapter_card_list_people.ItemClickListener {
+                            override fun onClick(view: View, position: Int) {
+                                //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+                                intent.putExtra("contentId", list_card_list_people[position].id)
+
+                                startActivity(intent)
+                                //contentId = ""
+                            }
+                        })
+                    }
+                })
+            }
+    }
+
 }

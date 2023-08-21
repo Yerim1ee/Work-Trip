@@ -37,7 +37,8 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:text="title"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -56,7 +57,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@color/black"
-                        android:id="@+id/tv_activity_detail_program_people" />
+                        android:id="@+id/tv_activity_detail_program_people"
+                        android:text="people"/>
                 </LinearLayout>
             </LinearLayout>
             <!--상단 끝-->
@@ -105,7 +107,8 @@
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:textColor="@color/white"
-                    android:layout_marginTop="12dp" />
+                    android:layout_marginTop="12dp"
+                    android:text="keyword"/>
 
                 <TextView
                     android:id="@+id/tv_activity_detail_program_overview"
@@ -113,12 +116,16 @@
                     android:layout_height="wrap_content"
                     android:paddingVertical="8dp"
                     android:textColor="@color/black"
-                    android:layout_marginVertical="12dp" />
+                    android:layout_marginVertical="12dp"
+                    android:text="overview"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -128,10 +135,10 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginRight="36dp"
-                        android:text="인원"/>
+                        android:text="시간"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_program_overviewPeople"
+                        android:id="@+id/tv_activity_detail_program_time"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="8dp"
@@ -143,7 +150,9 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -153,10 +162,10 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="12dp"
                         android:layout_marginRight="36dp"
-                        android:text="시간"/>
+                        android:text="준비"/>
 
                     <TextView
-                        android:id="@+id/tv_activity_detail_program_overviewTime"
+                        android:id="@+id/tv_activity_detail_program_preparation"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="8dp"
@@ -180,19 +189,47 @@
                     android:id="@+id/tv_activity_detail_program_listTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-
                     android:text="진행 방법"/>
 
-                <TextView
-                    android:id="@+id/tv_activity_detail_program_listOverview"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_activity_detail_program_list"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/black" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:scrollbars="vertical"
+                    android:orientation="vertical" />
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/gray4"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="14dp"
+                        android:text="Tip"/>
+
+                    <TextView
+                        android:id="@+id/tv_activity_detail_program_tip"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp" />
+                </LinearLayout>
 
             </LinearLayout>
             <!--순서 끝-->
