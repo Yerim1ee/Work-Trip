@@ -1,76 +1,56 @@
 package com.example.worktrip.DataClass
 
-class PlanWorkShopData {
+import android.os.Parcel
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-    private var userID:String? = null
-    private var now:Boolean = true
-    private var tv_plan_date: String? = null
-    private var tv_plan_title: String? = null
-    private var tv_plan_people: String? = null
-    private var tv_plan_filter: String? = null
-    private var tv_plan_budget: String? = null
 
-    fun PlanWorkShopData(date: String?, title: String?, people: String?, filter: String?, budget: String?) {
-        this.tv_plan_date = date
-        this.tv_plan_title = title
-        this.tv_plan_people = people
-        this.tv_plan_filter = filter
-        this.tv_plan_budget = budget
-    }
-    fun getuesrid(): String? {
-        return userID
-    }
-
-    fun setuesrid(id: String?) {
-        this.userID = id
-    }
-
-    fun getnowid(): Boolean {
-        return now
-    }
-
-    fun setnowid(id: Boolean) {
-        this.now = id
-    }
-    fun gettv_plan_date(): String? {
-        return tv_plan_date
+@Parcelize
+data class PlanWorkShopData(
+    @SerializedName ("docID") var docID: String? = null,
+    @SerializedName ("now") var now: Boolean = true,
+    @SerializedName ("tv_plan_date_start") var tv_plan_date_start: String? = null,
+    @SerializedName ("tv_plan_date_end") var tv_plan_date_end: String? = null,
+    @SerializedName ("tv_plan_title") var tv_plan_title: String? = null,
+    @SerializedName ("tv_plan_people") var tv_plan_people: String? = null,
+    @SerializedName ("tv_plan_filter") var tv_plan_filter: String? = null,
+    @SerializedName ("tv_plan_budget") var tv_plan_budget: String? = null,
+    ) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
     }
 
-    fun settv_plan_date(tv_plan_date: String?) {
-        this.tv_plan_date = tv_plan_date
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(docID)
+        parcel.writeByte(if (now) 1 else 0)
+        parcel.writeString(tv_plan_date_start)
+        parcel.writeString(tv_plan_date_end)
+        parcel.writeString(tv_plan_title)
+        parcel.writeString(tv_plan_people)
+        parcel.writeString(tv_plan_filter)
+        parcel.writeString(tv_plan_budget)
     }
 
-    fun gettv_plan_title(): String? {
-        return tv_plan_title
+    override fun describeContents(): Int {
+        return 0
     }
 
-    fun settv_plan_title(tv_plan_title: String?) {
-        this.tv_plan_title = tv_plan_title
+    companion object CREATOR : Parcelable.Creator<PlanWorkShopData> {
+        override fun createFromParcel(parcel: Parcel): PlanWorkShopData {
+            return PlanWorkShopData(parcel)
+        }
+
+        override fun newArray(size: Int): Array<PlanWorkShopData?> {
+            return arrayOfNulls(size)
+        }
     }
 
-    fun gettv_plan_people(): String? {
-        return tv_plan_people
-    }
-
-    fun settv_plan_people(tv_plan_people: String?) {
-        this.tv_plan_people = tv_plan_people
-    }
-
-
-    fun gettv_plan_filter(): String? {
-        return tv_plan_filter
-    }
-
-    fun settv_plan_filter(tv_plan_filter: String?) {
-        this.tv_plan_filter = tv_plan_filter
-    }
-
-
-    fun gettv_plan_budget(): String? {
-        return tv_plan_budget
-    }
-
-    fun settv_plan_budget(tv_plan_budget: String?) {
-        this.tv_plan_budget = tv_plan_budget
-    }
 }

@@ -2,13 +2,14 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
 
     // 코틀린 주석 처리 도구
     // id("com.google.devtools.ksp")
 
     //id
     id 'kotlin-android-extensions'
-    //id 'kotlin-parcelize'
+    // id 'kotlin-parcelize'
 
 }
 
@@ -56,8 +57,9 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-
-
+    androidExtensions {
+        experimental = true
+    }
     buildFeatures {
     }
 }
@@ -73,6 +75,10 @@ dependencies {
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -91,6 +97,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.3'
 
+    // materialDatePicker
+    implementation 'com.google.android.material:material:1.2.1'
 
     implementation "com.kakao.sdk:v2-all:2.14.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.14.0" // 카카오 로그인

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plan.Plan_workshop_plus_Activity">
+    tools:context=".Plan.Plan_workshop_edit_Activity">
+
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_plan_plus"
@@ -263,7 +265,6 @@
                     android:layout_marginTop="24dp"
                     android:background="@null"
                     android:hint="100,000,000"
-                    android:inputType="numberDecimal"
                     android:paddingVertical="10dp"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@+id/textView3"
@@ -366,17 +367,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <ImageButton
         android:id="@+id/bt_plan_plus_done"
         android:layout_width="285.54dp"
         android:layout_height="49.75dp"
-        android:background="@drawable/button_done01"
+        android:background="@drawable/plan_edit_button01"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

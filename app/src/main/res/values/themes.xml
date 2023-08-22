@@ -27,4 +27,10 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!--date_picker_style-->
+    <style name="AppThemeMaterial" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#2757FF</item>
+        <item name="colorPrimaryDark">#000000</item>
+    </style>
+
 </resources>

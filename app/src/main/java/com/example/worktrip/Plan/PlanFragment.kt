@@ -3,17 +3,11 @@ package com.example.worktrip.Plan
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.MainActivity
-import com.example.worktrip.R
+import com.example.worktrip.Plan.Adapter.Plan_tab_main_Adapter
 import com.example.worktrip.databinding.FragmentPlanBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

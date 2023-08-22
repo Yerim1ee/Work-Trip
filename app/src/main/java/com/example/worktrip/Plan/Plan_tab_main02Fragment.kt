@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.MainActivity
+import com.example.worktrip.Plan.Adapter.PlanWorkshopAdapter
 import com.example.worktrip.databinding.FragmentPlanTabMain02Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,27 +32,26 @@ class Plan_tab_main02Fragment : Fragment() {
         binding.rcvPlanMain2Recyclerview.layoutManager = LinearLayoutManager(context)
         binding.rcvPlanMain2Recyclerview.adapter= adapter
 
-        //             .whereEqualTo("userID",auth.uid.toString())
         db.collection("user_workshop")
+            .document("${auth.currentUser?.uid.toString()}")
+            .collection("workshop")
+            .whereEqualTo("now",false)
             .get()
             .addOnSuccessListener { result -> // 성공
                 itemList.clear()
                 for (document in result) {
                     val item = document.toObject(PlanWorkShopData::class.java)
-                    item.setuesrid(document.id) // 내부적으로 식별할 수 있는 게시물 식별자
+                    item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
                     itemList.add(item)
-
-                    Log.d("lee","가나다"+itemList.toString())
 
                     adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
 
                 }
 
-               }
+            }
             .addOnFailureListener { exception -> // 실패
                 Log.d("lee", "Error getting documents: ", exception)
             }
-
         return binding.root
     }
 

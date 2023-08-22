@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Plan.Plan_detail_timeline_Fragment">
+
+    <LinearLayout
+        android:id="@+id/ll_plan_detail_cal_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/bt_plan_detail_timeline_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/plan_detail_back" />
+
+        <TextView
+            android:id="@+id/tv_plan_detail_timeline_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="2023.12.23"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <ImageButton
+            android:id="@+id/bt_plan_detail_timeline_next"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/plan_detail_next" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_plan_detail_cal_pick">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_plan_detail_timeline_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="25dp"
+            android:gravity="center_horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/bt_plan_detail_timeline_plus"
+        android:layout_width="285.54dp"
+        android:layout_height="49.75dp"
+        android:background="@drawable/plan_detail_button01"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

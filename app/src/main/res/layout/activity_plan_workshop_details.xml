@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Plan.Plan_workshop_details_Activity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_plan_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_plan_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_plan_details_tabLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:tabMode="scrollable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_plan_detail_toolbar"
+        app:tabIndicatorColor="#2757FF"
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="#2757FF"
+        app:tabTextAppearance="@style/tabTextSizeBold"
+        app:tabTextColor="#BBBBBE"
+        app:tabIndicatorFullWidth="false"
+        app:tabRippleColor="@android:color/transparent"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_plan_details_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_plan_details_tabLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
