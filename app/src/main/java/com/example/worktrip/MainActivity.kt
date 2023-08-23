@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.worktrip.Community.fragment_community
 import com.example.worktrip.Home.HomeSearchActivity
 import com.example.worktrip.Home.fragment_home
 import com.example.worktrip.My.MyFragment
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { fragment_home() }
     private val planFragment by lazy { PlanFragment() }
-    private val communityFragment by lazy { fragment_home() }
+    private val communityFragment by lazy { fragment_community() }
     private val myFragment by lazy { MyFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
