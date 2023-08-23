@@ -49,6 +49,8 @@ class BookmarkActivity  : AppCompatActivity() {
         setContentView(view)
         //setContentView(R.layout.activity_bookmark)
 
+
+
         //toolbar 설정
         setSupportActionBar(findViewById(R.id.tb_activity_bookmark))
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀

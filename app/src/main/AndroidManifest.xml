@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Plan.Plan_detail_timeline_plus_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Plan.Plan_workshop_details_Activity"
             android:exported="false"
             android:label="@string/title_activity_plan_workshop_details" />

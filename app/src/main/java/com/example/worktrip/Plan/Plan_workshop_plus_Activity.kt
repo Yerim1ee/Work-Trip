@@ -75,8 +75,11 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
             } else {
                 val now: LocalDate = LocalDate.parse(endDate, formatter)
 
+                // 현재시간으로 게시물 ID 생성
+                val stringTime = formatter_time.format(System.currentTimeMillis())
+
                 var workshopdata = PlanWorkShopData(
-                    today.toString(),
+                    stringTime,
                     !(now.isBefore(todayDate)),
                     startDate,
                     endDate,
@@ -90,8 +93,6 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
                 val endDate_Local: LocalDate = LocalDate.parse(endDate, formatter)
                 var curDate_Local:LocalDate = starDate_Local
 
-                // 현재시간으로 게시물 ID 생성
-                val stringTime = formatter_time.format(System.currentTimeMillis())
 
                 // workshop 문서 생성
                 db.collection("user_workshop")

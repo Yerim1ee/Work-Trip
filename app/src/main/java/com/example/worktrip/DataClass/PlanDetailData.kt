@@ -16,10 +16,8 @@ data class PlanTimeLineData (
     @SerializedName ("plan_timeline_place") var plan_place : String? = null,
     @SerializedName ("plan_timeline_time_half") var plan_time_half : String? = null,
     @SerializedName ("plan_timeline_time") var plan_time : String? = null,
-    @SerializedName ("plan_timeline_date") var plan_date : String? = null,
     ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -35,7 +33,6 @@ data class PlanTimeLineData (
         parcel.writeString(plan_presenter)
         parcel.writeString(plan_place)
         parcel.writeString(plan_time)
-        parcel.writeString(plan_date)
     }
 
     override fun describeContents(): Int {

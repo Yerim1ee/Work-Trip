@@ -39,8 +39,7 @@ class Plan_detail_timeline_Fragment : Fragment() {
     val adapter = Plan_detail_timeline_Adapter(MainActivity(),itemList)
     lateinit var startdate:LocalDate
     lateinit var enddate:LocalDate
-    lateinit var period:Period
-
+    lateinit var workshop_docID: String
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,19 +50,22 @@ class Plan_detail_timeline_Fragment : Fragment() {
         binding.rcvPlanDetailTimelineRecyclerview.layoutManager = LinearLayoutManager(context)
         binding.rcvPlanDetailTimelineRecyclerview.adapter= adapter
 
+        // workshop 게시글 번호 받아오기
+        workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
+        //// 다른 루트에서 오지 않을 경우 받을 수 있는 방법 생각해서 defValue에 넣어두기
+
         binding.btPlanDetailTimelinePlus.setOnClickListener {
             val intent = Intent(activity, BookmarkActivity::class.java)
+            SocketApplication.prefs.setString("from_to_bookmark", "timeline") // 북마크에서 어디에서 오는지 식별하게 만들어주기 위한 값
+            SocketApplication.prefs.setString("now_timeline_date", binding.tvPlanDetailTimelineDate.text.toString()) //
             startActivity(intent)
         }
-
-        // workshop 게시글 번호 받아오기
-        var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
-        //// 다른 루트에서 오지 않을 경우 받을 수 있는 방법 생각해서 defValue에 넣어두기
 
 
         // 날짜 받는 형식 지정
         val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
 
+        // 초반 날짜 설정
         db.collection("user_workshop")
             .document("${auth.currentUser?.uid.toString()}")
             .collection("workshop")
@@ -73,15 +75,20 @@ class Plan_detail_timeline_Fragment : Fragment() {
                     result -> // 성공
                 val item = result.toObject(PlanWorkShopData::class.java)
                 if (item != null) {
+                    binding.tvPlanDetailTimelineDate.setText(item.tv_plan_date_start)
                     startdate = LocalDate.parse(item.tv_plan_date_start.toString(), formatter)
                     enddate = LocalDate.parse(item.tv_plan_date_end.toString(), formatter)
-                    binding.tvPlanDetailTimelineDate.setText(item.tv_plan_date_start.toString())
 
-
+                    // 초반 리스트 설정
+                    firestore_get()
                 }
 
             }
 
+
+
+
+        // 다음으로 날짜 눌렀을 때
         binding.btPlanDetailTimelineNext.setOnClickListener {
             // 현재 표기되어 있는 날짜 받아오기
             var currentdate =  LocalDate.parse(binding.tvPlanDetailTimelineDate.text, formatter)
@@ -89,32 +96,16 @@ class Plan_detail_timeline_Fragment : Fragment() {
 
             if(currentdate.plusDays(1).isAfter(enddate)){
                 binding.tvPlanDetailTimelineDate.setText(startdate.format(formatter))
+                firestore_get()
             }
             else{
                 currentdate = currentdate.plusDays(1)
                 binding.tvPlanDetailTimelineDate.setText(currentdate.format(formatter))
+                firestore_get()
             }
-            db.collection("user_workshop")
-                .document("${auth.currentUser?.uid.toString()}")
-                .collection("workshop")
-                .document(workshop_docID)
-                .collection("date")
-                .document(binding.tvPlanDetailTimelineDate.text.toString())
-                .collection("timeline")
-                .get()
-                .addOnSuccessListener { result -> // 성공
-                    itemList.clear()
-                    for (document in result) {
-                        val item = document.toObject(PlanTimeLineData::class.java)
-                        item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
-                        itemList.add(item)
 
-                        adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
-                    }
-                }
-                .addOnFailureListener { exception -> // 실패
-                    Log.d("lee", "Error getting documents: ", exception)
-                }
+
+
         }
 
         binding.btPlanDetailTimelineBack.setOnClickListener {
@@ -123,36 +114,47 @@ class Plan_detail_timeline_Fragment : Fragment() {
 
             if(currentdate.minusDays(1).isBefore(startdate) ){
                 binding.tvPlanDetailTimelineDate.setText(enddate.format(formatter))
+                firestore_get()
             }
             else{
                 currentdate = currentdate.minusDays(1)
                 binding.tvPlanDetailTimelineDate.setText(currentdate.format(formatter))
+                firestore_get()
             }
-            db.collection("user_workshop")
-                .document("${auth.currentUser?.uid.toString()}")
-                .collection("workshop")
-                .document(workshop_docID)
-                .collection("date")
-                .document(binding.tvPlanDetailTimelineDate.text.toString())
-                .collection("timeline")
-                .get()
-                .addOnSuccessListener { result -> // 성공
-                    itemList.clear()
-                    for (document in result) {
-                        val item = document.toObject(PlanTimeLineData::class.java)
-                        item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
-                        itemList.add(item)
 
-                        adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
-                    }
-                }
-                .addOnFailureListener { exception -> // 실패
-                    Log.d("lee", "Error getting documents: ", exception)
-                }
         }
 
 
 
         return binding.root
+    }
+
+    fun firestore_get(){
+
+        db.collection("user_workshop")
+            .document("${auth.currentUser?.uid.toString()}")
+            .collection("workshop")
+            .document(workshop_docID)
+            .collection("date")
+            .document(binding.tvPlanDetailTimelineDate.text.toString())
+            .collection("timeline")
+            .get()
+            .addOnSuccessListener { result -> // 성공
+
+                itemList.clear()
+
+                Log.d("aa",binding.tvPlanDetailTimelineDate.text.toString())
+
+                for (document in result) {
+                    val item = document.toObject(PlanTimeLineData::class.java)
+                    item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
+                    itemList.add(item)
+
+                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                }
+            }
+            .addOnFailureListener { exception -> // 실패
+                Log.d("lee", "Error getting documents: ", exception)
+            }
     }
 }

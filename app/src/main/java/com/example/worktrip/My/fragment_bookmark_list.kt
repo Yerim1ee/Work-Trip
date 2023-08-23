@@ -15,7 +15,9 @@ import com.example.worktrip.Home.DetailFoodActivity
 import com.example.worktrip.Home.DetailLodgingActivity
 import com.example.worktrip.Home.DetailProgramActivity
 import com.example.worktrip.NetworkThread_detailCommon2
+import com.example.worktrip.Plan.Plan_detail_timeline_plus_Activity
 import com.example.worktrip.R
+import com.example.worktrip.SocketApplication
 import com.example.worktrip.detail_contentOverview
 import com.google.firebase.auth.FirebaseAuth
 
@@ -78,32 +80,46 @@ class fragment_bookmark_list : Fragment() {
                     recyclerView_bookmark.adapter = adapter
 
 
-                    var intent = Intent()
 
                     adapter.setOnClickListener(object :
                         RecyclerAdapter_card_image_title_overview_location.ItemClickListener {
                         override fun onClick(view: View, position: Int) {
-                            //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+                            var intent = Intent()
 
-                            if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=25")) //여행 코스
-                            {
-                                intent = Intent(context, DetailCourseActivity::class.java)
-                            } else if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=32")) //숙소
-                            {
-                                intent = Intent(context, DetailLodgingActivity::class.java)
-                            } else if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=39")) //맛집
-                            {
-                                intent = Intent(context, DetailFoodActivity::class.java)
-                            } else if (list_card_image_title_overview_location[position].typeid.equals("program")) //프로그램
-                            {
-                                intent = Intent(context, DetailProgramActivity::class.java)
+                            var from = SocketApplication.prefs.getString("from_to_bookmark", "else")
+                            if (from == "timeline") {
+                                intent = Intent(context, Plan_detail_timeline_plus_Activity::class.java)
+                                intent.putExtra("title",list_card_image_title_overview_location[position].title)
+                                intent.putExtra("place",list_card_image_title_overview_location[position].location)
+                                startActivity(intent)
+
+                                // bookmark Activity 종료시키기
+
+                            } else {
+                                //Toast.makeText(applicationContext, "${position}번 리스트 선택", Toast.LENGTH_LONG).show()
+
+                                if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=25")) //여행 코스
+                                {
+                                    intent = Intent(context, DetailCourseActivity::class.java)
+                                } else if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=32")) //숙소
+                                {
+                                    intent = Intent(context, DetailLodgingActivity::class.java)
+                                } else if (list_card_image_title_overview_location[position].typeid.equals("&contentTypeId=39")) //맛집
+                                {
+                                    intent = Intent(context, DetailFoodActivity::class.java)
+                                } else if (list_card_image_title_overview_location[position].typeid.equals("program")) //프로그램
+                                {
+                                    intent = Intent(context, DetailProgramActivity::class.java)
+                                }
+
+
+                                intent.putExtra("contentTypeId", list_card_image_title_overview_location[position].typeid)
+                                intent.putExtra("contentId", list_card_image_title_overview_location[position].id)
+
+                                startActivity(intent)
                             }
 
 
-                            intent.putExtra("contentTypeId", list_card_image_title_overview_location[position].typeid)
-                            intent.putExtra("contentId", list_card_image_title_overview_location[position].id)
-
-                            startActivity(intent)
                         }
                     })
                 }

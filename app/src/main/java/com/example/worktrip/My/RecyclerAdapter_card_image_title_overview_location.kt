@@ -1,6 +1,7 @@
 package com.example.worktrip.My
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.worktrip.DataClass.PlanTimeLineData
+import com.example.worktrip.Plan.Plan_workshop_details_Activity
 import com.example.worktrip.R
+import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.CardImageTitleOverviewLocationBinding
 import com.example.worktrip.list_card_list
 import com.google.firebase.auth.FirebaseAuth
@@ -22,10 +26,13 @@ data class data_card_image_title_overview_location(
     var id: String,
     var typeid: String)
 
-class RecyclerAdapter_card_image_title_overview_location (private val items: ArrayList<data_card_image_title_overview_location>) : RecyclerView.Adapter<RecyclerAdapter_card_image_title_overview_location.ViewHolder>() {
+class RecyclerAdapter_card_image_title_overview_location (private val items: ArrayList<data_card_image_title_overview_location>)
+    : RecyclerView.Adapter<RecyclerAdapter_card_image_title_overview_location.ViewHolder>() {
     lateinit var mAuth: FirebaseAuth
     // 각 항목에 필요한 기능을 구현
     class ViewHolder(val binding: CardImageTitleOverviewLocationBinding) : RecyclerView.ViewHolder(binding.root)
+
+
 
     //아이템 개수
     override fun getItemCount(): Int = items.size
