@@ -75,7 +75,6 @@ class Plan_detail_timeline_Fragment : Fragment() {
                 if (item != null) {
                     startdate = LocalDate.parse(item.tv_plan_date_start.toString(), formatter)
                     enddate = LocalDate.parse(item.tv_plan_date_end.toString(), formatter)
-                    period = Period.between(startdate, enddate)
                     binding.tvPlanDetailTimelineDate.setText(item.tv_plan_date_start.toString())
 
 

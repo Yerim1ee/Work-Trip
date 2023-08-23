@@ -1,15 +1,17 @@
 package com.example.worktrip.Plan
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityPlanWorkshopEditBinding
+import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -18,20 +20,20 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
-class Plan_workshop_edit_Activity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityPlanWorkshopEditBinding
-    lateinit var db : FirebaseFirestore
+class Plan_workshop_plus_Activity : AppCompatActivity() {
+    private lateinit var binding: ActivityPlanWorkshopPlusBinding
+    lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    lateinit var startDate:String
-    lateinit var endDate:String
+    lateinit var startDate: String
+    lateinit var endDate: String
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityPlanWorkshopEditBinding.inflate(layoutInflater)
+        binding = ActivityPlanWorkshopPlusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
@@ -44,26 +46,15 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
         val todayDate_format = today.format(formatter) // 형식 지정
         val todayDate: LocalDate = LocalDate.parse(todayDate_format, formatter)
 
-        // 넘겼던 데이터 가져오기
-        val data = intent.getParcelableExtra<PlanWorkShopData>("data")
-
-        // date 초기화
-        startDate = data!!.tv_plan_date_start.toString()
-        endDate = data!!.tv_plan_date_end.toString()
-
-        // 데이터 기반 화면에 보여주기
-        binding.etPlanDate.setText(data.tv_plan_date_start.toString() + " ~ " + data.tv_plan_date_end.toString() )
-        binding.etPlanPeople.setText(data.tv_plan_people.toString())
-        binding.etPlanTitle.setText(data.tv_plan_title.toString())
-        binding.etPlanFilter.setText(data.tv_plan_filter.toString())
-        binding.etPlanBudget.setText(intent.getStringExtra("budget"))
+        // 게시글 ID 생성 위한 것
+        val formatter_time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_plan_plus))
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼
         val toolbarTitle = binding.tvPlanPlusTitle
-        toolbarTitle.text = "설정 변경"
+        toolbarTitle.text = "일정 추가"
 
         binding.ibPlanPlusDate.setOnClickListener {
             showDateRangePicker()
@@ -71,34 +62,21 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
 
 
         binding.btPlanPlusDone.setOnClickListener {
-            if( binding.etPlanBudget.text.toString().isEmpty()){
+            if (binding.etPlanBudget.text.toString().isEmpty()) {
                 Toast.makeText(this, "예산을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "1" )
-            }
-            else if( binding.etPlanDate.text.toString().isEmpty()){
+            } else if (binding.etPlanDate.text.toString().isEmpty()) {
                 Toast.makeText(this, "날짜를 선택해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "2")
-
-            }
-            else if( binding.etPlanPeople.text.toString().isEmpty() ){
+            } else if (binding.etPlanPeople.text.toString().isEmpty()) {
                 Toast.makeText(this, "참가 인원을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa","3")
-
-            }
-            else if( binding.etPlanTitle.text.toString().isEmpty()){
+            } else if (binding.etPlanTitle.text.toString().isEmpty()) {
                 Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "4")
-
-            }
-            else if( binding.etPlanFilter.text.toString().isEmpty()){
+            } else if (binding.etPlanFilter.text.toString().isEmpty()) {
                 Toast.makeText(this, "테마를 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "5")
-            }
-            else{
+            } else {
                 val now: LocalDate = LocalDate.parse(endDate, formatter)
 
                 var workshopdata = PlanWorkShopData(
-                    data.docID,
+                    today.toString(),
                     !(now.isBefore(todayDate)),
                     startDate,
                     endDate,
@@ -106,14 +84,39 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
                     binding.etPlanPeople.text.toString(),
                     binding.etPlanFilter.text.toString(),
                     binding.etPlanBudget.text.toString()
-
                 ) // 데이터 구조
 
+                val starDate_Local: LocalDate = LocalDate.parse(startDate, formatter)
+                val endDate_Local: LocalDate = LocalDate.parse(endDate, formatter)
+                var curDate_Local:LocalDate = starDate_Local
+
+                // 현재시간으로 게시물 ID 생성
+                val stringTime = formatter_time.format(System.currentTimeMillis())
+
+                // workshop 문서 생성
                 db.collection("user_workshop")
                     .document("${auth.currentUser?.uid.toString()}")
                     .collection("workshop")
-                    .document(data.docID.toString())
+                    .document(stringTime)
                     .set(workshopdata)
+                Log.d("aa",stringTime)
+
+                // date 맞춰서 날짜별 문서 생성
+                while(!(curDate_Local.isEqual(endDate_Local.plusDays(1)))){
+                    var workshopdata = PlanDetailDateData(curDate_Local.format(formatter))
+                    db.collection("user_workshop")
+                        .document("${auth.currentUser?.uid.toString()}")
+                        .collection("workshop")
+                        .document(stringTime)
+                        .collection("date")
+                        .document(curDate_Local.format(formatter))
+                        .set(workshopdata)
+                    Log.d("aa",stringTime)
+
+                    curDate_Local = curDate_Local.plusDays(1)
+                    Log.d("aa",curDate_Local.format(formatter))
+
+                }
 
                 finish()
             }
@@ -129,7 +132,7 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
     }
 
     // 기간을 선택하기 위한 datePicker
-    fun showDateRangePicker(){
+    fun showDateRangePicker() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         // 타이틀 정하는 코드
         val title = "워크숍 기간 설정"
@@ -137,7 +140,7 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
 
         val picker = builder.build()
         picker.show(supportFragmentManager, picker.toString())
-        picker.addOnNegativeButtonClickListener{ picker.dismiss() }
+        picker.addOnNegativeButtonClickListener { picker.dismiss() }
         picker.addOnPositiveButtonClickListener {
             startDate = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).format(it.first)
             endDate = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).format(it.second)
