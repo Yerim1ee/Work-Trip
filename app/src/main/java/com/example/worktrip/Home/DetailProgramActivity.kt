@@ -111,7 +111,7 @@ class DetailProgramActivity : AppCompatActivity() {
                         preparationTextView.text = programPreparation
                         tipTextView.text = programTip
 
-                        //파이어베이스
+                        //북마크를 위한
                         dbContentTypeID = "program"
                         dbContentTitle = programTitle
                         dbContentOverview = programOverview

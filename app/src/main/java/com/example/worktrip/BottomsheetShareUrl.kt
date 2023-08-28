@@ -38,10 +38,6 @@ class BottomsheetShareUrl : BottomSheetDialogFragment() {
         super.onActivityCreated(savedInstanceState)
         view?.findViewById<ImageButton>(R.id.ib_bottomsheet_share_url_url)?.setOnClickListener {
 
-            //북마크 보려고 아무렇게나 연결해놓음
-            val intent = Intent(context, BookmarkActivity::class.java)
-            startActivity(intent)
-
             //Toast.makeText(DetailCourseActivity(), onDynamicLinkClick(DetailCourseActivity()).toString(), Toast.LENGTH_LONG).show()
 
             /*Firebase.dynamicLinks

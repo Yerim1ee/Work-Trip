@@ -10,24 +10,65 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.Home.DetailCourseActivity
+import com.example.worktrip.Home.DetailFoodActivity
+import com.example.worktrip.Home.DetailLodgingActivity
+import com.example.worktrip.Home.DetailProgramActivity
 import com.example.worktrip.Home.HomeSearchActivity
 import com.example.worktrip.Home.ListRecommendedActivity
+import com.example.worktrip.Home.RecyclerAdapter_card_list
+import com.example.worktrip.Home.RecyclerAdapter_list_image_title_overview
+import com.example.worktrip.Home.data_list_image_title_overview
+import com.example.worktrip.My.RecyclerAdapter_card_image_title_overview_location
+import com.example.worktrip.My.bookmarkId
+import com.example.worktrip.My.bookmarkImg
+import com.example.worktrip.My.bookmarkLocation
+import com.example.worktrip.My.bookmarkOverview
+import com.example.worktrip.My.bookmarkTitle
+import com.example.worktrip.My.bookmarkTypeId
+import com.example.worktrip.My.data_card_image_title_overview_location
+import com.example.worktrip.My.firestore_bookmark_list
+import com.example.worktrip.My.list_card_image_title_overview_location
 import com.example.worktrip.NoticeActivity
+import com.example.worktrip.Plan.Plan_detail_timeline_plus_Activity
 import com.example.worktrip.R
+import com.example.worktrip.SocketApplication
+import com.example.worktrip.list_card_list
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.card_community.card_community
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_community.newInstance] factory method to
- * create an instance of this fragment.
- */
+val firestore_community= Firebase.firestore
+
+val list_card_community: ArrayList<data_card_community> = ArrayList()
+lateinit var recyclerView_community: RecyclerView
+
+var commuListImg1=""
+var commuListImg2=""
+var commuListImg3=""
+var commuListTitle=""
+var commuListContent=""
+var commuListDepature=""
+var commuListDestination=""
+var commuListDate=""
+var commuListCompany=""
+var commuListPeople=""
+var commuListPeriod=""
+var commuListGoal=""
+var commuListKeyword=""
+var commuListMoney=""
+//var commuListGood=0
+var commuListWritingID=""
+var commuListUserID=""
+
 class fragment_community : Fragment() {
-
+    private var adapter= RecyclerAdapter_card_community(list_card_community)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,9 +82,70 @@ class fragment_community : Fragment() {
         val view= inflater.inflate(R.layout.fragment_community, container, false)
 
         val plusWriting = view.findViewById<FloatingActionButton>(R.id.fb_fragment_community_write)
+        val writingCount = view.findViewById<TextView>(R.id.tv_fragment_community_count)
+
+        //게시글 불러오기
+        firestore_community.collection("community")
+            .get()
+            .addOnSuccessListener { task ->
+                for (document in task) {
+                    commuListImg1 = document.data["img1"].toString() //필드 데이터
+                    commuListImg2 = document.data["img2"].toString() //필드 데이터
+                    commuListImg3 = document.data["img3"].toString() //필드 데이터
+                    commuListTitle = document.data["title"].toString() //필드 데이터
+                    commuListContent = document.data["content"].toString() //필드 데이터
+                    commuListDepature = document.data["depature"].toString() //필드 데이터
+                    commuListDestination = document.data["destination"].toString() //필드 데이터
+                    commuListDate = document.data["date"].toString() //필드 데이터
+                    commuListCompany = document.data["company"].toString() //필드 데이터
+                    commuListPeople = document.data["people"].toString() //필드 데이터
+                    commuListPeriod = document.data["period"].toString() //필드 데이터
+                    commuListGoal = document.data["goal"].toString() //필드 데이터
+                    commuListKeyword = document.data["keyword"].toString() //필드 데이터
+                    commuListMoney = document.data["money"].toString() //필드 데이터
+                    //commuListGood = document.data["good"].toString() //필드 데이터
+                    commuListWritingID = document.data["writingID"].toString() //필드 데이터
+                    commuListUserID = document.data["userID"].toString() //필드 데이터
+
+
+                    list_card_community.add(
+                        data_card_community(commuListImg1, commuListImg2, commuListImg3, commuListTitle, commuListContent, commuListDepature, commuListDestination, commuListDate, commuListCompany, commuListPeople, commuListPeriod, commuListGoal, commuListKeyword, commuListMoney, commuListWritingID, commuListUserID)
+                    )
+                }
+
+                //샘플 데이터 삭제
+                list_card_community.removeFirst()
+
+                //총 게시글 수
+                writingCount.text= list_card_community.size.toString()
+
+                if (list_card_community.size == 0) {
+                    //Toast.makeText(context, "작성된 글이 없습니다.", Toast.LENGTH_LONG).show()
+                } else {
+                    //recycler view
+                    recyclerView_community=view.findViewById(R.id.rv_fragment_community!!)as RecyclerView
+                    recyclerView_community.layoutManager= LinearLayoutManager(requireContext())
+                    recyclerView_community.adapter= adapter
+
+
+
+                    adapter.setOnClickListener(object :
+                        RecyclerAdapter_card_community.ItemClickListener {
+                        override fun onClick(view: View, position: Int) {
+                            var intent = Intent()
+
+                            intent = Intent(context, DetailWritingActivity::class.java)
+                            intent.putExtra("writingID", list_card_community[position].writingid)
+
+                            startActivity(intent)
+
+                        }
+                    })
+                }
+            }
+
         plusWriting.setOnClickListener(object :View.OnClickListener {
             override fun onClick(v: View?) {
-
                 val intent = Intent(context, CommuPlusActivity::class.java)
                 //intent.putExtra("contentTypeId", contentTypeId)
                 //intent.putExtra("contentCat1", contentCat1)
@@ -83,5 +185,10 @@ class fragment_community : Fragment() {
             else -> return super.onOptionsItemSelected(item)
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        list_card_community.clear()
     }
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="locationItems">
+        <item>서울</item>
+        <item>인천</item>
+        <item>대전</item>
+        <item>대구</item>
+        <item>광주</item>
+        <item>부산</item>
+        <item>울산</item>
+        <item>세종특별자치시</item>
+        <item>경기도</item>
+        <item>강원특별자치도</item>
+    </string-array>
+
+    <string-array name="peopleItems">
+        <item>10명 이하</item>
+        <item>10~30명</item>
+        <item>30~50명</item>
+        <item>50명 이상</item>
+    </string-array>
+
+    <string-array name="periodItems">
+        <item>당일치기</item>
+        <item>1~2박</item>
+        <item>3~5박</item>
+        <item>5박 이상</item>
+    </string-array>
+
+    <string-array name="goalItems">
+        <item>워크숍</item>
+        <item>워케이션</item>
+        <item>단체 여행</item>
+        <item>MT</item>
+        <item>그 외</item>
+    </string-array>
+
+    <string-array name="keywordItems">
+        <item>자연/휴양</item>
+        <item>관광/체험</item>
+        <item>역사/건축</item>
+        <item>산업</item>
+        <item>그 외</item>
+    </string-array>
+
+    <string-array name="moneyItems">
+        <item>50만원 이하</item>
+        <item>50~100만원</item>
+        <item>100~300만원</item>
+        <item>300~500만원</item>
+        <item>500만원 이상</item>
+    </string-array>
+</resources>

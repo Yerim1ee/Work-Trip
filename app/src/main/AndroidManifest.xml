@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.DIAL_PHONE" /> <!-- kakao map -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 앨범 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 앨범 -->
+
 
     <application
         android:name=".SocketApplication"
@@ -116,7 +119,17 @@
             android:exported="false" />
         <activity
             android:name=".My.BookmarkActivity"
-            android:exported="false" /> <!-- kakaoMap -->
+            android:exported="false" />
+        <activity
+            android:name=".Community.CommuSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.CommuPlusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.DetailWritingActivity"
+            android:exported="false" />
+        <!-- kakaoMap -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="c31ebaa9db9fc1ca6c838a6e540e5fdf" />

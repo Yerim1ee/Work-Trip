@@ -3,39 +3,132 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_fragment_home"
+            android:id="@+id/tb_activity_commu_plus"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             tools:ignore="MissingConstraints">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_activity_commu_plus_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal">
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="후기글 작성"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:text="회사명 공개"
-                    android:textColor="@color/gray2"
-                    android:textSize="12sp" />
+            <CheckBox
+                android:id="@+id/cb_activity_commu_plus_company"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="회사명 공개"
+                android:textColor="@color/gray2"
+                android:textSize="12sp"
+                android:layout_gravity="right"/>
 
-                <CheckBox
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/icon_check"
-                    android:button="@null" />
-
-            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="16dp">
+
+        <TextView
+            android:id="@+id/tv_activity_commu_plus_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="subtitle"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_gray"
+            android:id="@+id/iv_activity_commu_plus_1"
+            android:layout_marginRight="12dp"/>
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_gray"
+            android:id="@+id/iv_activity_commu_plus_2" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_activity_commu_plus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:background="@color/gray9"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:gravity="center"
+        android:id="@+id/ll_activity_commu_plus_previous">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/gray5"
+        android:text="이전으로"
+        android:paddingTop="20dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"
+            android:background="@color/gray5"
+            android:layout_marginBottom="12dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="76dp"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btn_activity_commu_plus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/chips_keyword2"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
 </LinearLayout>

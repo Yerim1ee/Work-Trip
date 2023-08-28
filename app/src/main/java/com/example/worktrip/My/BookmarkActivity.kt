@@ -74,7 +74,6 @@ class BookmarkActivity  : AppCompatActivity() {
 
             override fun onPageSelected(position: Int){
                 super.onPageSelected(position)
-                Log.e("ViewPagerFragment", "Page ${position+1}")
             }
         })
         // 뷰페이저와 탭레이아웃을 붙임

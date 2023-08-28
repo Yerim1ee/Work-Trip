@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_marginTop="24dp">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_activity_bookmark_list"
+            android:id="@+id/rv_fragment_bookmark_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

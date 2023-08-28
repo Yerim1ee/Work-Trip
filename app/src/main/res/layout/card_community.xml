@@ -14,7 +14,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="fill_parent"
         android:layout_height="172dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="8dp"
         android:outlineProvider="none"
         android:background="@drawable/main_background"
 
@@ -33,11 +33,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:riv_corner_radius_top_left="16dp"
-                app:riv_corner_radius_top_right="16dp" />
+                app:riv_corner_radius_top_left="8dp"
+                app:riv_corner_radius_top_right="8dp" />
 
             <CheckBox
-                android:id="@+id/ib_card_community_bookmark"
+                android:id="@+id/cb_card_community_bookmark"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginHorizontal="2dp"
@@ -63,8 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_card_community_destination"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -72,10 +71,28 @@
                 android:background="@drawable/chips_keyword2"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="4dp"
-                android:text="출발-도착"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+                <TextView
+                    android:id="@+id/tv_card_community_departure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/tv_card_community_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  →  "
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/tv_card_community_destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="도착"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -106,8 +123,8 @@
         android:textColor="@color/black"
         android:maxLines="2"
         android:ellipsize="end"
-        android:id="@+id/tv_card_community_day"
-        android:text="ooooo"
+        android:id="@+id/tv_card_community_date"
+        android:text="날짜"
         />
 
     <TextView
@@ -124,7 +141,7 @@
         android:textSize="14sp"
         android:textColor="@color/black"
         android:id="@+id/tv_card_community_company"
-        android:text="ooooo"
+        android:text="회사"
         />
 </LinearLayout>
 
@@ -150,7 +167,7 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             android:id="@+id/tv_card_community_period"
-            android:text="dfdfdf"
+            android:text="기간"
             />
 
         <ImageView
@@ -165,8 +182,8 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:id="@+id/tv_card_community_filter"
-            android:text="dfdfdf"
+            android:id="@+id/tv_card_community_keyword"
+            android:text="키워드"
             />
 
         <ImageView
@@ -182,7 +199,7 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             android:id="@+id/tv_card_community_people"
-            android:text="dfdfdf"
+            android:text="사람"
             />
 
         <ImageView
@@ -198,7 +215,7 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             android:id="@+id/tv_card_community_good"
-            android:text="dfdfdf"
+            android:text="좋아요"
             />
 
     </LinearLayout>

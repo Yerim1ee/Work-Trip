@@ -11,7 +11,7 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_fragment_home"
+            android:id="@+id/tb_fragment_community"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             tools:ignore="MissingConstraints">
@@ -32,17 +32,50 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="24dp">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginHorizontal="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="@color/gray5"
+
+                        android:text="총 게시글: "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="@color/gray5"
+                        android:id="@+id/tv_fragment_community_count"
+
+                        android:text="-"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="@color/gray5"
+
+                        android:text="개"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_activity_bookmark_list"
+                    android:id="@+id/rv_fragment_community"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/card_community"
                     android:layout_gravity="center"
-                    android:orientation="vertical" />
+                    android:orientation="vertical"
+                    android:layout_marginBottom="24dp"/>
 
             </LinearLayout>
         </ScrollView>

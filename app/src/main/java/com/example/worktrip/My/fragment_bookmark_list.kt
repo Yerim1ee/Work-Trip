@@ -74,7 +74,7 @@ class fragment_bookmark_list : Fragment() {
                     Toast.makeText(context, "북마크에 저장된 정보가 없습니다.", Toast.LENGTH_LONG).show()
                 } else {
                     //recycler view
-                    recyclerView_bookmark = view.findViewById(R.id.rv_activity_bookmark_list!!) as RecyclerView
+                    recyclerView_bookmark = view.findViewById(R.id.rv_fragment_bookmark_list!!) as RecyclerView
                     recyclerView_bookmark.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     recyclerView_bookmark.adapter = adapter
