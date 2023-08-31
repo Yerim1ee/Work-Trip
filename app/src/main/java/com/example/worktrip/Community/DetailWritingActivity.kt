@@ -1,5 +1,6 @@
 package com.example.worktrip.Community
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
+import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailWritingBinding
@@ -18,29 +21,31 @@ import com.makeramen.roundedimageview.RoundedImageView
 
 private lateinit var binding: ActivityDetailWritingBinding
 
-private var dbWritingID = ""
-private var dbWritingTitle = ""
-private var dbWritingDepature = ""
-private var dbWritingDestination = ""
-private var dbWritingDate = ""
-private var dbWritingCompany = ""
-private var dbWritingImg1 = ""
-private var dbWritingImg2 = ""
-private var dbWritingImg3 = ""
+var dbWritingID = ""
+var dbWritingTitle = ""
+var dbWritingDepature = ""
+var dbWritingDestination = ""
+var dbWritingDate = ""
+var dbWritingCompany = ""
+var dbWritingImg1 = ""
+var dbWritingImg2 = ""
+var dbWritingImg3 = ""
 
-private var dbWritingPeriod = ""
-private var dbWritingKeyword = ""
-private var dbWritingPeople = ""
-private var dbWritingMoney = ""
+var dbWritingPeriod = ""
+var dbWritingKeyword = ""
+var dbWritingPeople = ""
+var dbWritingMoney = ""
 
-private var dbWritingContent = ""
+var dbWritingContent = ""
 
-private var dbWritingGoal = ""
+var dbWritingGoal = ""
+
+var dbWritingUserID = ""
 
 
 private var isSaved=false
-var good=1
-private var isGood=false
+//var good=1
+//private var isGood=false
 
 class DetailWritingActivity  : AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
@@ -224,6 +229,8 @@ class DetailWritingActivity  : AppCompatActivity() {
 
                         dbWritingGoal=writingGoal
 
+                        dbWritingUserID = document.data["userID"].toString() //필드 데이터
+
                         break
                     }
                 }
@@ -235,6 +242,7 @@ class DetailWritingActivity  : AppCompatActivity() {
         //툴바 메뉴 연결
         override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             menuInflater.inflate(R.menu.toolbar_bookmark_edit, menu)
+            //북마크
             firestore_bookmark_list.collection("user_bookmark")
                 .document("${mAuth.currentUser?.uid.toString()}").collection("community").get()
                 .addOnSuccessListener { task ->
@@ -259,6 +267,56 @@ class DetailWritingActivity  : AppCompatActivity() {
                     }
                 }
 
+            var isOwner=false
+            //수정 삭제 (visible)
+            firestore_community.collection("community")
+                .get()
+                .addOnSuccessListener { task ->
+                    for (document in task) {
+                        var userID=document.data["userID"].toString()
+                        var writingID=document.data["writingID"].toString()
+                        if (writingID.equals(dbWritingID) && userID.equals("${mAuth.currentUser?.uid.toString()}"))
+                        {
+                            isOwner=true
+                            break
+                        } else
+                        {
+                            isOwner=false
+                        }
+                    }
+                    if (menu != null) {
+                        var edit = menu.getItem(1)
+                        var delete = menu.getItem(2)
+
+                        if (edit != null && delete != null) {
+                        if(isOwner==true)
+                             {
+                                edit.setVisible(true)
+                                delete.setVisible(true)
+                            } else {
+                                edit.setVisible(false)
+                                delete.setVisible(false)
+                            }
+                        }
+                    }
+                }
+            /*if (menu != null) {
+                var edit = menu.getItem(1)
+                var delete = menu.getItem(2)
+
+                if (edit != null && delete != null) {
+                    if (dbWritingUserID.equals("${mAuth.currentUser?.uid.toString()}")) {
+
+                        edit.setVisible(true)
+                        delete.setVisible(true)
+
+                    } else {
+                        edit.setVisible(false)
+                        delete.setVisible(false)
+                    }
+                }
+
+            }*/
             return true
         }
 
@@ -268,6 +326,9 @@ class DetailWritingActivity  : AppCompatActivity() {
             when (item?.itemId) {
                 R.id.it_toolbar_be_bookmark -> {
                     //북마크 버튼 눌렀을 때
+                    val data_bookmark = hashMapOf(
+                        "userID" to "${mAuth.currentUser?.uid.toString()}"
+                    )
                     val data_bookmark_community = hashMapOf(
                         "writingID" to dbWritingID,
                         "date" to dbWritingDate,
@@ -284,7 +345,7 @@ class DetailWritingActivity  : AppCompatActivity() {
                         "img3" to dbWritingImg3,
                         "title" to dbWritingTitle,
                         "content" to dbWritingContent,
-                        "userID" to "${mAuth.currentUser?.uid.toString()}"
+                        "userID" to dbWritingUserID
                     )
 
                     if (isSaved == true) {
@@ -299,8 +360,11 @@ class DetailWritingActivity  : AppCompatActivity() {
 
                         //정보를 파이어베이스에 저장
                         firestore_bookmark_list.collection("user_bookmark")
+                            .document("${mAuth.currentUser?.uid.toString()}").set(data_bookmark)
+
+                        firestore_bookmark_list.collection("user_bookmark")
                             .document("${mAuth.currentUser?.uid.toString()}").collection("community")
-                            .document(writingID).set(data_bookmark_community)
+                            .document(dbWritingID).set(data_bookmark_community)
 
                         isSaved = true
                         Toast.makeText(
@@ -318,32 +382,65 @@ class DetailWritingActivity  : AppCompatActivity() {
                         //firestore_bookmark.collection("user_bookmark").document(/*유저 id*/).collection("list").document(dbContentId).delete()
                         deleteBookmark()
                     }
-
                     return super.onOptionsItemSelected(item)
+
                 }
 
                 R.id.it_toolbar_be_edit -> {
                     //수정하기 눌렀을 때
+                    var intent=Intent(this, CommuPlusActivity::class.java)
 
+                    intent.putExtra("editWriting", "editWriting")
+
+                    intent.putExtra("editWritingID", dbWritingID)
+                    intent.putExtra("editTitle", dbWritingTitle)
+                    intent.putExtra("editDepature", dbWritingDepature)
+                    intent.putExtra("editDestination", dbWritingDestination)
+                    intent.putExtra("editDate", dbWritingDate)
+                    intent.putExtra("editCompany", dbWritingCompany)
+                    intent.putExtra("editImg1", dbWritingImg1)
+                    intent.putExtra("editImg2", dbWritingImg2)
+                    intent.putExtra("editImg3", dbWritingImg3)
+                    intent.putExtra("editPeriod", dbWritingPeriod)
+                    intent.putExtra("editKeyword", dbWritingKeyword)
+                    intent.putExtra("editPeople", dbWritingPeople)
+                    intent.putExtra("editMoney", dbWritingMoney)
+                    intent.putExtra("editContent", dbWritingContent)
+                    intent.putExtra("editGoal", dbWritingGoal)
+
+                    startActivity(intent)
+
+                    return super.onOptionsItemSelected(item)
                 }
 
                 R.id.it_toolbar_be_delete -> {
                     //삭제하기 눌렀을 때
-
+                    val dialog=CustomDialogCommunity(this)
+                    dialog.showDialog()
+                    dialog.setOnClickListener(object: CustomDialogCommunity.onDialogClickListener
+                    {
+                        override fun onClicked(text: String) {
+                            finish()
+                        }
+                    })
+                    return super.onOptionsItemSelected(item)
                 }
 
                 R.id.it_toolbar_be_report -> {
                     //신고하기 눌렀을 때
-
+                    val bottomSheet = BottomsheetReport()
+                    bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+                    bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+                    return super.onOptionsItemSelected(item)
                 }
 
                 android.R.id.home -> {
                     finish()
                     return super.onOptionsItemSelected(item)
                 }
-            }
+                else -> return super.onOptionsItemSelected(item)
 
-            return super.onOptionsItemSelected(item)
+            }
 
         }
 

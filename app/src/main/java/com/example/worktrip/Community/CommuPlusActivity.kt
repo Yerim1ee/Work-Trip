@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.worktrip.Home.DetailFoodActivity
 import com.example.worktrip.My.TabAdapter_bookmark
 import com.example.worktrip.My.bookmarkImg
@@ -39,9 +40,30 @@ private lateinit var binding: ActivityCommuPlusBinding
 private lateinit var viewPager_plus: ViewPager2
 
 lateinit var cb_company: CheckBox
-private var cb_company_isChecked=""
+private var cb_company_isChecked="비공개"
 
-var writingID=""
+var editWriting=""
+
+var editWritingID=""
+
+var editTitle=""
+var editDepature=""
+var editDestination=""
+var editDate=""
+var editCompany=""
+var editImg1=""
+var editImg2=""
+var editImg3=""
+
+var editPeriod=""
+var editKeyword=""
+var editPeople =""
+var editMoney=""
+
+var editContent=""
+
+var editGoal=""
+
 class CommuPlusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +77,60 @@ class CommuPlusActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼
 
+        //글을 수정할 때
+        editWriting=intent.getStringExtra("editWriting").toString()
+
+        editWritingID=intent.getStringExtra("editWritingID").toString()
+        editDepature=intent.getStringExtra("editDepature").toString()
+        editDestination=intent.getStringExtra("editDestination").toString()
+        editDate=intent.getStringExtra("editDate").toString()
+        editCompany=intent.getStringExtra("editCompany").toString()
+        editImg1=intent.getStringExtra("editImg1").toString()
+        editImg2=intent.getStringExtra("editImg2").toString()
+        editImg3=intent.getStringExtra("editImg3").toString()
+
+        editPeriod=intent.getStringExtra("editPeriod").toString()
+        editKeyword=intent.getStringExtra("editKeyword").toString()
+        editPeople=intent.getStringExtra("editPeople").toString()
+
+        editTitle=intent.getStringExtra("editTitle").toString()
+        editMoney=intent.getStringExtra("editMoney").toString()
+        editContent=intent.getStringExtra("editContent").toString()
+        editGoal=intent.getStringExtra("editGoal").toString()
+
+
+        /*if (!(editWritingID.equals(null))||!(editWritingID.equals("null"))||!(editWritingID.equals("")))
+        {
+            /*firestore_community.collection("community").get()
+                .addOnSuccessListener { task ->
+                    for (document in task) {
+                        if (document.data["writingID"].toString().equals(editWritingID)) {
+                            //데이터
+                            editTitle = document.data["title"].toString() //필드 데이터
+                            editDepature = document.data["depature"].toString() //필드 데이터
+                            editDestination = document.data["destination"].toString() //필드 데이터
+                            editgDate = document.data["date"].toString() //필드 데이터
+                            editCompany = document.data["company"].toString() //필드 데이터
+                            editImg1 = document.data["img1"].toString() //필드 데이터
+                            editImg2 = document.data["img2"].toString() //필드 데이터
+                            editImg3 = document.data["img3"].toString() //필드 데이터
+
+                            editPeriod = document.data["period"].toString() //필드 데이터
+                            editKeyword = document.data["keyword"].toString() //필드 데이터
+                            editPeople = document.data["people"].toString() //필드 데이터
+                            editMoney = document.data["money"].toString() //필드 데이터
+
+                            editContent = document.data["content"].toString() //필드 데이터
+
+                            editGoal = document.data["goal"].toString() //필드 데이터
+
+                            break
+                        }}
+                }*/
+
+            findViewById<EditText>(R.id.et_fragment_plus_2_title).setText(editTitle)
+            findViewById<EditText>(R.id.et_fragment_plus_2_content).setText(editContent)
+        }*/
 
         val button=findViewById<Button>(R.id.btn_activity_commu_plus)
         val buttonPrevious=findViewById<LinearLayout>(R.id.ll_activity_commu_plus_previous)
@@ -62,6 +138,7 @@ class CommuPlusActivity : AppCompatActivity() {
         val c1=findViewById<ImageView>(R.id.iv_activity_commu_plus_1)
         val c2=findViewById<ImageView>(R.id.iv_activity_commu_plus_2)
         cb_company=findViewById(R.id.cb_activity_commu_plus_company)
+
 
         //뷰페이저
         viewPager_plus = findViewById<ViewPager2>(R.id.vp_activity_commu_plus)
@@ -71,6 +148,10 @@ class CommuPlusActivity : AppCompatActivity() {
         // fragment add
         viewPagerAdapter.addFragment(fragment_plus_1())
         viewPagerAdapter.addFragment(fragment_plus_2())
+        if (editWriting.equals("editWriting"))
+        {
+            cb_company.isChecked = !editCompany.equals("비공개")
+        }
 
         cb_company.setOnClickListener {
             if (cb_company.isChecked)
@@ -161,12 +242,16 @@ class CommuPlusActivity : AppCompatActivity() {
                                 }
 
                                 // 오늘 날짜 받아오기
-                                val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-                                val today = LocalDate.now()
-                                val todayDate_format = today.format(formatter) // 형식 지정
+                                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                //val today = LocalDate.now()
+                                val todayDate_format = formatter.format(System.currentTimeMillis()) // 형식 지정
 
+                                var writingID=firestore_community.collection("community").document().id
+                                if (editWriting.equals("editWriting"))
+                                {
+                                    writingID= editWritingID
+                                }
                                 //정보를 파이어베이스에 저장
-                                writingID=firestore_community.collection("community").document().id
                                 val data_community= hashMapOf(
                                     "writingID" to writingID,
                                     "date" to todayDate_format,
