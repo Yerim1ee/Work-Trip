@@ -23,6 +23,7 @@ import com.example.worktrip.databinding.FragmentPlanDetailNoticeBinding
 import com.example.worktrip.databinding.FragmentPlanDetailTimelineBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -35,10 +36,11 @@ class Plan_detail_timeline_Fragment : Fragment() {
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     val itemList = mutableListOf<PlanTimeLineData>()
-
     val adapter = Plan_detail_timeline_Adapter(MainActivity(),itemList)
+
     lateinit var startdate:LocalDate
     lateinit var enddate:LocalDate
+
     lateinit var workshop_docID: String
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -66,9 +68,7 @@ class Plan_detail_timeline_Fragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
 
         // 초반 날짜 설정
-        db.collection("user_workshop")
-            .document("${auth.currentUser?.uid.toString()}")
-            .collection("workshop")
+        db.collection("workshop")
             .document(workshop_docID)
             .get()
             .addOnSuccessListener {
@@ -131,27 +131,26 @@ class Plan_detail_timeline_Fragment : Fragment() {
 
     fun firestore_get(){
 
-        db.collection("user_workshop")
-            .document("${auth.currentUser?.uid.toString()}")
-            .collection("workshop")
+        db.collection("workshop")
             .document(workshop_docID)
             .collection("date")
             .document(binding.tvPlanDetailTimelineDate.text.toString())
             .collection("timeline")
+            .orderBy("plan_time_start", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result -> // 성공
 
                 itemList.clear()
 
-                Log.d("aa",binding.tvPlanDetailTimelineDate.text.toString())
-
                 for (document in result) {
                     val item = document.toObject(PlanTimeLineData::class.java)
                     item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
                     itemList.add(item)
-
                     adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+
                 }
+                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+
             }
             .addOnFailureListener { exception -> // 실패
                 Log.d("lee", "Error getting documents: ", exception)

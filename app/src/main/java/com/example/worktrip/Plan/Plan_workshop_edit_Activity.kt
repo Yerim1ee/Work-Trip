@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.worktrip.DataClass.PlanWorkShopData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityPlanWorkshopEditBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,6 +31,8 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
     lateinit var startDate:String
     lateinit var endDate:String
 
+    //DecimalFormat 객체 선언 실시 (소수점 표시 안함)
+    val t_dec_up = DecimalFormat("#,###")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityPlanWorkshopEditBinding.inflate(layoutInflater)
@@ -56,7 +60,10 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
         binding.etPlanPeople.setText(data.tv_plan_people.toString())
         binding.etPlanTitle.setText(data.tv_plan_title.toString())
         binding.etPlanFilter.setText(data.tv_plan_filter.toString())
-        binding.etPlanBudget.setText(intent.getStringExtra("budget"))
+
+        var budget = data.tv_plan_budget.toString()
+        var str_change_money_up = t_dec_up.parse(budget)
+        binding.etPlanBudget.setText(str_change_money_up.toString())
 
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_plan_plus))
@@ -71,30 +78,31 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
 
 
         binding.btPlanPlusDone.setOnClickListener {
+
+
             if( binding.etPlanBudget.text.toString().isEmpty()){
                 Toast.makeText(this, "예산을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "1" )
             }
             else if( binding.etPlanDate.text.toString().isEmpty()){
                 Toast.makeText(this, "날짜를 선택해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "2")
 
             }
             else if( binding.etPlanPeople.text.toString().isEmpty() ){
                 Toast.makeText(this, "참가 인원을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa","3")
 
             }
             else if( binding.etPlanTitle.text.toString().isEmpty()){
                 Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "4")
 
             }
             else if( binding.etPlanFilter.text.toString().isEmpty()){
                 Toast.makeText(this, "테마를 입력해주세요", Toast.LENGTH_LONG).show()
-                Log.d("aaa", "5")
             }
             else{
+                var budget = binding.etPlanBudget.text.toString().toInt()
+                var str_change_money_up = t_dec_up.format(budget)
+                binding.etPlanBudget.setText(str_change_money_up)
+
                 val now: LocalDate = LocalDate.parse(endDate, formatter)
 
                 var workshopdata = PlanWorkShopData(
@@ -109,11 +117,23 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
 
                 ) // 데이터 구조
 
-                db.collection("user_workshop")
-                    .document("${auth.currentUser?.uid.toString()}")
-                    .collection("workshop")
+                // workshop 문서 생성
+                db.collection("workshop")
                     .document(data.docID.toString())
                     .set(workshopdata)
+
+                var workshopuser_data = PlanWorkShopUserData(
+                    data.docID,
+                    startDate,
+                    "기획자"
+
+                )
+                // 자신의 id에 추가하기
+                db.collection("user_workshop")
+                    .document(auth.uid.toString())
+                    .collection("workshop_list")
+                    .document(data.docID.toString())
+                    .set(workshopuser_data)
 
                 finish()
             }

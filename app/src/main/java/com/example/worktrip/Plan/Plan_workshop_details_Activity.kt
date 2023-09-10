@@ -46,7 +46,6 @@ class Plan_workshop_details_Activity : AppCompatActivity() {
         toolbarTitle.text = intent.getStringExtra("title")
 
         SocketApplication.prefs.setString("now_workshop_id",intent.getStringExtra("docID").toString())
-        Log.d("aaa",intent.getStringExtra("docID").toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

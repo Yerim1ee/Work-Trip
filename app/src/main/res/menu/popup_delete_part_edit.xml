@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/delete"
+        android:title="삭제"/>
+
+    <item
+        android:id="@+id/edit_part"
+        android:title="권한 수정"/>
+</menu>

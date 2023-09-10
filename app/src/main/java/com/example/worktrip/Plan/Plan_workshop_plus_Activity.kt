@@ -1,14 +1,20 @@
 package com.example.worktrip.Plan
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanWorkShopData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityPlanWorkshopEditBinding
 import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
@@ -17,13 +23,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
-class Plan_workshop_plus_Activity : AppCompatActivity() {
+class Plan_workshop_plus_Activity : AppCompatActivity(){
     private lateinit var binding: ActivityPlanWorkshopPlusBinding
     lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -62,6 +69,10 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
 
 
         binding.btPlanPlusDone.setOnClickListener {
+            //DecimalFormat 객체 선언 실시 (소수점 표시 안함)
+            val t_dec_up = DecimalFormat("#,###")
+
+
             if (binding.etPlanBudget.text.toString().isEmpty()) {
                 Toast.makeText(this, "예산을 입력해주세요", Toast.LENGTH_LONG).show()
             } else if (binding.etPlanDate.text.toString().isEmpty()) {
@@ -73,10 +84,16 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
             } else if (binding.etPlanFilter.text.toString().isEmpty()) {
                 Toast.makeText(this, "테마를 입력해주세요", Toast.LENGTH_LONG).show()
             } else {
+
+                var budget = binding.etPlanBudget.text.toString().toInt()
+                var str_change_money_up = t_dec_up.format(budget)
+                binding.etPlanBudget.setText(str_change_money_up)
+
                 val now: LocalDate = LocalDate.parse(endDate, formatter)
 
                 // 현재시간으로 게시물 ID 생성
                 val stringTime = formatter_time.format(System.currentTimeMillis())
+
 
                 var workshopdata = PlanWorkShopData(
                     stringTime,
@@ -95,30 +112,60 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
 
 
                 // workshop 문서 생성
-                db.collection("user_workshop")
-                    .document("${auth.currentUser?.uid.toString()}")
-                    .collection("workshop")
-                    .document(stringTime)
+                db.collection("workshop")
+                    .document()
                     .set(workshopdata)
-                Log.d("aa",stringTime)
 
-                // date 맞춰서 날짜별 문서 생성
-                while(!(curDate_Local.isEqual(endDate_Local.plusDays(1)))){
-                    var workshopdata = PlanDetailDateData(curDate_Local.format(formatter))
-                    db.collection("user_workshop")
-                        .document("${auth.currentUser?.uid.toString()}")
-                        .collection("workshop")
-                        .document(stringTime)
-                        .collection("date")
-                        .document(curDate_Local.format(formatter))
-                        .set(workshopdata)
-                    Log.d("aa",stringTime)
 
-                    curDate_Local = curDate_Local.plusDays(1)
-                    Log.d("aa",curDate_Local.format(formatter))
 
-                }
+                // 날짜 추가 & document id 저장
+                db.collection("workshop")
+                    .get()
+                    .addOnSuccessListener {
+                        result->
+                        for (document in result) {
+                            val item = document.toObject(PlanWorkShopData::class.java)
 
+                            // date 맞춰서 날짜별 문서 생성
+                            if(item.docID.equals(stringTime)){
+                                while(!(curDate_Local.isEqual(endDate_Local.plusDays(1)))){
+
+                                    var workshopdata = PlanDetailDateData(curDate_Local.format(formatter))
+                                    db.collection("workshop")
+                                        .document(document.id)
+                                        .collection("date")
+                                        .document(curDate_Local.format(formatter))
+                                        .set(workshopdata)
+
+                                    curDate_Local = curDate_Local.plusDays(1)
+
+                                }
+
+
+
+                                db.collection("workshop")
+                                    .document(document.id)
+                                    .update("docID", document.id)
+
+
+                                var workshopuser_data = PlanWorkShopUserData(
+                                    document.id,
+                                    startDate,
+                                    "기획자"
+
+                                )
+                                // 자신의 id에 추가하기
+                                db.collection("user_workshop")
+                                    .document(auth.uid.toString())
+                                    .collection("workshop_list")
+                                    .document(document.id)
+                                    .set(workshopuser_data)
+
+                            }
+
+                        }
+
+                    }
                 finish()
             }
         }
@@ -148,6 +195,5 @@ class Plan_workshop_plus_Activity : AppCompatActivity() {
             binding.etPlanDate.setText("$startDate ~ $endDate")
         }
     }
-
 
 }

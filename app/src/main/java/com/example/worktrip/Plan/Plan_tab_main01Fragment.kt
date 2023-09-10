@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanWorkShopData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.Plan.Adapter.PlanWorkshopAdapter
 import com.example.worktrip.databinding.FragmentPlanTabMain02Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -45,9 +47,7 @@ class Plan_tab_main01Fragment : Fragment() {
         val todayDate: LocalDate = LocalDate.parse(todayDate_format, formatter)
 
         // 현재의 게시물인지 확인 후 속성 변경
-        db.collection("user_workshop")
-            .document("${auth.currentUser?.uid.toString()}")
-            .collection("workshop")
+        db.collection("workshop")
             .whereEqualTo("now",true)
             .get()
             .addOnSuccessListener { result -> // 성공
@@ -57,31 +57,41 @@ class Plan_tab_main01Fragment : Fragment() {
                     val endDate: LocalDate = LocalDate.parse(item.tv_plan_date_end.toString(), formatter)
 
                     if(endDate.isBefore(todayDate)){
-                        db.collection("user_workshop")
+                        db.collection("workshop")
                             .document("${auth.currentUser?.uid.toString()}")
                             .collection("now")
                             .document(document.id)
                             .update("now", false)
-
                     }
-
                 }}
 
 
-        // 데이터 정렬 후 내부 데이터로 넘기기
+        // 자신의 uid -> workshop-list 체크
         db.collection("user_workshop")
-            .document("${auth.currentUser?.uid.toString()}")
-            .collection("workshop")
-            .whereEqualTo("now",true)
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .orderBy("start_date", Query.Direction.ASCENDING)
             .get()
-            .addOnSuccessListener { result -> // 성공
+            .addOnSuccessListener { result ->
                 itemList.clear()
                 for (document in result) {
-                    val item = document.toObject(PlanWorkShopData::class.java)
-                    item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
-                    itemList.add(item)
+                    db.collection("workshop")
+                        .document(document.id)
+                        .get()
+                        .addOnSuccessListener {document_workshop->
+                            // 리사이클러 뷰 아이템 설정 및 추가
+                            val item = document_workshop.toObject(PlanWorkShopData::class.java)
+                            if (item != null) {
+                                if(item.now){
+                                    itemList.add(item)
+                                }
+                            }
+                                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                        }
+                        .addOnFailureListener { exception -> // 실패
+                            Log.d("lee", "Error getting documents: ", exception)
 
-                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                        }
                 }
             }
             .addOnFailureListener { exception -> // 실패
@@ -93,5 +103,6 @@ class Plan_tab_main01Fragment : Fragment() {
 
         return binding.root
     }
+
 
 }
