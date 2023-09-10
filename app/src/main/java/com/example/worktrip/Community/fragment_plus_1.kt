@@ -59,6 +59,13 @@ class fragment_plus_1 : Fragment() {
                 "세종특별자치시"->{spinner_depature.setSelection(7)}
                 "경기도"->{spinner_depature.setSelection(8)}
                 "강원특별자치도"->{spinner_depature.setSelection(9)}
+                "충청북도"->{spinner_depature.setSelection(10)}
+                "충청남도"->{spinner_depature.setSelection(11)}
+                "경상북도"->{spinner_depature.setSelection(12)}
+                "경상남도"->{spinner_depature.setSelection(13)}
+                "전라북도"->{spinner_depature.setSelection(14)}
+                "전라남도"->{spinner_depature.setSelection(15)}
+                "제주도"->{spinner_depature.setSelection(16)}
             }
         }
         spinner_depature.onItemSelectedListener=object : AdapterView.OnItemSelectedListener {
@@ -122,6 +129,41 @@ class fragment_plus_1 : Fragment() {
                         depature="강원특별자치도"
 
                     }
+                    10->{ //충청북도
+                        //Toast.makeText(applicationContext, "11", Toast.LENGTH_LONG).show()
+                        depature="충청북도"
+
+                    }
+                    11->{ //충청남도
+                        //Toast.makeText(applicationContext, "12", Toast.LENGTH_LONG).show()
+                        depature="충청남도"
+
+                    }
+                    12->{ //경상북도
+                        //Toast.makeText(applicationContext, "13", Toast.LENGTH_LONG).show()
+                        depature="경상북도"
+
+                    }
+                    13->{ //경상남도
+                        //Toast.makeText(applicationContext, "14", Toast.LENGTH_LONG).show()
+                        depature="경상남도"
+
+                    }
+                    14->{ //전라북도
+                        //Toast.makeText(applicationContext, "15", Toast.LENGTH_LONG).show()
+                        depature="전라북도"
+
+                    }
+                    15->{ //전라남도
+                        //Toast.makeText(applicationContext, "16", Toast.LENGTH_LONG).show()
+                        depature="전라남도"
+
+                    }
+                    16->{ //제주도
+                        //Toast.makeText(applicationContext, "17", Toast.LENGTH_LONG).show()
+                        depature="제주도"
+
+                    }
                 }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -145,6 +187,13 @@ class fragment_plus_1 : Fragment() {
                 "세종특별자치시"->{spinner_destination.setSelection(7)}
                 "경기도"->{spinner_destination.setSelection(8)}
                 "강원특별자치도"->{spinner_destination.setSelection(9)}
+                "충청북도"->{spinner_destination.setSelection(10)}
+                "충청남도"->{spinner_destination.setSelection(11)}
+                "경상북도"->{spinner_destination.setSelection(12)}
+                "경상남도"->{spinner_destination.setSelection(13)}
+                "전라북도"->{spinner_destination.setSelection(14)}
+                "전라남도"->{spinner_destination.setSelection(15)}
+                "제주도"->{spinner_destination.setSelection(16)}
             }
         }
         spinner_destination.onItemSelectedListener=object : AdapterView.OnItemSelectedListener {
@@ -206,6 +255,41 @@ class fragment_plus_1 : Fragment() {
                     9 -> { //강원특별자치도
                         //Toast.makeText(context, "9", Toast.LENGTH_LONG).show()
                         destination="강원특별자치도"
+
+                    }
+                    10->{ //충청북도
+                        //Toast.makeText(applicationContext, "11", Toast.LENGTH_LONG).show()
+                        destination="충청북도"
+
+                    }
+                    11->{ //충청남도
+                        //Toast.makeText(applicationContext, "12", Toast.LENGTH_LONG).show()
+                        destination="충청남도"
+
+                    }
+                    12->{ //경상북도
+                        //Toast.makeText(applicationContext, "13", Toast.LENGTH_LONG).show()
+                        destination="경상북도"
+
+                    }
+                    13->{ //경상남도
+                        //Toast.makeText(applicationContext, "14", Toast.LENGTH_LONG).show()
+                        destination="경상남도"
+
+                    }
+                    14->{ //전라북도
+                        //Toast.makeText(applicationContext, "15", Toast.LENGTH_LONG).show()
+                        destination="전라북도"
+
+                    }
+                    15->{ //전라남도
+                        //Toast.makeText(applicationContext, "16", Toast.LENGTH_LONG).show()
+                        destination="전라남도"
+
+                    }
+                    16->{ //제주도
+                        //Toast.makeText(applicationContext, "17", Toast.LENGTH_LONG).show()
+                        destination="제주도"
 
                     }
                 }

@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 앨범 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 앨범 -->
 
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
 
     <application
         android:name=".SocketApplication"
@@ -95,24 +98,180 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Home.DetailCourseActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--<data android:scheme="worktrip" android:host="detailcourse" />-->
+                <data android:scheme="@string/kakao_native_key" android:host="kakaolink" />
+            </intent-filter>
+            <intent-filter><!-- 앱 딥링크: 도메인 주소를 이용하여 URI Scheme의 단점을 보완한다. -->
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" android:host="www.worktrip.com" />
+            <data android:scheme="http"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="@string/kakao_native_key" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 커스텀 URL 스킴 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="kakaoc31ebaa9db9fc1ca6c838a6e540e5fdf" />
+                <!-- 끝 -->
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".Home.DetailLodgingActivity"
-            android:exported="false"
-            android:parentActivityName=".Home.ListRecommendedActivity" />
+            android:exported="true"
+            android:parentActivityName=".Home.ListRecommendedActivity" >
+            <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="worktrip" android:host="detaillodging" />
+            </intent-filter>
+            <intent-filter><!-- 앱 딥링크: 도메인 주소를 이용하여 URI Scheme의 단점을 보완한다. -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="www.worktrip.com" />
+                <data android:scheme="http"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="@string/kakao_native_key" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 커스텀 URL 스킴 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="kakaoc31ebaa9db9fc1ca6c838a6e540e5fdf" />
+                <!-- 끝 -->
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Home.DetailProgramActivity"
-            android:exported="false"
-            android:parentActivityName=".Home.ListProgramActivity" />
+            android:exported="true"
+            android:parentActivityName=".Home.ListProgramActivity" >
+            <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="worktrip" android:host="detailprogram" />
+            </intent-filter>
+            <intent-filter><!-- 앱 딥링크: 도메인 주소를 이용하여 URI Scheme의 단점을 보완한다. -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="www.worktrip.com" />
+                <data android:scheme="http"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="@string/kakao_native_key" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 커스텀 URL 스킴 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="kakaoc31ebaa9db9fc1ca6c838a6e540e5fdf" />
+                <!-- 끝 -->
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Home.DetailFoodActivity"
-            android:exported="false"
-            android:parentActivityName=".Home.ListRecommendedActivity" />
+            android:exported="true"
+            android:parentActivityName=".Home.ListRecommendedActivity" >
+            <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="worktrip" android:host="detailfood" />
+            </intent-filter>
+            <intent-filter><!-- 앱 딥링크: 도메인 주소를 이용하여 URI Scheme의 단점을 보완한다. -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="www.worktrip.com" />
+                <data android:scheme="http"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="@string/kakao_native_key" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 커스텀 URL 스킴 -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="kakaolink"
+                    android:scheme="kakaoc31ebaa9db9fc1ca6c838a6e540e5fdf" />
+                <!-- 끝 -->
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Home.DetailSightActivity"
             android:exported="false" />
         <activity
             android:name=".Home.HomeSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.HomeSearchListActivity"
             android:exported="false" />
         <activity
             android:name=".NoticeActivity"

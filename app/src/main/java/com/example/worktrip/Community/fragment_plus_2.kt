@@ -2,6 +2,7 @@ package com.example.worktrip.Community
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.worktrip.R
 import com.google.firebase.auth.FirebaseAuth
+import java.net.URI
 
 var commuTitle=""
 var commuContent=""
@@ -22,6 +24,8 @@ var commuContent=""
 var commuImage1=""
 var commuImage2=""
 var commuImage3=""
+
+//lateinit var commuImageUri1: Uri
 
 
 val GALLERY_CODE=101
@@ -146,6 +150,7 @@ class fragment_plus_2 : Fragment() {
                             if (isImage==1) {
                             image1.setImageURI(uri)
                             commuImage1 = uri.toString()
+                            //commuImageUri1=uri
 
                             nullImage1.visibility = View.GONE
                             nullText1.visibility = View.GONE

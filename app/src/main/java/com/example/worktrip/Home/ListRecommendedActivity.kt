@@ -81,6 +81,8 @@ class ListRecommendedActivity  : AppCompatActivity() {
         setContentView(view)
         //setContentView(R.layout.activity_list_recommended)
 
+        Toast.makeText(applicationContext, "목록을 불러오는 중입니다.", Toast.LENGTH_SHORT).show()
+
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_activity_list_recommended))
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
@@ -210,11 +212,39 @@ class ListRecommendedActivity  : AppCompatActivity() {
                         list_card_list.clear()
                     }
                     8->{ //경기도
-                        areaCode="&areaCode=9"
+                        areaCode="&areaCode=31"
                         list_card_list.clear()
                     }
                     9->{ //강원특별자치도
-                        areaCode="&areaCode=10"
+                        areaCode="&areaCode=32"
+                        list_card_list.clear()
+                    }
+                    10->{ //충청북도
+                        areaCode="&areaCode=33"
+                        list_card_list.clear()
+                    }
+                    11->{ //충청남도
+                        areaCode="&areaCode=34"
+                        list_card_list.clear()
+                    }
+                    12->{ //경상북도
+                        areaCode="&areaCode=35"
+                        list_card_list.clear()
+                    }
+                    13->{ //경상남도
+                        areaCode="&areaCode=36"
+                        list_card_list.clear()
+                    }
+                    14->{ //전라북도
+                        areaCode="&areaCode=37"
+                        list_card_list.clear()
+                    }
+                    15->{ //전라남도
+                        areaCode="&areaCode=38"
+                        list_card_list.clear()
+                    }
+                    16->{ //제주도
+                        areaCode="&areaCode=39"
                         list_card_list.clear()
                     }
                 }
@@ -281,6 +311,9 @@ class ListRecommendedActivity  : AppCompatActivity() {
                 //Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
                 intent = Intent(this, HomeSearchActivity::class.java)
                 intent.putExtra("searchCheck", searchCheck)
+
+                list_card_list.clear()
+
                 startActivity(intent)
                 return super.onOptionsItemSelected(item)
             }

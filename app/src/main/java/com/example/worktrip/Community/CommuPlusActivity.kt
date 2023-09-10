@@ -273,6 +273,22 @@ class CommuPlusActivity : AppCompatActivity() {
                                 firestore_community.collection("community").document(writingID)
                                     .set(data_community)
 
+                                /*// storage 인스턴스 생성--------------------------------------------
+                                val storage = Firebase.storage
+                                // storage 참조
+                                val storageRef = storage.getReference("image")
+                                // 파일 경로와 이름으로 참조 변수 생성
+                                val mountainsRef = storageRef.child("${writingID}.png")
+
+                                val uploadTask = mountainsRef.putFile(commuImageUri1)
+                                uploadTask.addOnSuccessListener { taskSnapshot ->
+                                    // 파일 업로드 성공
+                                    //Toast.makeText(this@CommuPlusActivity, "사진 업로드 성공", Toast.LENGTH_SHORT).show();
+                                }.addOnFailureListener {
+                                    // 파일 업로드 실패
+                                    //Toast.makeText(this@CommuPlusActivity, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+                                }
+                                //------------------------------------------------------------------*/
                                 val intent = Intent(this@CommuPlusActivity, DetailWritingActivity::class.java)
 
                                 intent.putExtra("writingID", writingID)

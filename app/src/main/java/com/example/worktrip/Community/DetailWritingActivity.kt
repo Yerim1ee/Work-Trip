@@ -317,6 +317,7 @@ class DetailWritingActivity  : AppCompatActivity() {
                 }
 
             }*/
+
             return true
         }
 
@@ -431,6 +432,7 @@ class DetailWritingActivity  : AppCompatActivity() {
                     val bottomSheet = BottomsheetReport()
                     bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
                     bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+
                     return super.onOptionsItemSelected(item)
                 }
 
