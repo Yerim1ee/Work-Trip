@@ -26,7 +26,7 @@ import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
-//*****스레드 클래스 안 for문이 작동하지 않으면 Log.d("??", url) 찍은 후 브라우저로 링크 이상 없는지 확인*****
+//*****스레드 클래스 안 for문이 작동하지 않으면 Log.d("??", url) 찍은 후 브라우저로 링크 이상 없는지 확인*****//
 
 //상세 정보
 var detail_contentTitle: String=""
@@ -34,8 +34,8 @@ var detail_contentLocation: String=""
 //lateinit var detail_bitmap: Bitmap
 var detail_imgURL: String=""
 
-var detail_locationX: String=""
-var detail_locationY: String=""
+var detail_locationX: String="0.0"
+var detail_locationY: String="0.0"
 
 var detail_contentCat1:String=""
 var detail_contentCat2:String=""
@@ -441,8 +441,7 @@ var detail_subcontentId=""
 
 
 //반복정보조회 (코스)
-class NetworkThread_detailInfo1(
-    var url: String): Runnable {
+class NetworkThread_detailInfo1(var url: String): Runnable {
 
     override fun run() {
 
@@ -488,6 +487,96 @@ class NetworkThread_detailInfo1(
             }
         } catch (e: Exception) {
             Log.d("TTT", "오픈API 에러: "+e.toString())
+        }
+    }
+}
+//val list_card_list: ArrayList<data_card_list> = ArrayList()
+
+//lateinit var list_contentTitle: String
+//lateinit var list_contentLocation: String
+//lateinit var list_contentId: String
+//lateinit var list_contentTypeId: String
+
+//키워드 검색 조회
+class NetworkThread_searchKeyword1(var url: String, var areaCode: String): Runnable {
+    override fun run() {
+
+        try {
+            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
+            xml.documentElement.normalize()
+
+            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
+            val list: NodeList = xml.getElementsByTagName("item")
+
+            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
+            for(i in 0..list.length-1){
+
+                val n: Node = list.item(i)
+
+                if(n.getNodeType() == Node.ELEMENT_NODE){
+                    val elem = n as Element
+                    val map = mutableMapOf<String,String>()
+
+
+                    for(j in 0..elem.attributes.length - 1) {
+                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
+                    }
+
+                    if (areaCode.equals("0"))
+                    {
+                        list_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
+
+                        /*var img : URLtoBitmapTask = URLtoBitmapTask()
+                        img = URLtoBitmapTask().apply {
+                            url = URL(imgURL)
+                        }
+                        list_bitmap = img.execute().get()*/
+
+                        //list_image=Glide.with(activity).load(imgURL).into(binding.ivCardListImg)
+
+                        list_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
+                        list_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
+                        list_contentId="${elem.getElementsByTagName("contentid").item(0).textContent}"
+                        list_contentTypeId="${elem.getElementsByTagName("contenttypeid").item(0).textContent}"
+
+                        if ((list_contentLocation).equals(""))
+                        {
+                            list_contentLocation="주소 정보 없음"
+                        }
+
+                        list_card_list.add(data_card_list(list_imgURL, list_contentTitle, list_contentLocation, list_contentId, list_contentTypeId))
+
+                    }
+                    else{
+                        if (areaCode.equals("${elem.getElementsByTagName("areacode").item(0).textContent}"))
+                        {
+                            list_imgURL="${elem.getElementsByTagName("firstimage").item(0).textContent}"
+
+                            /*var img : URLtoBitmapTask = URLtoBitmapTask()
+                            img = URLtoBitmapTask().apply {
+                                url = URL(imgURL)
+                            }
+                            list_bitmap = img.execute().get()*/
+
+                            //list_image=Glide.with(activity).load(imgURL).into(binding.ivCardListImg)
+
+                            list_contentTitle="${elem.getElementsByTagName("title").item(0).textContent}"
+                            list_contentLocation="${elem.getElementsByTagName("addr1").item(0).textContent}"
+                            list_contentId="${elem.getElementsByTagName("contentid").item(0).textContent}"
+                            list_contentTypeId="${elem.getElementsByTagName("contenttypeid").item(0).textContent}"
+
+                            if ((list_contentLocation).equals(""))
+                            {
+                                list_contentLocation="주소 정보 없음"
+                            }
+
+                            list_card_list.add(data_card_list(list_imgURL, list_contentTitle, list_contentLocation, list_contentId, list_contentTypeId))
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("TTT", "API 에러: "+e.toString())
         }
     }
 }

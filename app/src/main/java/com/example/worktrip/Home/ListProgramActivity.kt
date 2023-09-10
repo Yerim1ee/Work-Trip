@@ -33,12 +33,12 @@ private lateinit var recyclerView_list_people: RecyclerView
 private lateinit var categoryArray: List<String>
 private var searchCheck="program"
 
-private var programId=""
-private var programKeyword=""
-private var programTitle=""
-private var programImg=""
-private var programPeople=""
-private var programOverview=""
+var programId=""
+var programKeyword=""
+var programTitle=""
+var programImg=""
+var programPeople=""
+var programOverview=""
 
 
 class ListProgramActivity: AppCompatActivity() {
@@ -50,6 +50,7 @@ class ListProgramActivity: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         //setContentView(R.layout.activity_list_program)
+        Toast.makeText(applicationContext, "목록을 불러오는 중입니다.", Toast.LENGTH_SHORT).show()
 
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_activity_list_program))
@@ -143,6 +144,9 @@ class ListProgramActivity: AppCompatActivity() {
                 //Toast.makeText(applicationContext, "검색 실행", Toast.LENGTH_LONG).show()
                 intent = Intent(this, HomeSearchActivity::class.java)
                 intent.putExtra("searchCheck", searchCheck)
+
+                list_card_list_people.clear()
+
                 startActivity(intent)
                 return super.onOptionsItemSelected(item)
             }

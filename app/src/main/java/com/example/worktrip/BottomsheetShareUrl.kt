@@ -36,6 +36,12 @@ class BottomsheetShareUrl : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //스킴 딥링크
+        val uri = Uri.parse("worktrip://detailcourse") //scheme://host, contain key ex. "worktrip://detailcourse?contentID=2361026"
+        val i = Intent(Intent.ACTION_VIEW, uri)
+        i.setPackage("com.example.worktrip")
+        startActivity(i)
+
         view?.findViewById<ImageButton>(R.id.ib_bottomsheet_share_url_url)?.setOnClickListener {
 
             //Toast.makeText(DetailCourseActivity(), onDynamicLinkClick(DetailCourseActivity()).toString(), Toast.LENGTH_LONG).show()
@@ -55,11 +61,14 @@ class BottomsheetShareUrl : BottomSheetDialogFragment() {
                     // ...
                 }
                 .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }*/
+
+
+
         }
 
 
-
     }
+
     /*private fun getDeepLink(scheme: String, key: String?, id: String?): Uri {
         return if(key == null){
             Uri.parse("deep link url${scheme}")

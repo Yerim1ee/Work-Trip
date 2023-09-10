@@ -88,7 +88,9 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
         {
             viewHolder.binding.ivCardCommunityNull.visibility= View.GONE
         }
-
+        val data_bookmark = hashMapOf(
+            "userID" to "${mAuth.currentUser?.uid.toString()}"
+        )
         val data_bookmark_community= hashMapOf(
             "writingID" to dbWritingId,
             "date" to items[position].date,
@@ -135,6 +137,9 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
                 {
                     viewHolder.binding.cbCardCommunityBookmark.isChecked=true
                     //정보를 파이어베이스에 저장
+                    firestore_bookmark_list.collection("user_bookmark")
+                        .document("${mAuth.currentUser?.uid.toString()}").set(data_bookmark)
+
                     firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("community").document(dbWritingId).set(data_bookmark_community)
 
                     //직접 클릭할때만 토스트가 보이도록

@@ -150,7 +150,7 @@
                         android:layout_marginLeft="8dp"
                         android:textSize="12sp"
                         android:textColor="@color/black"
-                        android:text="+좋아요 수"
+                        android:text="+0"
                         android:id="@+id/tv_activity_detail_writing_good"/>
 
                     <View
