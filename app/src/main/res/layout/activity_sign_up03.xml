@@ -31,13 +31,15 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_name_check">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
@@ -48,10 +50,10 @@
                 android:layout_height="32dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:checked="true"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="한식"
-                android:onClick="onCheckboxClicked"
-                android:checked="true"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -62,9 +64,9 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="서양식"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -75,9 +77,9 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="중식"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -88,9 +90,9 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="일식"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -101,9 +103,9 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="이색음식점"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -114,9 +116,9 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
+                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="카페/전통찻집"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
@@ -140,13 +142,15 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
-        app:layout_constraintTop_toBottomOf="@+id/travel">
+        app:layout_constraintTop_toBottomOf="@+id/travel"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
@@ -262,10 +266,12 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
-        app:layout_constraintTop_toBottomOf="@+id/sleep">
+        app:layout_constraintTop_toBottomOf="@+id/sleep"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -409,13 +415,15 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
-        app:layout_constraintTop_toBottomOf="@+id/reports">
+        app:layout_constraintTop_toBottomOf="@+id/reports"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
@@ -502,13 +510,15 @@
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView4" />
 
     <HorizontalScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
-        app:layout_constraintTop_toBottomOf="@+id/course">
+        app:layout_constraintTop_toBottomOf="@+id/course"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
@@ -583,10 +593,16 @@
 
     <Button
         android:id="@+id/bt_singup3_next"
-        android:layout_width="285.54dp"
-        android:layout_height="49.75dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/chips_keyword2"
+        android:text="완료"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_marginTop="550dp"
-        android:background="@drawable/button_next_02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />

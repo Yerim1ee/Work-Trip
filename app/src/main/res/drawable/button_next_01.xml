@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="true"
-        android:drawable="@drawable/sign_up_next_usable"/>
+        android:drawable="@drawable/chips_keyword2"/>
+        <!--android:drawable="@drawable/sign_up_next_usable"-->
     <item android:state_enabled="false"
-        android:drawable="@drawable/sign_up_next_unusable"/>
+        android:drawable="@drawable/chips_keyword3"/>
+        <!--android:drawable="@drawable/sign_up_next_unusable"-->
 </selector>

@@ -52,7 +52,7 @@
                         android:textSize="18sp"
                         android:textColor="@color/black"
 
-                        android:text="-님,"/>
+                        android:text="user님,"/>
 
                     <TextView
                         android:layout_width="fill_parent"

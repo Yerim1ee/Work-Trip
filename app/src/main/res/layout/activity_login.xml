@@ -7,7 +7,7 @@
     tools:context=".SignUp.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,8 @@
 
         <View
             android:id="@+id/view"
-            android:layout_width="285dp"
+            android:layout_width="fill_parent"
+            android:layout_marginHorizontal="16dp"
             android:layout_height="1dp"
             android:layout_marginTop="80dp"
             android:background="#232324"
@@ -82,7 +83,8 @@
 
         <View
             android:id="@+id/view2"
-            android:layout_width="285dp"
+            android:layout_width="fill_parent"
+            android:layout_marginHorizontal="16dp"
             android:layout_height="1dp"
             android:layout_marginTop="65dp"
             android:background="#232324"
@@ -101,12 +103,19 @@
             app:layout_constraintTop_toTopOf="@+id/et_login_password" />
 
 
-        <ImageButton
+        <Button
             android:id="@id/ib_login_login"
-            android:layout_width="285.54dp"
-            android:layout_height="49.75dp"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/chips_keyword2"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_missing_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -115,7 +124,7 @@
             android:id="@+id/ib_login_kakaologin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/kakao_login_medium_narrow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
