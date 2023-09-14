@@ -50,6 +50,7 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
 
         // 넘겼던 데이터 가져오기
         val data = intent.getParcelableExtra<PlanWorkShopData>("data")
+        val budget_data = intent.getStringExtra("budget")
 
         // date 초기화
         startDate = data!!.tv_plan_date_start.toString()
@@ -61,8 +62,8 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
         binding.etPlanTitle.setText(data.tv_plan_title.toString())
         binding.etPlanFilter.setText(data.tv_plan_filter.toString())
 
-        var budget = data.tv_plan_budget.toString()
-        var str_change_money_up = t_dec_up.parse(budget)
+        Log.d("aaa",budget_data.toString() )
+        var str_change_money_up = t_dec_up.parse(budget_data.toString())
         binding.etPlanBudget.setText(str_change_money_up.toString())
 
         //toolbar 설정

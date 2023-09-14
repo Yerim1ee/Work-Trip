@@ -38,92 +38,87 @@
         app:layout_constraintStart_toStartOf="@+id/tv_signup_name_check"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_name_check">
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rg_plan_signup3_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema1"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
                 android:checked="true"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="한식"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema2"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="서양식"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema3"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="중식"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema4"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="일식"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema5"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="이색음식점"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/thema6"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/sign_up_check_style1"
                 android:button="@null"
-                android:onClick="onCheckboxClicked"
                 android:paddingHorizontal="10dp"
                 android:text="카페/전통찻집"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
 
-        </LinearLayout>
+        </RadioGroup>
     </HorizontalScrollView>
 
 
@@ -149,13 +144,14 @@
         app:layout_constraintTop_toBottomOf="@+id/travel"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rg_plan_signup3_travel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema1"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -163,12 +159,11 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="자연관광지"
-                android:onClick="onCheckboxClicked"
                 android:checked="true"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema2"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -177,11 +172,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="관광자원"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema3"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -190,11 +184,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="역사관광지"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema4"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -203,11 +196,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="체험관광지"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema5"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -216,11 +208,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="산업관광지"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema6"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -229,11 +220,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="휴양관광지"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_travel_thema7"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -242,12 +232,11 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="건축/조형물"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
 
-        </LinearLayout>
+        </RadioGroup>
     </HorizontalScrollView>
 
 
@@ -273,13 +262,14 @@
         app:layout_constraintTop_toBottomOf="@+id/sleep"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rg_plan_signup3_sleep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema1"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -288,11 +278,10 @@
                 android:checked="true"
                 android:paddingHorizontal="10dp"
                 android:text="한옥"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema2"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -301,11 +290,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="게스트하우스"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema3"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -314,11 +302,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="펜션"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema4"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -327,11 +314,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="관광호텔"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema5"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -340,11 +326,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="모텔"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema6"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -353,11 +338,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="유스호스텔"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema7"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -366,11 +350,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="민박"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_sleep_thema8"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -379,24 +362,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="콘도미디엄"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
-                android:id="@+id/cb_sleep_thema9"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/sign_up_check_style1"
-                android:button="@null"
-                android:paddingHorizontal="10dp"
-                android:text="유스호스텔"
-                android:onClick="onCheckboxClicked"
-                android:textAlignment="center"
-                android:textColor="@drawable/sign_up_textcolor1" />
-
-        </LinearLayout>
+        </RadioGroup>
     </HorizontalScrollView>
 
 
@@ -422,13 +391,14 @@
         app:layout_constraintTop_toBottomOf="@+id/reports"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rg_plan_signup3_reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_reports_thema1"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -437,11 +407,10 @@
                 android:checked="true"
                 android:paddingHorizontal="10dp"
                 android:text="선호X"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_reports_thema2"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -450,11 +419,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="육상레포츠"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_reports_thema3"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -463,11 +431,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="수상레포츠"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_reports_thema4"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -476,11 +443,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="복합레포츠"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_reports_thema5"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -489,11 +455,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="항공레포츠"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-        </LinearLayout>
+        </RadioGroup>
     </HorizontalScrollView>
 
     <TextView
@@ -517,13 +482,14 @@
         app:layout_constraintTop_toBottomOf="@+id/course"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rg_plan_signup3_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_course_thema1"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -531,12 +497,11 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="힐링 코스"
-                android:onClick="onCheckboxClicked"
                 android:checked="true"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_course_thema2"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -545,11 +510,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="도보 코스"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_course_thema3"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -558,11 +522,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="캠핑 코스"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_course_thema4"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -571,11 +534,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="맛 코스"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-            <CheckBox
+            <RadioButton
                 android:id="@+id/cb_course_thema5"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -584,11 +546,10 @@
                 android:button="@null"
                 android:paddingHorizontal="10dp"
                 android:text="가족 코스"
-                android:onClick="onCheckboxClicked"
                 android:textAlignment="center"
                 android:textColor="@drawable/sign_up_textcolor1" />
 
-        </LinearLayout>
+        </RadioGroup>
     </HorizontalScrollView>
 
     <Button

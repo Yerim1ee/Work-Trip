@@ -11,10 +11,9 @@ data class UserBaseData (
     var userName : String? = null,
     var date : String? = null,
     var company : String? = null,
-    var alarm : Boolean = false
-   // var food :BooleanArray = BooleanArray(6),
-   // var travel : BooleanArray = BooleanArray(7),
-  //  var sleep :BooleanArray = BooleanArray(9),
-   // var reports : BooleanArray = BooleanArray(5),
-   // var course : BooleanArray = BooleanArray(5)
+   var food : String? = null,
+   var travel : String? = null,
+  var sleep : String? = null,
+   var reports : String? = null,
+   var course : String? = null,
 ){}

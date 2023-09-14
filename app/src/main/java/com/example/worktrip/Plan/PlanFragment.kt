@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
@@ -46,30 +47,34 @@ class PlanFragment : Fragment() {
 
 
         binding.ibPlanPlus.setOnClickListener {
-            activity?.let{
-                /*
-                // Dialog만들기
-                val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog01, null)
-                val mBuilder = AlertDialog.Builder(this)
-                    .setView(mDialogView)
+            // Dialog만들기
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.custom_dialog04, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
 
-                val  mAlertDialog = mBuilder.show()
+            val  mAlertDialog = mBuilder.show()
 
-                val okButton = mDialogView.findViewById<ImageButton>(R.id.ib_dialog_done)
-                okButton.setOnClickListener {
-                    resetPassword(mDialogView.findViewById<EditText>(R.id.et_dialog_email).text.toString())
-                }
-
-                val noButton = mDialogView.findViewById<ImageButton>(R.id.ib_dialog_back)
-                noButton.setOnClickListener {
+            val okButton = mDialogView.findViewById<Button>(R.id.btn_dialog_new)
+            okButton.setOnClickListener {
+                activity?.let{
                     mAlertDialog.dismiss()
+                    val intent = Intent(context, Plan_workshop_plus_Activity::class.java)
+                    startActivity(intent)
                 }
 
-                 */
+            }
 
-                val intent = Intent(context, Plan_workshop_plus_Activity::class.java)
+            val noButton = mDialogView.findViewById<Button>(R.id.btn_dialog_enter)
+            noButton.setOnClickListener{
+            activity?.let{
+                mAlertDialog.dismiss()
+                val intent = Intent(context, Plan_workshop_plus2_Activity::class.java)
                 startActivity(intent)
             }
+
+            }
+
+
         }
         return binding.root
     }

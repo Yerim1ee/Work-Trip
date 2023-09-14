@@ -14,15 +14,19 @@ import androidx.constraintlayout.widget.StateSet.TAG
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanBudgetData
+import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
-import com.example.worktrip.DataClass.PlanWorkShopPeopleData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.Plan.Adapter.Plan_detail_budget_Adapter
 import com.example.worktrip.Plan.Adapter.Plan_detail_person_Adapter
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.FragmentPlanDetailPeopleBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
@@ -31,6 +35,7 @@ import com.kakao.sdk.template.model.TextTemplate
 class Plan_detail_people_Fragment : Fragment() {
 
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private lateinit var auth: FirebaseAuth
 
     // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
     lateinit var mainActivity: Plan_workshop_details_Activity
@@ -43,9 +48,9 @@ class Plan_detail_people_Fragment : Fragment() {
     }
 
     private lateinit var binding: FragmentPlanDetailPeopleBinding
-    lateinit var workshop_docID: String
+    lateinit var workshop_docID2: String
 
-    val itemList = mutableListOf<PlanWorkShopPeopleData>()
+    val itemList = mutableListOf<PlanWorkShopUserData>()
     val adapter = Plan_detail_person_Adapter(MainActivity(),itemList)
 
     override fun onCreateView(
@@ -53,17 +58,19 @@ class Plan_detail_people_Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlanDetailPeopleBinding.inflate(inflater, container, false)
-
         // 리사이클러뷰 연결
         binding.rcvPlanDetailPeopleRecyclerview.layoutManager = LinearLayoutManager(context)
         binding.rcvPlanDetailPeopleRecyclerview.adapter= adapter
 
+        auth = Firebase.auth // auth 정의
 
         // workshop 게시글 번호 받아오기
-        workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
+        workshop_docID2 = SocketApplication.prefs.getString("now_workshop_id", "")
         //// 다른 루트에서 오지 않을 경우 받을 수 있는 방법 생각해서 defValue에 넣어두기
 
-        binding.tvPlanPeopleCode.setText(workshop_docID)
+        firestore_get()
+
+        binding.tvPlanPeopleCode.setText(workshop_docID2)
 
 
         // 텍스트를 클립보드에 복사하기
@@ -119,9 +126,9 @@ class Plan_detail_people_Fragment : Fragment() {
 
     fun firestore_get_title(): String{
 
-         var title:String = ""
+        var title:String = ""
         db.collection("workshop")
-            .document(workshop_docID)
+            .document(workshop_docID2)
             .get()
             .addOnSuccessListener { result -> // 성공
                 val item = result.toObject(PlanWorkShopData::class.java)
@@ -135,7 +142,44 @@ class Plan_detail_people_Fragment : Fragment() {
         return title
     }
     fun firestore_get(){
+        itemList.clear()
+
+        Log.d("aaaa",workshop_docID2.toString())
+        db.collection("user_workshop")
+            .get()
+            .addOnSuccessListener { result -> // 성공
+                for(document in result){
+
+                    db.collection("user_workshop")
+                        .document(document.id)
+                        .collection("workshop_list")
+                        .whereEqualTo("workshop_docID", workshop_docID2)
+                        .get()
+                        .addOnSuccessListener {result ->
+
+                            for (document in result){
+                                val item = document.toObject(PlanWorkShopUserData::class.java)
+                                if (item != null) {
+                                    item.workshop_docID = document.id
+                                    itemList.add(item)
+                                }// 내부적으로 식별할 수 있는 게시물 식별자
+                            }
+                                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                            }
+                        .addOnFailureListener {
+                            Exception ->
+                            Log.d("aaaa", Exception.toString())
+
+                        }
+                }
+
+            }
+            .addOnFailureListener { exception -> // 실패
+                Log.d("lee", "Error getting documents: ", exception)
+            }
 
 
     }
+
+
 }

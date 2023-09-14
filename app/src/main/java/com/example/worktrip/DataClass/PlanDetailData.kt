@@ -140,39 +140,3 @@ data class PlanNoticeData (
     }
 }
 
-
-@Parcelize
-data class PlanWorkShopPeopleData(
-    @SerializedName ("person_uid") var person_uid: String? = null,
-    @SerializedName ("workshop_id") var workshop_id: String? = null,
-    @SerializedName ("part") var part: String? = null,
-
-    ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(person_uid)
-        parcel.writeString(workshop_id)
-        parcel.writeString(part)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<PlanWorkShopUserData> {
-        override fun createFromParcel(parcel: Parcel): PlanWorkShopUserData {
-            return PlanWorkShopUserData(parcel)
-        }
-
-        override fun newArray(size: Int): Array<PlanWorkShopUserData?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-}

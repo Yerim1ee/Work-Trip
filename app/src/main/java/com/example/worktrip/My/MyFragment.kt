@@ -1,24 +1,32 @@
 package com.example.worktrip.My
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.constraintlayout.widget.StateSet.TAG
 import androidx.fragment.app.Fragment
+import com.example.worktrip.DataClass.UserBaseData
+import com.example.worktrip.R
 import com.example.worktrip.SignUp.LoginActivity
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.FragmentMyBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 class MyFragment : Fragment() {
-    lateinit var mAuth:FirebaseAuth
-    lateinit var db : FirebaseFirestore
+     var mAuth:FirebaseAuth = Firebase.auth
+     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +35,15 @@ class MyFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentMyBinding.inflate(inflater, container, false)
 
-        binding.tvMyName.setText(SocketApplication.prefs.getString("user-name","익명"))
+        db.collection("user")
+            .document(mAuth.uid.toString())
+            .get()
+            .addOnSuccessListener { result -> // 성공
+                val item = result.toObject(UserBaseData::class.java)
+                if (item != null) {
+                    binding.tvMyName.setText(item.userName)
+                }
+            }
 
         mAuth =FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -41,12 +57,29 @@ class MyFragment : Fragment() {
         }
 
         binding.layoutMySignOut.setOnClickListener {
-            revokeAccess()
-            Toast.makeText(getActivity(), "탈퇴 되었습니다.", Toast.LENGTH_LONG).show()
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
+            // Dialog만들기
+            val mDialogView = LayoutInflater.from(activity).inflate(R.layout.custom_dialog3, null)
+            val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+
+            val  mAlertDialog = mBuilder.show()
+
+            val okButton = mDialogView.findViewById<Button>(R.id.btn_dialog_ok)
+            okButton.setOnClickListener {
+                revokeAccess()
+                Toast.makeText(getActivity(), "탈퇴 되었습니다.", Toast.LENGTH_LONG).show()
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+
+            }
+
+            val noButton = mDialogView.findViewById<Button>(R.id.btn_dialog_no)
+            noButton.setOnClickListener {
+                mAlertDialog.dismiss()
+            }
+
 
         }
+
 
         binding.layoutMyEditSave.setOnClickListener {
             val intent = Intent(activity, BookmarkActivity::class.java)

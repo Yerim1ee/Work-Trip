@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="권한을 변경하시겠습니까?"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/et_dialog_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:hint="기획자로 변경 시, 편집이 가능하며"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+        <TextView
+            android:id="@+id/et_dialog_email2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="참가자로 변경 시, 보는 것만 가능합니다."
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_dialog_email" />
+        <Button
+            android:id="@+id/btn_dialog_no_2"
+            android:layout_width="80.12dp"
+            android:layout_height="29.99dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/line_gray_8"
+            android:text="아니오"
+            android:textStyle="bold"
+            android:textColor="@color/gray5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_dialog_email" />
+
+
+        <Button
+            android:id="@+id/btn_dialog_ok_2"
+            android:layout_width="80.12dp"
+            android:layout_height="29.99dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="80dp"
+            android:background="@drawable/line_blue_8"
+            android:text="네"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_dialog_email" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

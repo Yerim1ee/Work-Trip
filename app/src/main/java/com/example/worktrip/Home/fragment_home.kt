@@ -17,12 +17,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.NetworkThread_list
 import com.example.worktrip.NoticeActivity
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.list_card_list
 import com.example.worktrip.list_contentId
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 private val key="599o%2FfnKg8hgR51clnKMjz0ZVncf2Gg%2FahikrqN3gDaUMlsAfyA80I%2BDNj40Q%2FKYQv66DOcIZ9OvOMg%2Fuq86IA%3D%3D"
@@ -43,7 +48,10 @@ private val arrange="&arrange=O"
 //관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
 private var contentTypeId=""
 
-class fragment_home : Fragment() {
+class fragment_home : Fragment(){
+     lateinit var mAuth: FirebaseAuth
+     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+
     //recyclerView
     val list_course: ArrayList<data_card_list> = ArrayList()
     private var adapter_course=RecyclerAdapter_card_image_title(list_course)
@@ -70,6 +78,8 @@ class fragment_home : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        mAuth = Firebase.auth // auth 정의
+
         //toolbar
         (activity as AppCompatActivity).setSupportActionBar(view.findViewById(R.id.tb_fragment_home))
         (activity as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
@@ -77,7 +87,16 @@ class fragment_home : Fragment() {
 
         //user-name
         var userName=view.findViewById<TextView>(R.id.tv_fragment_home_userName)
-        userName.setText(SocketApplication.prefs.getString("user-name","익명")+" 님,")
+
+        db.collection("user")
+            .document(mAuth.uid.toString())
+            .get()
+            .addOnSuccessListener { result -> // 성공
+                val item = result.toObject(UserBaseData::class.java)
+                if (item != null) {
+                    userName.setText(item.userName)
+                }
+            }
 
         /*//링크 테스트용...
         userName.setOnClickListener{

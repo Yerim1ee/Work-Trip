@@ -61,9 +61,13 @@ data class PlanWorkShopUserData(
     @SerializedName ("workshop_docID") var workshop_docID: String? = null,
     @SerializedName ("start_date") var start_date: String? = null,
     @SerializedName ("part") var part: String? = null,
+    @SerializedName ("uid") var uID: String? = null,
+    @SerializedName ("name") var name: String? = null,
 
     ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -74,6 +78,40 @@ data class PlanWorkShopUserData(
         parcel.writeString(workshop_docID)
         parcel.writeString(start_date)
         parcel.writeString(part)
+        parcel.writeString(uID)
+        parcel.writeString(name)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<PlanWorkShopUserData> {
+        override fun createFromParcel(parcel: Parcel): PlanWorkShopUserData {
+            return PlanWorkShopUserData(parcel)
+        }
+
+        override fun newArray(size: Int): Array<PlanWorkShopUserData?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+}
+
+
+
+@Parcelize
+data class uidData(
+    @SerializedName ("uid") var uID: String? = null,
+
+    ) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(uID)
     }
 
     override fun describeContents(): Int {

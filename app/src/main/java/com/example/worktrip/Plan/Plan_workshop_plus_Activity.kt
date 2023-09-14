@@ -15,8 +15,9 @@ import androidx.compose.ui.graphics.Color
 import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
+import com.example.worktrip.DataClass.UserBaseData
+import com.example.worktrip.DataClass.uidData
 import com.example.worktrip.R
-import com.example.worktrip.databinding.ActivityPlanWorkshopEditBinding
 import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +41,7 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlanWorkshopPlusBinding.inflate(layoutInflater)
+        binding = com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
@@ -147,19 +148,34 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
                                     .document(document.id)
                                     .update("docID", document.id)
 
-
-                                var workshopuser_data = PlanWorkShopUserData(
-                                    document.id,
-                                    startDate,
-                                    "기획자"
-
-                                )
-                                // 자신의 id에 추가하기
-                                db.collection("user_workshop")
+                                db.collection("user")
                                     .document(auth.uid.toString())
-                                    .collection("workshop_list")
-                                    .document(document.id)
-                                    .set(workshopuser_data)
+                                    .get()
+                                    .addOnSuccessListener { result -> // 성공
+                                        val item = result.toObject(UserBaseData::class.java)
+                                        if (item != null) {
+                                            var workshopuser_data = PlanWorkShopUserData(
+                                                document.id,
+                                                startDate,
+                                                "기획자",
+                                                auth.uid.toString(),
+                                                item.userName.toString()
+                                                )
+
+
+                                            // 자신의 id에 추가하기
+                                            db.collection("user_workshop")
+                                                .document(auth.uid.toString())
+                                                .collection("workshop_list")
+                                                .document(document.id)
+                                                .set(workshopuser_data)
+                                        }
+                                    }
+                                    .addOnFailureListener { exception -> // 실패
+                                        Log.d("lee", "Error getting documents: ", exception)
+                                    }
+
+
 
                             }
 

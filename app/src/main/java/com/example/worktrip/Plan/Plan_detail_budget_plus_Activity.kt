@@ -54,7 +54,6 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         auth = Firebase.auth // auth 정의
 
-
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_plan_detail_budget_plus))
         supportActionBar!!.setDisplayShowTitleEnabled(false) //타이틀
@@ -86,8 +85,8 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
                 R.id.rb_plan_budget_program ->
                     radio_button_category = "프로그램"
             }
-        }
 
+        }
         binding.btPlanBudgetPlusDone.setOnClickListener {
             //DecimalFormat 객체 선언 실시 (소수점 표시 안함)
             val t_dec_up = DecimalFormat("#,###")
