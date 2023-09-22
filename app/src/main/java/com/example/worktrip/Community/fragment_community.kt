@@ -23,7 +23,6 @@ import com.example.worktrip.Home.HomeSearchActivity
 import com.example.worktrip.Home.ListRecommendedActivity
 import com.example.worktrip.Home.RecyclerAdapter_card_list
 import com.example.worktrip.Home.RecyclerAdapter_list_image_title_overview
-import com.example.worktrip.Home.data_list_image_title_overview
 import com.example.worktrip.My.RecyclerAdapter_card_image_title_overview_location
 import com.example.worktrip.My.bookmarkId
 import com.example.worktrip.My.bookmarkImg

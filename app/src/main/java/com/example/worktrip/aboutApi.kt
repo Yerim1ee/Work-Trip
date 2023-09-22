@@ -59,7 +59,6 @@ class NetworkThread_detailCommon1(
 
             //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
             for(i in 0..list.length-1){
-
                 val n: Node = list.item(i)
 
                 if(n.getNodeType() == Node.ELEMENT_NODE){

@@ -12,8 +12,13 @@ import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.My.firestore_bookmark_list
+import com.example.worktrip.NetworkThread_categoryCode1
+import com.example.worktrip.NetworkThread_detailCommon1
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailSightBinding
+import com.example.worktrip.detail_contentCat1
+import com.example.worktrip.detail_contentCat2
+import com.example.worktrip.detail_contentCat3
 import com.example.worktrip.detail_contentKeyword
 import com.example.worktrip.detail_contentLocation
 import com.example.worktrip.detail_contentOverview
@@ -96,16 +101,58 @@ class DetailSightActivity : AppCompatActivity(){
         }
         else
         {
+            var getContentId = intent.getStringExtra("contentId")
+            var getContentKeyword = intent.getStringExtra("contentKeyword")
+
+            //키 값
+            var key = "599o%2FfnKg8hgR51clnKMjz0ZVncf2Gg%2FahikrqN3gDaUMlsAfyA80I%2BDNj40Q%2FKYQv66DOcIZ9OvOMg%2Fuq86IA%3D%3D"
+            //AND(안드로이드)
+            var mobileOS = "&MobileOS=AND"
+            //서비스명 = 어플명
+            var mobileApp = "&MobileApp=WorkTrip"
+            //type (xml/json)
+            var _type = "&_type=xml"
+            //content id (intent)
+            var contentId = "&contentId=" + getContentId
+            //관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
+            var contentTypeId = "&contentTypeId=12"
+            //기본정보조회여부( Y,N )
+            var defaultYN = "&defaultYN=Y"
+            //원본, 썸네일대표 이미지, 이미지 공공누리유형정보 조회여부( Y,N )
+            var firstImageYN = "&firstImageYN=Y"
+            //지역코드, 시군구코드조회여부( Y,N )
+            var areaCodeYN = "&areacodeYN=Y"
+            //대,중,소분류코드조회여부( Y,N )
+            var catCodeYN = "&catcodeYN=Y"
+            //	주소, 상세주소조회여부( Y,N )
+            var addinfoYN = "&addrinfoYN=Y"
+            //좌표X, Y 조회여부( Y,N )
+            var mapInfoYN = "&mapinfoYN=Y"
+            //콘텐츠개요조회여부( Y,N )
+            var overviewYN = "&overviewYN=Y"
+            //페이지번호
+            //var pageNo = "&pageNo=1"
+
+            //API 정보를 가지고 있는 주소
+            val url_detailCommon1 =
+                "https://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=" + key + mobileOS + mobileApp + _type + contentId + contentTypeId + defaultYN + firstImageYN + areaCodeYN + catCodeYN + addinfoYN + mapInfoYN + overviewYN //+ pageNo
+
+            //쓰레드 생성
+            val thread_detailCommon1 = Thread(NetworkThread_detailCommon1(url_detailCommon1))
+            thread_detailCommon1.start() // 쓰레드 시작
+            thread_detailCommon1.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+
             titleTextView.text = detail_contentTitle
             locationTextView.text = detail_contentLocation
             //imgImageView.setImageBitmap(detail_bitmap)
             Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
             if (!(detail_imgURL.equals("")))
             {
-                findViewById<ImageView>(R.id.iv_activity_detail_course_nullImage).visibility= View.GONE
+                findViewById<ImageView>(R.id.iv_activity_detail_sight_nullImage).visibility= View.GONE
             }
             overviewTextView.text = detail_contentOverview
-            keywordTextView.text= detail_contentKeyword
+            keywordTextView.text= getContentKeyword
 
             //kakaoMap
             val mapView = MapView(this)
@@ -155,7 +202,7 @@ class DetailSightActivity : AppCompatActivity(){
         {
             menuInflater.inflate(R.menu.toolbar_null, menu)
         }
-        else if (getSubcontent.equals("false"))
+        else /**/if (getSubcontent.equals("뺄까 그냥..."))
         {
             menuInflater.inflate(R.menu.toolbar_bookmark_share, menu)
 
@@ -195,7 +242,7 @@ class DetailSightActivity : AppCompatActivity(){
                 android.R.id.home -> finish()
             }
         }
-        else if (getSubcontent.equals("false"))
+        else
         {
             when (item?.itemId) {
                 R.id.it_toolbar_bs_bookmark -> {

@@ -7,13 +7,37 @@
     android:layout_height="match_parent"
     tools:context=".My.MyFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_fragment_home"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/sub_blue_2"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="128.45528455284554dp"
+            android:layout_height="20dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:background="@drawable/logo_typo"
+            />
+
+        <ImageView
+            android:id="@+id/ib_my_logout"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/my_logout"
+            android:backgroundTint="@color/main_blue"
+            android:layout_gravity="end" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tb_fragment_home">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,44 +45,25 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
 
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="match_parent"
-                    android:layout_height="311dp"
-                    android:background="@drawable/my_background"
+                    android:layout_height="268dp"
+                    android:background="@drawable/main_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_my_logo"
-                    android:layout_width="101dp"
-                    android:layout_height="15.54dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="45dp"
-                    android:background="@drawable/white_logo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/ib_my_logout"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/my_logout"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_my_logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_my_logo" />
 
                 <ImageView
                     android:id="@+id/iv_my_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/base_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +73,7 @@
                     android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="name 님"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_blue"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/iv_my_image"
@@ -91,7 +96,8 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/my_edit" />
+                        android:background="@drawable/my_edit"
+                        android:backgroundTint="@color/gray5"/>
                 </LinearLayout>
 
                 <TextView
@@ -100,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="# user_personal # user_personal # user_personal"
-                    android:textColor="#D4D4D9"
+                    android:textColor="@color/gray5"
                     android:textSize="11sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,13 +115,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_my_content">
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -137,12 +143,11 @@
                             android:text="친구"
                             android:textColor="@color/white"
                             android:textSize="11sp" />
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -151,7 +156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/white"
+                            android:textColor="@color/main_blue"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -159,15 +164,15 @@
                             android:id="@+id/tv_my_workshop_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="워크샵"
-                            android:textColor="@color/white"
+                            android:text="일정"
+                            android:textColor="@color/main_blue"
                             android:textSize="11sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="120dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -176,7 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/white"
+                            android:textColor="@color/main_blue"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -185,17 +190,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="작성글"
-                            android:textColor="@color/white"
+                            android:textColor="@color/main_blue"
                             android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="330dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
-                    android:orientation="vertical"
                     android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
