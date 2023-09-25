@@ -109,23 +109,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageButton
+            <Button
                 android:id="@+id/ib_plan_btn1"
-                android:layout_width="151.03dp"
-                android:layout_height="43.82dp"
-                android:background="@drawable/plan_item_button_1" />
+                android:layout_width="152dp"
+                android:layout_height="44dp"
+                android:background="@drawable/plan_item_button"
+                android:text="팀원 통계 확인"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14dp"/>
 
-            <ImageButton
+            <Button
                 android:id="@+id/ib_plan_btn2"
-                android:layout_width="151.03dp"
-                android:layout_height="43.82dp"
+                android:layout_width="152dp"
+                android:layout_height="44dp"
                 android:layout_marginLeft="4dp"
-                android:background="@drawable/plan_item_button_2" />
+                android:background="@drawable/plan_item_button"
+                android:text="설정 변경하기"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14dp"/>
         </LinearLayout>
 
 

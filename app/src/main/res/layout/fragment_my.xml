@@ -8,7 +8,7 @@
     tools:context=".My.MyFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_fragment_home"
+        android:id="@+id/tb_fragment_my"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/sub_blue_2"

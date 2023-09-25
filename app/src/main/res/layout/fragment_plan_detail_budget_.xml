@@ -191,13 +191,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-
-    <ImageButton
+    <Button
         android:id="@+id/bt_plan_detail_budget_plus"
-        android:layout_width="285.54dp"
-        android:layout_height="49.75dp"
-        android:background="@drawable/plan_budget_plus_button"
         android:layout_marginBottom="30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/chips_keyword2"
+        android:text="비용 추가하기"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

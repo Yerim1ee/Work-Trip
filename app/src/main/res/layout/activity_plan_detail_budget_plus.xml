@@ -133,8 +133,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:hint="수량"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -225,8 +223,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:hint="세부 내용"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
