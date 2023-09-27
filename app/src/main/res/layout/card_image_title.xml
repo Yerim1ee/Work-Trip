@@ -67,5 +67,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:id="@+id/tv_card_image_title_title"
+        android:ellipsize="end"
+        android:maxLines="1"
         />
 </LinearLayout>
