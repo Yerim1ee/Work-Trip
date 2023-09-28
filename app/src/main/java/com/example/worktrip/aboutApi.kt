@@ -101,7 +101,7 @@ class NetworkThread_detailCommon1(
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //Log.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -138,7 +138,7 @@ class NetworkThread_detailCommon2(
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -208,7 +208,7 @@ class NetworkThread_list(var url: String): Runnable { //, var activity: Activity
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "API 에러: "+e.toString())
+            //Log.d("TTT", "API 에러: "+e.toString())
         }
     }
 
@@ -247,7 +247,7 @@ class NetworkThread_categoryCode1(
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //Log.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -322,7 +322,7 @@ class NetworkThread_detailIntroFood(
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //Log.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -424,7 +424,7 @@ class NetworkThread_detailIntroLodging(
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //Log.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -485,7 +485,7 @@ class NetworkThread_detailInfo1(var url: String): Runnable {
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "오픈API 에러: "+e.toString())
+            //.d("TTT", "오픈API 에러: "+e.toString())
         }
     }
 }
@@ -575,7 +575,7 @@ class NetworkThread_searchKeyword1(var url: String, var areaCode: String): Runna
                 }
             }
         } catch (e: Exception) {
-            Log.d("TTT", "API 에러: "+e.toString())
+            //Log.d("TTT", "API 에러: "+e.toString())
         }
     }
 }

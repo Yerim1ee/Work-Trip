@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -251,7 +250,6 @@ class ListRecommendedActivity  : AppCompatActivity() {
 
                 //API 정보를 가지고 있는 주소
                 url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + key + numOfRows + mobileOS + mobileApp + _type + listYN + arrange + contentTypeId + areaCode
-                //println(url_list)
 
                 //쓰레드 생성
                 val thread = Thread(NetworkThread_list(url_list))
