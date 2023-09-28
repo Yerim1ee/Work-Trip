@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.media.Image
 import android.os.AsyncTask
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -26,7 +25,7 @@ import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
-//*****스레드 클래스 안 for문이 작동하지 않으면 Log.d("??", url) 찍은 후 브라우저로 링크 이상 없는지 확인*****//
+//*****스레드 클래스 안 for문이 작동하지 않으면 로그로 url 찍은 후 브라우저로 링크 이상 없는지 확인*****//
 
 //상세 정보
 var detail_contentTitle: String=""
@@ -101,7 +100,7 @@ class NetworkThread_detailCommon1(
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "오픈API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }
@@ -138,7 +137,7 @@ class NetworkThread_detailCommon2(
                 }
             }
         } catch (e: Exception) {
-            //.d("TTT", "오픈API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }
@@ -208,7 +207,7 @@ class NetworkThread_list(var url: String): Runnable { //, var activity: Activity
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 
@@ -247,7 +246,7 @@ class NetworkThread_categoryCode1(
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "오픈API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }
@@ -322,7 +321,7 @@ class NetworkThread_detailIntroFood(
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "오픈API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }
@@ -424,7 +423,7 @@ class NetworkThread_detailIntroLodging(
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "오픈API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }
@@ -575,7 +574,7 @@ class NetworkThread_searchKeyword1(var url: String, var areaCode: String): Runna
                 }
             }
         } catch (e: Exception) {
-            //Log.d("TTT", "API 에러: "+e.toString())
+            //"오픈API 에러: "+e.toString()
         }
     }
 }

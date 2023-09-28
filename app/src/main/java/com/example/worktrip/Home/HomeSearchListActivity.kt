@@ -356,11 +356,11 @@ class HomeSearchListActivity : AppCompatActivity() {
 
 private fun encodingKOR(str_data: String) {
     var str_encode = URLEncoder.encode(str_data, "UTF-8")
-    //println("인코딩 : "+str_encode)
+    //인코딩 : str_encode
 
     //url 디코딩 수행 실시
     //var str_decode = URLDecoder.decode(str_encode, "UTF-8")
-    //println("디코딩 : "+str_decode)
+    //디코딩 : +str_decode
 
     getHomeSearchText=str_encode
 }
