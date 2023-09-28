@@ -104,6 +104,7 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
                 var str_change_money_up = t_dec_up.format(budget)
                 binding.etPlanBudget.setText(str_change_money_up)
 
+
                 val now: LocalDate = LocalDate.parse(endDate, formatter)
 
                 var workshopdata = PlanWorkShopData(

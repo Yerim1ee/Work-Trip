@@ -39,6 +39,18 @@ class Plan_tab_main01Fragment : Fragment() {
         binding.rcvPlanMain2Recyclerview.layoutManager = LinearLayoutManager(context)
         binding.rcvPlanMain2Recyclerview.adapter= adapter
 
+
+
+
+
+
+        return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+
         // 오늘 날짜 받아오기
         // 게시글 now, past 분류하기 위해 받아옴
         val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
@@ -58,13 +70,10 @@ class Plan_tab_main01Fragment : Fragment() {
 
                     if(endDate.isBefore(todayDate)){
                         db.collection("workshop")
-                            .document("${auth.currentUser?.uid.toString()}")
-                            .collection("now")
                             .document(document.id)
                             .update("now", false)
                     }
                 }}
-
 
         // 자신의 uid -> workshop-list 체크
         db.collection("user_workshop")
@@ -86,7 +95,7 @@ class Plan_tab_main01Fragment : Fragment() {
                                     itemList.add(item)
                                 }
                             }
-                                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                            adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
                         }
                         .addOnFailureListener { exception -> // 실패
                             Log.d("lee", "Error getting documents: ", exception)
@@ -98,10 +107,6 @@ class Plan_tab_main01Fragment : Fragment() {
                 Log.d("lee", "Error getting documents: ", exception)
             }
 
-
-
-
-        return binding.root
     }
 
 

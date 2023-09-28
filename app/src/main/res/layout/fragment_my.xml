@@ -91,13 +91,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/iv_my_image"
                         tools:layout_editor_absoluteX="181dp" />
 
-                    <ImageButton
-                        android:id="@+id/ib_my_profile_edit"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/my_edit"
-                        android:backgroundTint="@color/gray5"/>
                 </LinearLayout>
 
                 <TextView
@@ -208,35 +201,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView6">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_my_alarm"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp">
-
-                        <TextView
-                            android:id="@+id/tv_my_alarm_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="알림"
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <Switch
-                            android:id="@+id/st_my_alarm_switch"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_my_edit_information"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="20dp">
+                        android:layout_height="40dp">
 
                         <TextView
                             android:id="@+id/tv_my_edit_information_text"
@@ -370,33 +337,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_my_app_information"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="20dp">
-
-                        <TextView
-                            android:id="@+id/tv_my_app_information"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="앱 정보"
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/st_my_app_information"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="@drawable/my_next_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_my_Sign_out"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -422,7 +362,33 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_my_system_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="50dp">
 
+                        <TextView
+                            android:id="@+id/tv_my_system_information"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="이용약관"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/st_my_system_information"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/my_next_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

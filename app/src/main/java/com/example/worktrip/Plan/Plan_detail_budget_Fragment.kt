@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanBudgetData
 import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.My.BookmarkActivity
 import com.example.worktrip.Plan.Adapter.Plan_detail_budget_Adapter
@@ -25,8 +26,10 @@ import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.BudgetEditDialogBinding
 import com.example.worktrip.databinding.FragmentPlanDetailBudgetBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
 import java.time.LocalDate
 
@@ -34,6 +37,7 @@ class Plan_detail_budget_Fragment : Fragment() {
     private lateinit var binding: FragmentPlanDetailBudgetBinding
 
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    var auth: FirebaseAuth = Firebase.auth
 
     val t_dec_up = DecimalFormat("#,###")
     val itemList = mutableListOf<PlanBudgetData>()
@@ -61,6 +65,35 @@ class Plan_detail_budget_Fragment : Fragment() {
             startActivity(intent)
         }
 
+
+
+        db.collection("user_workshop")
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .document(workshop_docID)
+            .get()
+            .addOnSuccessListener {
+                    result -> // 성공
+                val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                if (item_result != null) {
+                    Log.d("Aaa", item_result.part.toString())
+                    if(item_result.part.toString().equals("참가자")){
+                        binding.btPlanDetailBudgetPlus.visibility = View.GONE
+                    }
+                    else{
+                        binding.btPlanDetailBudgetPlus.visibility = View.VISIBLE
+
+                    }
+                }
+            }
+
+        return binding.root
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         // 초반 예산 내용 설정
         db.collection("workshop")
             .document(workshop_docID)
@@ -76,71 +109,7 @@ class Plan_detail_budget_Fragment : Fragment() {
                 // 초반 리스트 설정
                 firestore_get()
             }
-
-        binding.planDetailBudgetFirstEdit.setOnClickListener {
-            // Dialog만들기
-            val mDialogView = LayoutInflater.from(activity).inflate(R.layout.budget_edit_dialog, null)
-            val et_budget = mDialogView.findViewById<EditText>(R.id.ed_dialog_budget)
-            val ib_back = mDialogView.findViewById<ImageButton>(R.id.ib_dialog_budget_back)
-            val ib_done =  mDialogView.findViewById<ImageButton>(R.id.ib_dialog_budget_done)
-
-            val mBuilder = AlertDialog.Builder(activity)
-                .setView(mDialogView)
-
-            val  mAlertDialog = mBuilder.show()
-
-
-            /*
-
-            // 돈 형식에서 int로 변환할 수 있도록 준비
-            var str_change_used = t_dec_up.parse(binding.tvPlanDetailBudgetFirst.text.toString())
-
-            et_budget.setText(str_change_used.toInt().toString())
-
-            ib_done.setOnClickListener {
-                Log.d("aaaa", et_budget.text.toString())
-
-                var budget = t_dec_up.format(et_budget.text.toString())
-                et_budget.setText(budget)
-
-                db.collection("workshop")
-                    .document(workshop_docID)
-                    .update("tv_plan_budget",budget)
-                    .addOnSuccessListener {
-                        Log.d("aaaa", budget)
-
-                    }
-
-                // 초반 예산 내용 설정
-                db.collection("workshop")
-                    .document(workshop_docID)
-                    .get()
-                    .addOnSuccessListener {
-                            result -> // 성공
-                        val item = result.toObject(PlanWorkShopData::class.java)
-                        if (item != null) {
-                            binding.tvPlanDetailBudgetFirst.setText(item.tv_plan_budget)
-                            binding.tvPlanDetailBudgetLast.setText(item.tv_plan_budget)
-                        }
-
-                        // 초반 리스트 설정
-                        firestore_get()
-                        mAlertDialog.dismiss()
-                    }
-            }
-
-            ib_back.setOnClickListener {
-                mAlertDialog.dismiss()
-            }
-             */
-        }
-
-
-        return binding.root
-
-
     }
-
 
     fun firestore_get(){
 
@@ -172,9 +141,17 @@ class Plan_detail_budget_Fragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
 
+                if(itemList.isEmpty()){
+                    binding.tvPlanDetailBudgetNull.visibility = View.VISIBLE
+                }
+                else{
+                    binding.tvPlanDetailBudgetNull.visibility = View.GONE
+                }
+
             }
             .addOnFailureListener { exception -> // 실패
                 Log.d("lee", "Error getting documents: ", exception)
             }
+
     }
 }

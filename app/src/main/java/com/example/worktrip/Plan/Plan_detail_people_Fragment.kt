@@ -68,7 +68,6 @@ class Plan_detail_people_Fragment : Fragment() {
         workshop_docID2 = SocketApplication.prefs.getString("now_workshop_id", "")
         //// 다른 루트에서 오지 않을 경우 받을 수 있는 방법 생각해서 defValue에 넣어두기
 
-        firestore_get()
 
         binding.tvPlanPeopleCode.setText(workshop_docID2)
 
@@ -123,6 +122,12 @@ class Plan_detail_people_Fragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume(){
+        super.onResume()
+
+        firestore_get_manager()
+        firestore_get_participant()
+    }
 
     fun firestore_get_title(): String{
 
@@ -141,45 +146,66 @@ class Plan_detail_people_Fragment : Fragment() {
             }
         return title
     }
-    fun firestore_get(){
+    fun firestore_get_participant(){
         itemList.clear()
 
-        Log.d("aaaa",workshop_docID2.toString())
         db.collection("user_workshop")
             .get()
-            .addOnSuccessListener { result -> // 성공
-                for(document in result){
-
+            .addOnSuccessListener {
+                    result_first ->
+                for(document_first in result_first){
                     db.collection("user_workshop")
-                        .document(document.id)
+                        .document(document_first.id)
                         .collection("workshop_list")
-                        .whereEqualTo("workshop_docID", workshop_docID2)
+                        .document(workshop_docID2)
                         .get()
                         .addOnSuccessListener {result ->
-
-                            for (document in result){
-                                val item = document.toObject(PlanWorkShopUserData::class.java)
-                                if (item != null) {
-                                    item.workshop_docID = document.id
+                            val item = result.toObject(PlanWorkShopUserData::class.java)
+                            if (item != null) {
+                                item.workshop_docID = result.id
+                                if(item.part.equals("참가자")){
                                     itemList.add(item)
-                                }// 내부적으로 식별할 수 있는 게시물 식별자
+                                }
                             }
-                                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
-                            }
-                        .addOnFailureListener {
-                            Exception ->
-                            Log.d("aaaa", Exception.toString())
-
+                            // 리사이클러 뷰 갱신
+                            adapter.notifyDataSetChanged()
                         }
                 }
 
+
             }
-            .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
+    }
+
+    fun firestore_get_manager(){
+
+        db.collection("user_workshop")
+            .get()
+            .addOnSuccessListener {
+                    result_first ->
+                for(document_first in result_first){
+                    db.collection("user_workshop")
+                        .document(document_first.id)
+                        .collection("workshop_list")
+                        .document(workshop_docID2)
+                        .get()
+                        .addOnSuccessListener {result ->
+                            val item = result.toObject(PlanWorkShopUserData::class.java)
+                            if (item != null) {
+                                item.workshop_docID = result.id
+                                if(item.part.equals("기획자")){
+                                    itemList.add(item)
+                                }
+                            }
+                            // 리사이클러 뷰 갱신
+                            adapter.notifyDataSetChanged()
+                        }
+                }
+
+
             }
+
 
 
     }
-
 
 }

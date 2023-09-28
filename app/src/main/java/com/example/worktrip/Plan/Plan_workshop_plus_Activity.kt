@@ -41,7 +41,7 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding.inflate(layoutInflater)
+        binding = ActivityPlanWorkshopPlusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
@@ -86,8 +86,8 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
                 Toast.makeText(this, "테마를 입력해주세요", Toast.LENGTH_LONG).show()
             } else {
 
-                var budget = binding.etPlanBudget.text.toString().toInt()
-                var str_change_money_up = t_dec_up.format(budget)
+                var budget = binding.etPlanBudget.text.toString()
+                var str_change_money_up = t_dec_up.format(budget.toInt())
                 binding.etPlanBudget.setText(str_change_money_up)
 
                 val now: LocalDate = LocalDate.parse(endDate, formatter)

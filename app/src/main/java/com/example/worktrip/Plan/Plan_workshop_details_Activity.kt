@@ -51,9 +51,6 @@ class Plan_workshop_details_Activity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.it_toolbar_ns_question -> {
-                // Dialog 보여주기
-            }
         }
         return super.onOptionsItemSelected(item)
     }

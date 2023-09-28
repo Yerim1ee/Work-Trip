@@ -2,6 +2,7 @@ package com.example.worktrip.My
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class MyFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentMyBinding.inflate(inflater, container, false)
 
+
         db.collection("user")
             .document(mAuth.uid.toString())
             .get()
@@ -42,11 +44,13 @@ class MyFragment : Fragment() {
                 val item = result.toObject(UserBaseData::class.java)
                 if (item != null) {
                     binding.tvMyName.setText(item.userName)
+                    binding.tvMyContent.setText("# "+item.food +
+                            " # "+item.course +
+                            " # "+item.reports+
+                            " # "+item.sleep+
+                            " # "+item.travel)
                 }
             }
-
-        mAuth =FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
 
         binding.ibMyLogout.setOnClickListener {
             signOut()
@@ -54,6 +58,11 @@ class MyFragment : Fragment() {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
 
+        }
+
+        binding.layoutMySystemInformation.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/work-trip-c01ab.appspot.com/o/setting%2F%EC%9A%B4%EC%98%81-%EC%A0%95%EC%B1%85.html?alt=media&token=8ebc728d-94fe-49ac-a153-7f626c58232e"))
+            startActivity(intent)
         }
 
         binding.layoutMySignOut.setOnClickListener {
@@ -83,6 +92,8 @@ class MyFragment : Fragment() {
 
         binding.layoutMyEditSave.setOnClickListener {
             val intent = Intent(activity, BookmarkActivity::class.java)
+            var from = SocketApplication.prefs.setString("from_to_bookmark", "else")
+
             startActivity(intent)
 
         }
@@ -97,10 +108,18 @@ class MyFragment : Fragment() {
     private fun revokeAccess() {
 
         // db 에서 데이터 삭제
-        db.collection("user").document("${mAuth.currentUser?.uid.toString()}")
+        db.collection("user")
+            .document("${mAuth.currentUser?.uid.toString()}")
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+
+        db.collection("user_workshop")
+            .document("${mAuth.currentUser?.uid.toString()}")
+            .delete()
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot successfully deleted!")
+            }
         mAuth.getCurrentUser()?.delete()
     }
 

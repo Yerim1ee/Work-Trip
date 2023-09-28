@@ -24,20 +24,46 @@ import com.example.worktrip.SignUp.LoginActivity
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.CardItemNoticeBinding
 import com.example.worktrip.databinding.CardPeopleItemBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.card_item_budget.view.ib_plan_card_detail_budget_plus
 import kotlinx.android.synthetic.main.card_people_item.view.ib_plan_people_card_plus
+import kotlinx.android.synthetic.main.card_plan_detail_item.view.ib_plan_detail_timeline_plus
 
 
 class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
     : RecyclerView.ViewHolder(binding.root){
 
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    var auth: FirebaseAuth = Firebase.auth
 
     private val context = binding.root.context
+    var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
 
     fun bind(item: PlanWorkShopUserData) {
+        db.collection("user_workshop")
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .document(workshop_docID)
+            .get()
+            .addOnSuccessListener {
+                    result -> // 성공
+                val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                if (item_result != null) {
+                    Log.d("Aaa", item_result.part.toString())
+                    if(item_result.part.toString().equals("참가자")){
+                        itemView.ib_plan_people_card_plus.visibility = View.GONE
+                    }
+                    else{
+                        itemView.ib_plan_people_card_plus.visibility = View.VISIBLE
+
+                    }
+                }
+            }
+
         itemView.ib_plan_people_card_plus.setOnClickListener { // 아이템 클릭
             val popup = PopupMenu(context, it, Gravity.RIGHT)
             popup.menuInflater.inflate(R.menu.popup_delete_edit1, popup.menu)
@@ -60,17 +86,15 @@ class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
                                 .document(item.uID.toString())
                                 .get()
                                 .addOnSuccessListener {result->
-                                    val item = result.toObject(PlanWorkShopUserData::class.java)
-                                    if (item != null) {
+                                    val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                                    if (item_result != null) {
                                         if(item.part.equals("기획자")){
-                                            Log.d("aaaa","기획자")
                                             db.collection("user_workshop")
                                                 .document(item.uID.toString())
                                                 .collection("workshop_list")
-                                                .document(item.workshop_docID.toString())
+                                                .document(workshop_docID)
                                                 .update("part","참가자")
                                                 .addOnSuccessListener {
-                                                    Log.d("aaaa","tjdrhd")
                                                     mAlertDialog.dismiss()
                                                 }
                                                 .addOnFailureListener {
@@ -78,14 +102,13 @@ class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
                                                 }
                                         }
                                         else{
-                                            Log.d("aaaa","참가자")
                                             db.collection("user_workshop")
                                                 .document(item.uID.toString())
                                                 .collection("workshop_list")
-                                                .document(item.workshop_docID.toString())
+                                                .document(workshop_docID)
                                                 .update("part","기획자")
                                                 .addOnSuccessListener {
-                                                    Log.d("aaaa","tjdrhd")
+                                                    mAlertDialog.dismiss()
                                                 }
                                                 .addOnFailureListener {
 
@@ -109,7 +132,6 @@ class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
     }
 
     private fun firestore_delete(person_uid: String) {
-        var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
 
         db.collection("user_workshop")
             .document(person_uid)

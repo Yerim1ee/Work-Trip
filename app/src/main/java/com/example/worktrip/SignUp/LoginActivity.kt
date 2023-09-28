@@ -29,7 +29,7 @@ import com.kakao.sdk.user.UserApiClient
 import com.kakao.util.maps.helper.Utility
 
 
-class LoginActivity :  Activity(), View.OnClickListener  {
+class LoginActivity :  Activity() {
     // 액티비티에서 사용할 레이아웃의 뷰 바인딩 클래스
     private lateinit var binding: ActivityLoginBinding
     lateinit var db : FirebaseFirestore
@@ -56,7 +56,6 @@ class LoginActivity :  Activity(), View.OnClickListener  {
         auth = Firebase.auth // auth 정의
         db = FirebaseFirestore.getInstance() // db 정의
 
-        binding.ibLoginKakaologin.setOnClickListener(this);
 
         // 로그인 버튼 클릭 시 로그인 정보 확인
         binding.ibLoginLogin.setOnClickListener {
@@ -93,48 +92,8 @@ class LoginActivity :  Activity(), View.OnClickListener  {
 
     }
 
-    override fun onClick(view: View?) {
-        if (view != null) {
-            when(view.id){
-                R.id.ib_login_kakaologin->{
-
-                // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-                    if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-                        UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-                            if (error != null) {
-                                Log.e(TAG, "카카오톡으로 로그인 실패", error)
-
-                                // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-                                // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-                                if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                                    return@loginWithKakaoTalk
-                                }
-
-                                // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
-                                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-
-                            } else if (token != null) {
-                                Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                                kakao_firebase_login(token.accessToken)
-
-                            }
-                        }
-                    } else {
-                        UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                    }
-                }
-
-
-            }
-        }
-    }
-
     public override fun onStart() {
         super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        if(account!==null){ // 이미 로그인 되어있을 시 바로 메인 액티비티로 이동
-            moveMainPage(auth.currentUser)
-        }
     }
     // 비밀번호 재설정
     private fun resetPassword(email:String){

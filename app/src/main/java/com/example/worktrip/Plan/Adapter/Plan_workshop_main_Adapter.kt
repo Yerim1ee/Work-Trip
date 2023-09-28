@@ -14,11 +14,17 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.worktrip.DataClass.PlanWorkShopData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
+import com.example.worktrip.Plan.PlanStaticActivity
 import com.example.worktrip.Plan.Plan_workshop_details_Activity
 import com.example.worktrip.Plan.Plan_workshop_edit_Activity
 import com.example.worktrip.R
 import com.example.worktrip.databinding.CardPlanItemBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_btn1
 import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_btn2
 import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_plus
 
@@ -28,14 +34,41 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
 
     private val context = binding.root.context
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    var auth: FirebaseAuth = Firebase.auth
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(item: PlanWorkShopData) {
+
+        db.collection("user_workshop")
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .document(item.docID.toString())
+            .get()
+            .addOnSuccessListener {
+                    result -> // 성공
+                val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                if (item_result != null) {
+                    Log.d("Aaa", item_result.part.toString())
+                    if(item_result.part.toString().equals("참가자")){
+                        binding.ibPlanBtn2.visibility = View.GONE
+                    }
+                    else{
+                        binding.ibPlanBtn2.visibility = View.VISIBLE
+
+                    }
+                }
+            }
+
         itemView.ib_plan_btn2.setOnClickListener { // 아이템의 버튼2 클릭
             val intent = Intent(context, Plan_workshop_edit_Activity::class.java)
             intent.putExtra("data", item)
             intent.putExtra("budget", item.tv_plan_budget.toString())
             intent.run { context.startActivity(this) }
+        }
+        itemView.ib_plan_btn1.setOnClickListener {
+            val intent = Intent(context, PlanStaticActivity::class.java)
+            intent.putExtra("docID", item.docID);
+            intent.run{context.startActivity(this)}
         }
         itemView.setOnClickListener { // 아이템 클릭
             val intent = Intent(context, Plan_workshop_details_Activity::class.java)

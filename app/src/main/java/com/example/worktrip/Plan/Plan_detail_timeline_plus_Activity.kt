@@ -58,9 +58,12 @@ class Plan_detail_timeline_plus_Activity : AppCompatActivity() {
         // workshop 게시글 번호 받아오기
         var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
         var timeline_docId = SocketApplication.prefs.getString("now_timeline_date", "") //
+        var bookmark = SocketApplication.prefs.getString("from_to_bookmark", "") //
 
-        binding.etPlanDetailTimelinePlusTitle.setText(intent.getStringExtra("title"))
-        binding.tvPlanDetailTimelinePlusPlace.setText(intent.getStringExtra("place"))
+        if(bookmark.equals("timeline")){
+            binding.etPlanDetailTimelinePlusTitle.setText(intent.getStringExtra("title"))
+            binding.tvPlanDetailTimelinePlusPlace.setText(intent.getStringExtra("place"))
+        }
 
 
         //toolbar 설정

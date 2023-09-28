@@ -26,9 +26,9 @@ class SignUpActivity03 : Activity() {
     private lateinit var binding: ActivitySignUp03Binding
 
     // 파이어 베이스 회원가입을 위한 객체 획득
-    private lateinit var auth: FirebaseAuth
+    private  var auth: FirebaseAuth = Firebase.auth
     var email: String? = null
-    lateinit var db: FirebaseFirestore
+     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     // 체크박스 체크 표시를 위한 boolean array
      var food: String = "한식"
@@ -54,12 +54,6 @@ class SignUpActivity03 : Activity() {
         company = intent.getStringExtra("company").toString()
 
 
-        db = FirebaseFirestore.getInstance()
-        auth = Firebase.auth
-
-        var user_id = uidData(
-            auth.uid.toString()
-        )
 
         // 카테고리 받아오기
         binding.rgPlanSignup3Food.setOnCheckedChangeListener { group, checkId ->
@@ -78,10 +72,6 @@ class SignUpActivity03 : Activity() {
            course = findViewById<RadioButton>(checkId).text.toString()
         }
 
-        // 자신의 id에 추가하기
-        db.collection("user_workshop")
-            .document(auth.uid.toString())
-            .set(user_id)
 
         // 에러 처리
         binding.btSingup3Next.setOnClickListener {
@@ -97,7 +87,7 @@ class SignUpActivity03 : Activity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) { // 생성이 되었다면
                     var userInfo = UserBaseData( // 데이터 구조
-                        userID = auth?.uid,
+                        userID = id,
                         userName = name,
                         date = date,
                         company = company,
@@ -114,7 +104,14 @@ class SignUpActivity03 : Activity() {
 
                     // 이름 저장
                     SocketApplication.prefs.setString("user-name", name)
+                    var user_id = uidData(
+                        auth.uid.toString()
+                    )
 
+                    // 자신의 id에 추가하기
+                    db.collection("user_workshop")
+                        .document(auth.uid.toString())
+                        .set(user_id)
 
                     // 메인으로 이동
                     val nextIntent = Intent(this, SignUpActivity04::class.java)

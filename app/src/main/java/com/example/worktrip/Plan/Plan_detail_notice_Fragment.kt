@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanBudgetData
 import com.example.worktrip.DataClass.PlanNoticeData
+import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.Plan.Adapter.PlanDetailNoticeViewHolder
 import com.example.worktrip.Plan.Adapter.Plan_detail_budget_Adapter
@@ -28,6 +29,7 @@ class Plan_detail_notice_Fragment : Fragment() {
     private lateinit var binding: FragmentPlanDetailNoticeBinding
 
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     val itemList = mutableListOf<PlanNoticeData>()
     val adapter = Plan_detail_notice_Adapter(MainActivity(),itemList)
@@ -54,13 +56,37 @@ class Plan_detail_notice_Fragment : Fragment() {
             startActivity(intent)
         }
 
-        // 초반 리스트 설정
-        firestore_get()
+        db.collection("user_workshop")
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .document(workshop_docID)
+            .get()
+            .addOnSuccessListener {
+                    result -> // 성공
+                val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                if (item_result != null) {
+                    Log.d("Aaa", item_result.part.toString())
+                    if(item_result.part.toString().equals("참가자")){
+                        binding.btPlanDetailNoticePlus.visibility = View.GONE
+                    }
+                    else{
+                        binding.btPlanDetailNoticePlus.visibility = View.VISIBLE
+
+                    }
+                }
+            }
 
 
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // 초반 리스트 설정
+        firestore_get()
+
+    }
     fun firestore_get(){
 
         db.collection("workshop")
@@ -78,10 +104,17 @@ class Plan_detail_notice_Fragment : Fragment() {
                     // 리사이클러 뷰 갱신
                     adapter.notifyDataSetChanged()
                 }
+                if(itemList.isEmpty()){
+                    binding.tvPlanDetailNoticeNull.visibility = View.VISIBLE
+                }
+                else{
+                    binding.tvPlanDetailNoticeNull.visibility = View.GONE
+                }
 
             }
             .addOnFailureListener { exception -> // 실패
                 Log.d("lee", "Error getting documents: ", exception)
             }
+
     }
 }

@@ -34,27 +34,12 @@ class Plan_tab_main02Fragment : Fragment() {
         binding.rcvPlanMain2Recyclerview.layoutManager = LinearLayoutManager(context)
         binding.rcvPlanMain2Recyclerview.adapter= adapter
 
-        db.collection("user_workshop")
-            .document("${auth.currentUser?.uid.toString()}")
-            .collection("workshop")
-            .whereEqualTo("now",false)
-            .get()
-            .addOnSuccessListener { result -> // 성공
-                itemList.clear()
-                for (document in result) {
-                    val item = document.toObject(PlanWorkShopData::class.java)
-                    item.docID = document.id// 내부적으로 식별할 수 있는 게시물 식별자
-                    itemList.add(item)
 
-                    adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+        return binding.root
+    }
 
-                }
-
-            }
-            .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
-            }
-
+    override fun onResume() {
+        super.onResume()
 
         // 자신의 uid -> workshop-list 체크
         db.collection("user_workshop")
@@ -72,7 +57,7 @@ class Plan_tab_main02Fragment : Fragment() {
                             // 리사이클러 뷰 아이템 설정 및 추가
                             val item = document_workshop.toObject(PlanWorkShopData::class.java)
                             if (item != null) {
-                                if(!item.now){
+                                if(!(item.now)){
                                     itemList.add(item)
                                     Log.d("lee", itemList.toString())
                                 }
@@ -88,9 +73,6 @@ class Plan_tab_main02Fragment : Fragment() {
             .addOnFailureListener { exception -> // 실패
                 Log.d("lee", "Error getting documents: ", exception)
             }
-
-
-        return binding.root
     }
 
 

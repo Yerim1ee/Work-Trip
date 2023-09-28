@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:hint="100,000"
+            tools:text="100,000"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:hint="100,000"
+            tools:text="100,000"
             android:textColor="#6E6E73"
             android:textSize="14sp" />
 
@@ -87,12 +87,6 @@
             android:textColor="#6E6E73"
             android:textSize="14sp" />
 
-        <ImageButton
-            android:id="@+id/plan_detail_budget_first_edit"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/budget_edit" />
     </LinearLayout>
 
     <View
@@ -104,7 +98,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
+
+
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -130,6 +127,20 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <TextView
+                android:id="@+id/tv_plan_detail_budget_null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="30dp"
+                android:visibility="gone"
+                android:text="사용 내역을 추가해주세요:)"
+                android:textColor="@color/gray2"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/rcv_plan_detail_budget_recyclerview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rcv_plan_detail_budget_recyclerview" />
             <View
                 android:id="@+id/view9"
                 android:layout_width="0dp"
@@ -146,8 +157,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="20dp"
-                android:text="사용 금액"
                 android:layout_marginBottom="100dp"
+                android:text="사용 금액"
                 android:textColor="#6E6E73"
                 android:textSize="20sp"
                 android:textStyle="bold"

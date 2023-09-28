@@ -28,6 +28,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Plan.PlanStaticActivity"
+            android:exported="false" />
+        <activity
             android:name=".Plan.Plan_workshop_plus2_Activity"
             android:exported="false" />
         <activity

@@ -18,9 +18,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_plan_main1_recyclerview"
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="25dp">
+            tools:listitem="@layout/card_plan_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 

@@ -87,7 +87,7 @@ class fragment_bookmark_list : Fragment() {
                             var intent = Intent()
 
                             var from = SocketApplication.prefs.getString("from_to_bookmark", "else")
-                            if (from == "timeline") {
+                            if (from.equals("timeline")) {
                                 intent = Intent(context, Plan_detail_timeline_plus_Activity::class.java)
                                 intent.putExtra("title",list_card_image_title_overview_location[position].title)
                                 intent.putExtra("place",list_card_image_title_overview_location[position].location)
