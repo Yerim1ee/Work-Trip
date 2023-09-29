@@ -136,6 +136,7 @@ class fragment_community : Fragment() {
                                     data_card_community(commuListImg1, commuListImg2, commuListImg3, commuListTitle, commuListContent, commuListDepature, commuListDestination, commuListDate, commuListCompany, commuListPeople, commuListPeriod, commuListGoal, commuListKeyword, commuListMoney, commuListWritingID, commuListUserID))
                                 }
                             }
+
                         }
 
                         //샘플 데이터 삭제
@@ -145,7 +146,7 @@ class fragment_community : Fragment() {
                         writingCount.text= list_card_community.size.toString()
 
                         if (list_card_community.size == 0) {
-                            //Toast.makeText(context, "작성된 글이 없습니다.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "커뮤니티에 작성된 글이 없습니다.", Toast.LENGTH_LONG).show()
                         } else {
                             //recycler view
                             recyclerView_community=view.findViewById(R.id.rv_fragment_community!!)as RecyclerView

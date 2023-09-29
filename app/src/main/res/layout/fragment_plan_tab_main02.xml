@@ -7,9 +7,8 @@
     tools:context=".Plan.Plan_tab_main02Fragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,10 +16,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_plan_main2_recyclerview"
-            android:layout_width="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="25dp">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
         </androidx.recyclerview.widget.RecyclerView>
 

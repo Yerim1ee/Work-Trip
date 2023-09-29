@@ -25,14 +25,6 @@
             tools:layout_editor_absoluteX="16dp"
             android:background="@drawable/logo_typo"
             />
-        <ImageButton
-            android:id="@+id/ib_plan_question"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/plan_main_question"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_plan_logo"
-            android:layout_gravity="end" />
 
     </androidx.appcompat.widget.Toolbar>
 
