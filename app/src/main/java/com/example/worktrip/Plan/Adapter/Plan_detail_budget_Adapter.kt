@@ -2,7 +2,6 @@ package com.example.worktrip.Plan.Adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,23 +9,17 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanTimeLineData
-import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.Plan.PlanBudgetEditActivity
-import com.example.worktrip.Plan.PlanTimlineEditActivity
-import com.example.worktrip.Plan.Plan_workshop_details_Activity
+import com.example.worktrip.Plan.PlanBudgetShowActivity
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.CardItemBudgetBinding
-import com.example.worktrip.databinding.CardPlanDetailItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.card_item_budget.view.ib_plan_card_detail_budget_plus
-import kotlinx.android.synthetic.main.card_item_notice.view.ib_card_notice_plus
-import kotlinx.android.synthetic.main.card_plan_detail_item.view.ib_plan_detail_timeline_plus
 
 
 class PlanDetailBudgetViewHolder(val binding: CardItemBudgetBinding)
@@ -47,7 +40,6 @@ class PlanDetailBudgetViewHolder(val binding: CardItemBudgetBinding)
                     result -> // 성공
                 val item_result = result.toObject(PlanWorkShopUserData::class.java)
                 if (item_result != null) {
-                    Log.d("Aaa", item_result.part.toString())
                     if(item_result.part.toString().equals("참가자")){
                         itemView.ib_plan_card_detail_budget_plus.visibility = View.GONE
                     }
@@ -59,7 +51,7 @@ class PlanDetailBudgetViewHolder(val binding: CardItemBudgetBinding)
             }
 
         itemView.setOnClickListener { // 아이템 클릭
-            val intent = Intent(context, Plan_workshop_details_Activity::class.java)
+            val intent = Intent(context, PlanBudgetShowActivity::class.java)
             intent.putExtra("data", item)
             intent.run { context.startActivity(this) }
         }

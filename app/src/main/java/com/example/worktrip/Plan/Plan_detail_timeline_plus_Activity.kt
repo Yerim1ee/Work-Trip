@@ -4,36 +4,17 @@ import android.app.TimePickerDialog
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
-import android.view.View.VISIBLE
-import android.widget.TextView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanTimeLineData
-import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.ActivityPlanDetailTimelinePlusBinding
-import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
-import com.example.worktrip.databinding.FragmentPlanDetailTimelineBinding
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
-import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
-import java.sql.Time
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 import java.util.Calendar
 
 class Plan_detail_timeline_plus_Activity : AppCompatActivity() {

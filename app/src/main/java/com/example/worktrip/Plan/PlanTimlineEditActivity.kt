@@ -6,15 +6,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.worktrip.DataClass.PlanTimeLineData
-import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
-import com.example.worktrip.databinding.ActivityPlanDetailTimelinePlusBinding
 import com.example.worktrip.databinding.ActivityPlanTimlineEditBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import java.util.Calendar
 
 class PlanTimlineEditActivity : AppCompatActivity() {

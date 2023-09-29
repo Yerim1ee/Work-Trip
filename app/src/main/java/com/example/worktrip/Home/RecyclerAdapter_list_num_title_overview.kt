@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ListNumTitleOverviewBinding
@@ -38,7 +39,11 @@ class RecyclerAdapter_list_num_title_overview (private val items: ArrayList<data
         viewHolder.binding.tvListNumTitleOverviewNum.text = items[position].num
         viewHolder.binding.tvListNumTitleOverviewTitle.text = items[position].title
         viewHolder.binding.tvListNumTitleOverviewOverview.text = items[position].overview
-        Glide.with(viewHolder.binding.ivListNumTitleOverviewImg).load(items[position].img).centerInside().into(viewHolder.binding.ivListNumTitleOverviewImg)
+        /*Glide.with(viewHolder.binding.ivListNumTitleOverviewImg).load(items[position].img)
+            .centerInside().into(viewHolder.binding.ivListNumTitleOverviewImg)
+        */
+        viewHolder.binding.ivListNumTitleOverviewImg.load(items[position].img)
+
 
 
         if (position==0)

@@ -5,14 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.Toast
-import com.example.worktrip.DataClass.PlanBudgetData
 import com.example.worktrip.DataClass.PlanNoticeData
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
-import com.example.worktrip.databinding.ActivityPlanDetailBudgetPlusBinding
 import com.example.worktrip.databinding.ActivityPlanDetailNoticePlusBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

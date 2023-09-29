@@ -2,36 +2,22 @@ package com.example.worktrip.Plan.Adapter
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanNoticeData
-import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
-import com.example.worktrip.DataClass.UserBaseData
-import com.example.worktrip.Plan.PlanBudgetEditActivity
-import com.example.worktrip.Plan.Plan_workshop_details_Activity
 import com.example.worktrip.R
-import com.example.worktrip.SignUp.LoginActivity
 import com.example.worktrip.SocketApplication
-import com.example.worktrip.databinding.CardItemNoticeBinding
 import com.example.worktrip.databinding.CardPeopleItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.card_item_budget.view.ib_plan_card_detail_budget_plus
 import kotlinx.android.synthetic.main.card_people_item.view.ib_plan_people_card_plus
-import kotlinx.android.synthetic.main.card_plan_detail_item.view.ib_plan_detail_timeline_plus
 
 
 class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
@@ -53,7 +39,6 @@ class PlanDetailPeopleViewHolder(val binding: CardPeopleItemBinding)
                     result -> // 성공
                 val item_result = result.toObject(PlanWorkShopUserData::class.java)
                 if (item_result != null) {
-                    Log.d("Aaa", item_result.part.toString())
                     if(item_result.part.toString().equals("참가자")){
                         itemView.ib_plan_people_card_plus.visibility = View.GONE
                     }

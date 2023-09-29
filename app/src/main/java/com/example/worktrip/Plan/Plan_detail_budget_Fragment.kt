@@ -1,29 +1,18 @@
 package com.example.worktrip.Plan
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
-import com.example.worktrip.My.BookmarkActivity
 import com.example.worktrip.Plan.Adapter.Plan_detail_budget_Adapter
-import com.example.worktrip.Plan.Adapter.Plan_detail_timeline_Adapter
-import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
-import com.example.worktrip.databinding.BudgetEditDialogBinding
 import com.example.worktrip.databinding.FragmentPlanDetailBudgetBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -31,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
-import java.time.LocalDate
 
 class Plan_detail_budget_Fragment : Fragment() {
     private lateinit var binding: FragmentPlanDetailBudgetBinding
@@ -44,7 +32,7 @@ class Plan_detail_budget_Fragment : Fragment() {
     val adapter = Plan_detail_budget_Adapter(MainActivity(),itemList)
 
     lateinit var workshop_docID: String
-    var used_price:Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,7 +64,6 @@ class Plan_detail_budget_Fragment : Fragment() {
                     result -> // 성공
                 val item_result = result.toObject(PlanWorkShopUserData::class.java)
                 if (item_result != null) {
-                    Log.d("Aaa", item_result.part.toString())
                     if(item_result.part.toString().equals("참가자")){
                         binding.btPlanDetailBudgetPlus.visibility = View.GONE
                     }
@@ -112,7 +99,7 @@ class Plan_detail_budget_Fragment : Fragment() {
     }
 
     fun firestore_get(){
-
+        var used_price:Int = 0
         db.collection("workshop")
             .document(workshop_docID)
             .collection("budget")
@@ -149,8 +136,7 @@ class Plan_detail_budget_Fragment : Fragment() {
                 }
 
             }
-            .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
+            .addOnFailureListener {
             }
 
     }

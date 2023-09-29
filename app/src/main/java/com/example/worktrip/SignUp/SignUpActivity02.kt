@@ -3,6 +3,7 @@ package com.example.worktrip.SignUp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.example.worktrip.databinding.ActivitySignUp02Binding
 
 class SignUpActivity02 : Activity() {
@@ -21,13 +22,23 @@ class SignUpActivity02 : Activity() {
 
         // 에러 처리
         binding.btSingup2Next.setOnClickListener{
-            var intent: Intent = Intent(this, SignUpActivity03::class.java)
-            intent.putExtra("id", id)
-            intent.putExtra("password", password) // 비밀번호만 넘겨도 괜찮을지...
-            intent.putExtra("name", binding.etSignupName.text.toString())
-            intent.putExtra("date", binding.etSignupBirth.text.toString())
-            intent.putExtra("company",binding.etSignupCompany.text.toString())
-            startActivity(intent)
+            if(binding.etSignupName.text.toString().isEmpty()){
+                Toast.makeText(this, "이름을 입력해주세요", Toast.LENGTH_LONG).show()
+            }
+            else if(!(binding.cbSignup2CheckAge.isChecked)){
+                Toast.makeText(this, "만 18세 미만은 가입이 어렵습니다.", Toast.LENGTH_LONG).show()
+
+            }
+            else{
+                var intent = Intent(this, SignUpActivity03::class.java)
+                intent.putExtra("id", id)
+                intent.putExtra("password", password)
+                intent.putExtra("name", binding.etSignupName.text.toString())
+                intent.putExtra("date", binding.etSignupBirth.text.toString())
+                intent.putExtra("company",binding.etSignupCompany.text.toString())
+                startActivity(intent)
+            }
+
         }
     }
 }

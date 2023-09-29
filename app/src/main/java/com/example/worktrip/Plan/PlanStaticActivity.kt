@@ -1,13 +1,9 @@
 package com.example.worktrip.Plan
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
@@ -65,12 +61,6 @@ class PlanStaticActivity : AppCompatActivity() {
 
     private fun setData() {
 
-        Log.e("aaaa", "whole"+whole.toFloat().toString())
-        Log.e("aaaa", "camping"+camping.toFloat().toString())
-        Log.e("aaaa", "eat"+eat.toFloat().toString())
-        Log.e("aaaa", "family"+family.toFloat().toString())
-        Log.e("aaaa", "walk"+walk.toFloat().toString())
-        Log.e("aaaa", "healed"+healed.toFloat().toString())
         if((camping + eat + healed + family + walk) == whole){
 
 
@@ -183,32 +173,26 @@ class PlanStaticActivity : AppCompatActivity() {
                                     .get()
                                     .addOnSuccessListener {result3 ->
                                         val item2 = result3.toObject(UserBaseData::class.java)
-                                        Log.d("aaaa", whole.toString() + "이거시다")
                                         if (item2 != null) {
                                             when(item2.course){
                                                 "캠핑 코스" ->{
                                                     camping = camping + 1
-                                                    Log.d("aaaa", "캠핑")
                                                 }
 
                                                 "도보 코스"->{
                                                     walk = walk + 1
-                                                    Log.d("aaaa", "도보")
                                                 }
 
                                                 "맛 코스"->{
                                                     eat = eat + 1
-                                                    Log.d("aaaa", "맛")
                                                 }
 
                                                 "힐링 코스"->{
                                                     healed = healed + 1
-                                                    Log.d("aaaa", "힐링")
                                                 }
 
                                                 "가족 코스" -> {
                                                     family = family + 1
-                                                    Log.d("aaaa", "가족")
                                                 }
                                             }
                                             setData()

@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Plan.PlanBudgetEditActivity">
+    tools:context=".Plan.PlanBudgetShowActivity">
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_plan_detail_budget_plus"
+        android:id="@+id/tb_plan_detail_budget_show"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -19,7 +19,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/tv_plan_detail_budget_plus_title"
+            android:id="@+id/tv_plan_detail_budget_show_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -40,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/ed_plan_detail_budget_price"
+            <TextView
+                android:id="@+id/ed_plan_detail_budget_show_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="75dp"
@@ -64,10 +64,10 @@
                 android:layout_marginTop="16dp"
                 android:background="#F8F8F8"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_plan_detail_budget_price" />
+                app:layout_constraintTop_toBottomOf="@+id/ed_plan_detail_budget_show_price" />
 
             <RadioGroup
-                android:id="@+id/rg_plan_budget_radiogroup"
+                android:id="@+id/rg_plan_budget_show_radiogroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -78,40 +78,45 @@
                 app:layout_constraintTop_toBottomOf="@+id/view8">
 
                 <RadioButton
-                    android:id="@+id/rb_plan_budget_course"
+                    android:id="@+id/rb_plan_budget_show_course"
                     android:layout_width="59dp"
+                    android:clickable="false"
                     android:layout_height="70dp"
                     android:background="@drawable/plan_detail_budget_plus1"
                     android:button="@null" />
 
                 <RadioButton
-                    android:id="@+id/rb_plan_budget_house"
+                    android:id="@+id/rb_plan_budget_show_house"
                     android:layout_width="59dp"
                     android:layout_height="70dp"
+                    android:clickable="false"
                     android:layout_marginLeft="12dp"
                     android:background="@drawable/plan_detail_budget_plus2"
                     android:button="@null" />
 
                 <RadioButton
-                    android:id="@+id/rb_plan_budget_program"
+                    android:id="@+id/rb_plan_budget_show_program"
                     android:layout_width="59dp"
                     android:layout_height="70dp"
+                    android:clickable="false"
                     android:layout_marginLeft="12dp"
                     android:background="@drawable/plan_detail_budget_plus3"
                     android:button="@null" />
 
                 <RadioButton
-                    android:id="@+id/rb_plan_budget_eat"
+                    android:id="@+id/rb_plan_budget_show_eat"
                     android:layout_width="59dp"
                     android:layout_height="70dp"
+                    android:clickable="false"
                     android:layout_marginLeft="12dp"
                     android:background="@drawable/plan_detail_budget_plus4"
                     android:button="@null" />
 
                 <RadioButton
-                    android:id="@+id/rb_plan_budget_else"
+                    android:id="@+id/rb_plan_budget_show_else"
                     android:layout_width="59dp"
                     android:layout_height="70dp"
+                    android:clickable="false"
                     android:layout_marginLeft="12dp"
                     android:background="@drawable/plan_detail_budget_plus5"
                     android:button="@null" />
@@ -125,7 +130,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rg_plan_budget_radiogroup">
+                app:layout_constraintTop_toBottomOf="@+id/rg_plan_budget_show_radiogroup">
 
                 <TextView
                     android:id="@+id/textView"
@@ -136,8 +141,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_plan_detail_budget_quantity"
+                <TextView
+                    android:id="@+id/et_plan_detail_budget_show_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -159,7 +164,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_quantity" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_show_quantity" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -182,8 +187,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_plan_detail_budget_pay"
+                <TextView
+                    android:id="@+id/et_plan_detail_budget_show_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -204,7 +209,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_pay" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_show_pay" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -227,8 +232,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_plan_detail_budget_content"
+                <TextView
+                    android:id="@+id/et_plan_detail_budget_show_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -249,7 +254,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_content" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_plan_detail_budget_show_content" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -264,7 +269,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_plan_budget_plus_recipt"
+                android:id="@+id/iv_plan_budget_show_recipt"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="20dp"
                 app:layout_constraintDimensionRatio="1:1"
@@ -279,25 +284,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <ImageView
-                android:id="@+id/iv_plan_budget_plus_image_icon"
+                android:id="@+id/iv_plan_budget_show_image_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:background="@drawable/photo"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_plan_budget_plus_recipt"
-                app:layout_constraintEnd_toEndOf="@+id/iv_plan_budget_plus_recipt"
-                app:layout_constraintStart_toStartOf="@+id/iv_plan_budget_plus_recipt"
-                app:layout_constraintTop_toTopOf="@+id/iv_plan_budget_plus_recipt" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_plan_budget_show_recipt"
+                app:layout_constraintEnd_toEndOf="@+id/iv_plan_budget_show_recipt"
+                app:layout_constraintStart_toStartOf="@+id/iv_plan_budget_show_recipt"
+                app:layout_constraintTop_toTopOf="@+id/iv_plan_budget_show_recipt" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/bt_plan_budget_plus_done"
+        android:id="@+id/bt_plan_budget_show_done"
         android:layout_marginBottom="30dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:background="@drawable/chips_keyword2"
-        android:text="완료"
+        android:text="닫기"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"

@@ -1,14 +1,12 @@
 package com.example.worktrip.Plan
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanWorkShopData
-import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.Plan.Adapter.PlanWorkshopAdapter
 import com.example.worktrip.databinding.FragmentPlanTabMain02Binding
@@ -59,19 +57,16 @@ class Plan_tab_main02Fragment : Fragment() {
                             if (item != null) {
                                 if(!(item.now)){
                                     itemList.add(item)
-                                    Log.d("lee", itemList.toString())
                                 }
                             }
                             adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
                         }
-                        .addOnFailureListener { exception -> // 실패
-                            Log.d("lee", "Error getting documents: ", exception)
+                        .addOnFailureListener {
 
                         }
                 }
             }
-            .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
+            .addOnFailureListener {
             }
     }
 

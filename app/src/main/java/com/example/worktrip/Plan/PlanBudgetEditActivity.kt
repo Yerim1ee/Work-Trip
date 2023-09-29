@@ -2,28 +2,26 @@ package com.example.worktrip.Plan
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.ActivityPlanBudgetEditBinding
-import com.example.worktrip.databinding.ActivityPlanDetailBudgetPlusBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
+
 
 class PlanBudgetEditActivity : AppCompatActivity() {
 
@@ -32,15 +30,21 @@ class PlanBudgetEditActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private var uri: Uri? = null
+    lateinit var workshop_docID:String
 
     //DecimalFormat 객체 선언 실시 (소수점 표시 안함)
     val t_dec_up = DecimalFormat("#,###")
 
+    var radio_button_category  = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlanBudgetEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        db = FirebaseFirestore.getInstance()
+        auth = Firebase.auth // auth 정의
+
+        workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
 
         //toolbar 설정
         this.setSupportActionBar(findViewById(R.id.tb_plan_detail_budget_plus))
@@ -49,7 +53,6 @@ class PlanBudgetEditActivity : AppCompatActivity() {
         val toolbarTitle = binding.tvPlanDetailBudgetPlusTitle
         toolbarTitle.text = "사용내역 수정"
 
-        var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
 
         // 넘겼던 데이터 가져오기
         val data = intent.getParcelableExtra<PlanBudgetData>("data")
@@ -58,26 +61,35 @@ class PlanBudgetEditActivity : AppCompatActivity() {
         var str_change_money_up = t_dec_up.parse(budget)
         binding.edPlanDetailBudgetPrice.setText(str_change_money_up.toString())
 
+        imageShow(data?.docID.toString())
         binding.etPlanDetailBudgetContent.setText(data?.plan_content)
         binding.etPlanDetailBudgetPay.setText(data?.plan_pay)
         binding.etPlanDetailBudgetQuantity.setText(data?.plan_quantity)
-        Log.d("aaaa", data?.plan_category.toString())
         when(data?.plan_category){
-            "코스" ->
+            "코스" ->{
                 binding.rbPlanBudgetCourse.isChecked  = true
+                radio_button_category = "코스"
+            }
+            "맛집" ->{
+                binding.rbPlanBudgetEat.isChecked  = true
+                radio_button_category = "맛집"
+            }
+            "기타" ->{
+                binding.rbPlanBudgetElse.isChecked  = true
+                radio_button_category = "기타"
+            }
 
-                "맛집" ->
-                        binding.rbPlanBudgetEat.isChecked  = true
-                    "기타" ->
-                        binding.rbPlanBudgetElse.isChecked  = true
-                    "숙소" ->
-                        binding.rbPlanBudgetHouse.isChecked  = true
-                    "프로그램"->
-            binding.rbPlanBudgetProgram.isChecked  = true
+            "숙소" ->{
+                binding.rbPlanBudgetHouse.isChecked  = true
+                radio_button_category = "숙소"
+            }
+
+            "프로그램"->{
+                binding.rbPlanBudgetProgram.isChecked  = true
+                radio_button_category = "프로그램"
+            }
+
         }
-
-        db = FirebaseFirestore.getInstance()
-        auth = Firebase.auth // auth 정의
 
 
 
@@ -89,27 +101,22 @@ class PlanBudgetEditActivity : AppCompatActivity() {
         }
 
         // 카테고리 받아오기
-        var radio_button_category  = ""
         binding.rgPlanBudgetRadiogroup.setOnCheckedChangeListener{ group, checkId ->
             when(checkId){
-                R.id.rb_plan_budget_course ->
+                com.example.worktrip.R.id.rb_plan_budget_course ->
                     radio_button_category = "코스"
-                R.id.rb_plan_budget_eat ->
+                com.example.worktrip.R.id.rb_plan_budget_eat ->
                     radio_button_category = "맛집"
-                R.id.rb_plan_budget_else ->
+                com.example.worktrip.R.id.rb_plan_budget_else ->
                     radio_button_category = "기타"
-                R.id.rb_plan_budget_house ->
+                com.example.worktrip.R.id.rb_plan_budget_house ->
                     radio_button_category = "숙소"
-                R.id.rb_plan_budget_program ->
+                com.example.worktrip.R.id.rb_plan_budget_program ->
                     radio_button_category = "프로그램"
             }
         }
 
         binding.btPlanBudgetPlusDone.setOnClickListener {
-
-
-            uri?.let { imageUpload(it) }
-
             if (binding.edPlanDetailBudgetPrice.text.toString().isEmpty()) {
                 Toast.makeText(this, "사용 가격을 입력해주세요", Toast.LENGTH_LONG).show()
             }  else if (binding.etPlanDetailBudgetQuantity.text.toString().isEmpty()) {
@@ -138,6 +145,10 @@ class PlanBudgetEditActivity : AppCompatActivity() {
                     uri.toString()
 
                 ) // 데이터 구조
+
+                if(!(uri.toString().equals(data?.plan_recipt.toString()))){
+                    uri?.let { imageUpload(it, data?.docID.toString()) }
+                }
 
                 // workshop 문서 생성
                 db.collection("workshop")
@@ -173,14 +184,13 @@ class PlanBudgetEditActivity : AppCompatActivity() {
             }
         }
 
-    private fun imageUpload(uri: Uri) {
+    private fun imageUpload(uri: Uri, title:String) {
         // storage 인스턴스 생성
         val storage = Firebase.storage
         // storage 참조
-        val storageRef = storage.getReference("plan_budget/${auth.uid}")
+        val storageRef = storage.getReference("plan_budget/${workshop_docID}")
         // 파일 경로와 이름으로 참조 변수 생성
-        val fileName = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
-        val mountainsRef = storageRef.child("${fileName}.png")
+        val mountainsRef = storageRef.child("${title}.png")
 
 
         val uploadTask = mountainsRef.putFile(uri)
@@ -191,6 +201,21 @@ class PlanBudgetEditActivity : AppCompatActivity() {
 
             // 파일 업로드 실패
             Toast.makeText(this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private fun imageShow( title:String) {
+
+        val storage = FirebaseStorage.getInstance("gs://work-trip-c01ab.appspot.com/")
+        val storageRef = storage.reference
+        storageRef.child("plan_budget/${workshop_docID}/${title}.png").downloadUrl
+            .addOnSuccessListener { uri -> //이미지 로드 성공시
+                binding.ivPlanBudgetPlusImageIcon.visibility = View.GONE
+            Glide.with(applicationContext)
+                .load(uri)
+                .into(binding.ivPlanBudgetPlusRecipt)
+        }.addOnFailureListener { //이미지 로드 실패시
+            Toast.makeText(applicationContext, "영수증 이미지 로드 실패", Toast.LENGTH_SHORT).show()
         }
     }
 

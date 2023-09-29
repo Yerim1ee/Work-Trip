@@ -2,16 +2,13 @@ package com.example.worktrip.Plan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityPlanWorkshopPlus2Binding
-import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,13 +44,11 @@ class Plan_workshop_plus2_Activity : AppCompatActivity() {
                 .addOnSuccessListener {result->
                     val item = result.toObject(PlanWorkShopData::class.java)
 
-                    Log.d("aaa", item.toString())
                     if (item != null) {
                         db.collection("user")
                             .document(auth.uid.toString())
                             .get()
                             .addOnSuccessListener { result ->
-                                Log.d("aaa", result.toString())
                                 val item_user = result.toObject(UserBaseData::class.java)
                                 if (item_user != null) {
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.My.bookmarkId
 import com.example.worktrip.My.bookmarkTypeId
@@ -45,7 +46,13 @@ class RecyclerAdapter_card_image_title(private val items: ArrayList<data_card_li
         mAuth = FirebaseAuth.getInstance()
 
         //viewHolder.binding.ivCardImageTitleImg.setImageBitmap(items[position].img)
-        Glide.with(viewHolder.binding.ivCardImageTitleImg).load(items[position].img).centerInside().into(viewHolder.binding.ivCardImageTitleImg)
+        /*Glide.with(viewHolder.binding.ivCardImageTitleImg).load(items[position].img)
+            .centerInside()
+            .into(viewHolder.binding.ivCardImageTitleImg)
+        */
+        viewHolder.binding.ivCardImageTitleImg.load(items[position].img)
+
+
         viewHolder.binding.tvCardImageTitleTitle.text=items[position].title
         //view에 onClickListner를 달고, 그 안에서 직접 만든 itemClickListener를 연결
         viewHolder.itemView.setOnClickListener { itemClickListner.onClick(it, position) }

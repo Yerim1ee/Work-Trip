@@ -5,27 +5,21 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.constraintlayout.widget.StateSet.TAG
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
-import com.example.worktrip.Plan.Adapter.Plan_detail_budget_Adapter
 import com.example.worktrip.Plan.Adapter.Plan_detail_person_Adapter
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.FragmentPlanDetailPeopleBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.template.model.Link
@@ -102,15 +96,9 @@ class Plan_detail_people_Fragment : Fragment() {
                 // 카카오톡으로 카카오톡 공유 가능
                 ShareClient.instance.shareDefault(mainActivity, defaultText) { sharingResult, error ->
                     if (error != null) {
-                        Log.e(TAG, "카카오톡 공유 실패", error)
                     }
                     else if (sharingResult != null) {
-                        Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
                         startActivity(sharingResult.intent)
-
-                        // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
-                        Log.w(TAG, "Warning Msg: ${sharingResult.warningMsg}")
-                        Log.w(TAG, "Argument Msg: ${sharingResult.argumentMsg}")
                     }
                 }
             }else {
@@ -141,8 +129,7 @@ class Plan_detail_people_Fragment : Fragment() {
                    title =  item.tv_plan_title.toString()
                 }
             }
-            .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
+            .addOnFailureListener {
             }
         return title
     }

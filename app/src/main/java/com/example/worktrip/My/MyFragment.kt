@@ -4,15 +4,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.constraintlayout.widget.StateSet.TAG
 import androidx.fragment.app.Fragment
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
@@ -28,29 +24,15 @@ import com.google.firebase.ktx.Firebase
 class MyFragment : Fragment() {
      var mAuth:FirebaseAuth = Firebase.auth
      var db : FirebaseFirestore = FirebaseFirestore.getInstance()
-
+    lateinit var binding:FragmentMyBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentMyBinding.inflate(inflater, container, false)
+        binding = FragmentMyBinding.inflate(inflater, container, false)
 
 
-        db.collection("user")
-            .document(mAuth.uid.toString())
-            .get()
-            .addOnSuccessListener { result -> // 성공
-                val item = result.toObject(UserBaseData::class.java)
-                if (item != null) {
-                    binding.tvMyName.setText(item.userName)
-                    binding.tvMyContent.setText("# "+item.food +
-                            " # "+item.course +
-                            " # "+item.reports+
-                            " # "+item.sleep+
-                            " # "+item.travel)
-                }
-            }
 
         binding.ibMyLogout.setOnClickListener {
             signOut()
@@ -62,6 +44,10 @@ class MyFragment : Fragment() {
 
         binding.layoutMySystemInformation.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/work-trip-c01ab.appspot.com/o/setting%2F%EC%9A%B4%EC%98%81-%EC%A0%95%EC%B1%85.html?alt=media&token=8ebc728d-94fe-49ac-a153-7f626c58232e"))
+            startActivity(intent)
+        }
+        binding.layoutMyEditInformation.setOnClickListener {
+            val intent = Intent(activity, My_change_info_Activity::class.java)
             startActivity(intent)
         }
 
@@ -100,6 +86,25 @@ class MyFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        db.collection("user")
+            .document(mAuth.uid.toString())
+            .get()
+            .addOnSuccessListener { result -> // 성공
+                val item = result.toObject(UserBaseData::class.java)
+                if (item != null) {
+                    binding.tvMyName.setText(item.userName)
+                    binding.tvMyContent.setText("# "+item.food +
+                            " # "+item.course +
+                            " # "+item.reports+
+                            " # "+item.sleep+
+                            " # "+item.travel)
+                }
+            }
+    }
+
     private fun signOut() {
        FirebaseAuth.getInstance().signOut()
 
@@ -111,15 +116,15 @@ class MyFragment : Fragment() {
         db.collection("user")
             .document("${mAuth.currentUser?.uid.toString()}")
             .delete()
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+            .addOnSuccessListener {  }
+            .addOnFailureListener { }
 
         db.collection("user_workshop")
             .document("${mAuth.currentUser?.uid.toString()}")
             .delete()
             .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot successfully deleted!")
             }
+
         mAuth.getCurrentUser()?.delete()
     }
 

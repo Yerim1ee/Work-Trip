@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -45,34 +44,28 @@ class SignUpActivity01 : Activity() {
             if(binding.etSignupId.text.toString().isEmpty())
             {
                 Toast.makeText(this, "아이디를 입력해주세요.",Toast.LENGTH_LONG).show()
-                Log.d("Aaa", "왜1")
 
             }
             else if(binding.tvSignupIdError.text.toString().equals("이메일 형식에 맞지 않습니다.")){
                 Toast.makeText(this, "이메일 형식에 맞지 않습니다.",Toast.LENGTH_LONG).show()
-                Log.d("Aaa", "왜2")
 
             }
             else if(binding.tvSignupRePasswordError.text.toString().equals("비밀번호를 일치시켜주세요")){
                 Toast.makeText(this, "비밀번호를 일치시켜주세요",Toast.LENGTH_LONG).show()
-                Log.d("Aaa", "왜3")
             }
 
             else if(binding.etSignupPassword.text.toString().length < 6){
                 Toast.makeText(this, "6자 이상 입력해주세요..",Toast.LENGTH_LONG).show()
-                Log.d("Aaa", "왜4")
 
             }
 
             else if(binding.tvSignupPasswordError.equals("6자 이상 입력해주세요.")){
                 Toast.makeText(this, "6자 이상 입력해주세요..",Toast.LENGTH_LONG).show()
-                Log.d("Aaa", "왜5")
 
             }
             else{
 
                         if(!(binding.tvSignupIdError.text.toString().equals("해당 아이디가 존재합니다."))){
-                            Log.d("Aaa", "3")
                             var intent: Intent = Intent(this, SignUpActivity02::class.java)
                             intent.putExtra("id", binding.etSignupId.text.toString())
                             intent.putExtra("password", binding.etSignupPassword.text.toString())

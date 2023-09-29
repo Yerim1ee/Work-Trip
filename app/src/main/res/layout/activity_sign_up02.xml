@@ -181,6 +181,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <CheckBox
+        android:id="@+id/cb_signup_2_check_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="만 18세 이상입니다."
+        android:buttonTint="@color/main_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+
     <Button
         android:id="@+id/bt_singup2_next"
         android:layout_marginBottom="30dp"

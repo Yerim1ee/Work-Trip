@@ -1,19 +1,19 @@
 package com.example.worktrip.SignUp
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.CheckBox
+import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivitySignUp03Binding
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.DataClass.uidData
-import com.example.worktrip.MainActivity
-import com.example.worktrip.PreferenceUtil
 import com.example.worktrip.SocketApplication
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -75,7 +75,31 @@ class SignUpActivity03 : Activity() {
 
         // 에러 처리
         binding.btSingup3Next.setOnClickListener {
-            signUpEmail()
+            // Dialog만들기
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog07, null)
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+
+            val  mAlertDialog = mBuilder.show()
+
+            val noButton = mDialogView.findViewById<Button>(R.id.btn_dialog_no_7)
+            noButton.setOnClickListener {
+                    Toast.makeText(this, "개인정보처리방침에 동의를 완료하셔야 회원가입을 완료하실 수 있습니다.", Toast.LENGTH_LONG).show()
+
+            }
+
+            val okButton = mDialogView.findViewById<Button>(R.id.btn_dialog_yes_7)
+            okButton.setOnClickListener{
+                mAlertDialog.dismiss()
+                signUpEmail()
+                }
+
+            val link_check = mDialogView.findViewById<TextView>(R.id.tv_custom_dialog_07_link)
+            link_check.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/work-trip-c01ab.appspot.com/o/setting%2F%EC%9A%B4%EC%98%81-%EC%A0%95%EC%B1%85.html?alt=media&token=8ebc728d-94fe-49ac-a153-7f626c58232e"))
+                startActivity(intent)
+            }
+
         }
     }
 

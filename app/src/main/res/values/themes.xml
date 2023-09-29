@@ -33,4 +33,8 @@
         <item name="colorPrimaryDark">#000000</item>
     </style>
 
+    <style name="Theme.SSMemorize" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">#2757FF</item>
+        <item name="colorPrimaryDark">#000000</item>
+    </style>
 </resources>

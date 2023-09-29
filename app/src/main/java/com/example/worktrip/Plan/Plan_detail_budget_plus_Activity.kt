@@ -1,9 +1,6 @@
 package com.example.worktrip.Plan
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +11,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.example.worktrip.DataClass.PlanBudgetData
-import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.ActivityPlanDetailBudgetPlusBinding
-import com.example.worktrip.databinding.ActivityPlanDetailTimelinePlusBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,9 +22,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Date
 
 class Plan_detail_budget_plus_Activity : AppCompatActivity() {
     private lateinit var binding: ActivityPlanDetailBudgetPlusBinding
@@ -41,6 +30,7 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private var uri: Uri? = null
+    lateinit var workshop_docID:String
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -49,8 +39,7 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
         binding = ActivityPlanDetailBudgetPlusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
-
+        workshop_docID = SocketApplication.prefs.getString("now_workshop_id", "")
         db = FirebaseFirestore.getInstance()
         auth = Firebase.auth // auth 정의
 
@@ -91,7 +80,7 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
             //DecimalFormat 객체 선언 실시 (소수점 표시 안함)
             val t_dec_up = DecimalFormat("#,###")
 
-            uri?.let { imageUpload(it) }
+
 
             if (binding.edPlanDetailBudgetPrice.text.toString().isEmpty()) {
                 Toast.makeText(this, "사용 가격을 입력해주세요", Toast.LENGTH_LONG).show()
@@ -125,6 +114,8 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
                     uri.toString()
 
                     ) // 데이터 구조
+
+                uri?.let { imageUpload(it, stringTime) }
 
                 // workshop 문서 생성
                 db.collection("workshop")
@@ -161,14 +152,13 @@ class Plan_detail_budget_plus_Activity : AppCompatActivity() {
             }
         }
 
-    private fun imageUpload(uri: Uri) {
+    private fun imageUpload(uri: Uri, title:String) {
         // storage 인스턴스 생성
         val storage = Firebase.storage
         // storage 참조
-        val storageRef = storage.getReference("plan_budget/${auth.uid}")
+        val storageRef = storage.getReference("plan_budget/${workshop_docID}")
         // 파일 경로와 이름으로 참조 변수 생성
-        val fileName = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
-        val mountainsRef = storageRef.child("${fileName}.png")
+        val mountainsRef = storageRef.child("${title}.png")
 
 
         val uploadTask = mountainsRef.putFile(uri)

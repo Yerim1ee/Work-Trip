@@ -3,14 +3,11 @@ package com.example.worktrip.Plan.Adapter
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.worktrip.DataClass.PlanWorkShopData
@@ -48,7 +45,6 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
                     result -> // 성공
                 val item_result = result.toObject(PlanWorkShopUserData::class.java)
                 if (item_result != null) {
-                    Log.d("Aaa", item_result.part.toString())
                     if(item_result.part.toString().equals("참가자")){
                         binding.ibPlanBtn2.visibility = View.GONE
                     }
@@ -102,7 +98,6 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .document()
             .delete()
             .addOnSuccessListener {
-                Log.d("assa","1")
             }
 
         db.collection("workshop")
@@ -111,7 +106,6 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .document()
             .delete()
             .addOnSuccessListener {
-                Log.d("assa","2")
             }
 
         db.collection("workshop")
@@ -120,14 +114,12 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .document()
             .delete()
             .addOnSuccessListener {
-                Log.d("assa","3")
             }
 
         db.collection("workshop")
             .document(workshop_docID)
             .delete()
             .addOnSuccessListener {
-                Log.d("assa","4")
             }
 
         db.collection("user_workshop")
@@ -136,7 +128,6 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .document(workshop_docID)
             .delete()
             .addOnSuccessListener {
-                Log.d("assa","5")
             }
 
     }

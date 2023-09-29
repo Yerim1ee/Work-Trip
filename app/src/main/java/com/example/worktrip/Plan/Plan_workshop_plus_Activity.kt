@@ -1,22 +1,15 @@
 package com.example.worktrip.Plan
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.graphics.Color
 import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.DataClass.UserBaseData
-import com.example.worktrip.DataClass.uidData
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityPlanWorkshopPlusBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -28,7 +21,6 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.Locale
 
 class Plan_workshop_plus_Activity : AppCompatActivity(){
@@ -171,8 +163,7 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
                                                 .set(workshopuser_data)
                                         }
                                     }
-                                    .addOnFailureListener { exception -> // 실패
-                                        Log.d("lee", "Error getting documents: ", exception)
+                                    .addOnFailureListener {
                                     }
 
 

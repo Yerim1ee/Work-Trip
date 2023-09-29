@@ -3,7 +3,6 @@ package com.example.worktrip.Plan
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -62,7 +61,6 @@ class Plan_workshop_edit_Activity : AppCompatActivity() {
         binding.etPlanTitle.setText(data.tv_plan_title.toString())
         binding.etPlanFilter.setText(data.tv_plan_filter.toString())
 
-        Log.d("aaa",budget_data.toString() )
         var str_change_money_up = t_dec_up.parse(budget_data.toString())
         binding.etPlanBudget.setText(str_change_money_up.toString())
 

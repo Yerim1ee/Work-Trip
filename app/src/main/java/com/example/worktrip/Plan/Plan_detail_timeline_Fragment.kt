@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,24 +11,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.worktrip.DataClass.PlanDetailDateData
 import com.example.worktrip.DataClass.PlanTimeLineData
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.PlanWorkShopUserData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.My.BookmarkActivity
-import com.example.worktrip.Plan.Adapter.PlanWorkshopAdapter
 import com.example.worktrip.Plan.Adapter.Plan_detail_timeline_Adapter
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
-import com.example.worktrip.databinding.FragmentPlanDetailNoticeBinding
 import com.example.worktrip.databinding.FragmentPlanDetailTimelineBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.card_item_budget.view.ib_plan_card_detail_budget_plus
 import java.time.LocalDate
-import java.time.Period
 import java.time.format.DateTimeFormatter
 
 class Plan_detail_timeline_Fragment : Fragment() {
@@ -112,7 +106,6 @@ class Plan_detail_timeline_Fragment : Fragment() {
                     result -> // 성공
                 val item_result = result.toObject(PlanWorkShopUserData::class.java)
                 if (item_result != null) {
-                    Log.d("Aaa", item_result.part.toString())
                     if(item_result.part.toString().equals("참가자")){
                         binding.btPlanDetailTimelinePlus.visibility = View.GONE
                     }
@@ -226,7 +219,6 @@ class Plan_detail_timeline_Fragment : Fragment() {
                 }
             }
             .addOnFailureListener { exception -> // 실패
-                Log.d("lee", "Error getting documents: ", exception)
             }
 
     }

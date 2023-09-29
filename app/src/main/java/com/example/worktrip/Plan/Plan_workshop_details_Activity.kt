@@ -2,11 +2,9 @@ package com.example.worktrip.Plan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.worktrip.Plan.Adapter.Plan_tab_detail_Adapter
-import com.example.worktrip.PreferenceUtil
 import com.example.worktrip.R
 import com.example.worktrip.SocketApplication
 import com.example.worktrip.databinding.ActivityPlanWorkshopDetailsBinding
