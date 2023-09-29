@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Plan.Plan_tab_main02Fragment">
 
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -23,4 +24,20 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_plan_tab_main2_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지난 워크숍이 없습니다."
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/gray2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

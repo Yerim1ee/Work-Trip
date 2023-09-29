@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.MainActivity
 import com.example.worktrip.Plan.Adapter.PlanWorkshopAdapter
-import com.example.worktrip.databinding.FragmentPlanTabMain02Binding
+import com.example.worktrip.databinding.FragmentPlanTabMain01Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 
 class Plan_tab_main01Fragment : Fragment() {
 
-    private lateinit var binding: FragmentPlanTabMain02Binding
+    private lateinit var binding: FragmentPlanTabMain01Binding
 
     var db : FirebaseFirestore = FirebaseFirestore.getInstance()
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -32,10 +32,10 @@ class Plan_tab_main01Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPlanTabMain02Binding.inflate(inflater, container, false)
+        binding = FragmentPlanTabMain01Binding.inflate(inflater, container, false)
 
-        binding.rcvPlanMain2Recyclerview.layoutManager = LinearLayoutManager(context)
-        binding.rcvPlanMain2Recyclerview.adapter= adapter
+        binding.rcvPlanMain1Recyclerview.layoutManager = LinearLayoutManager(context)
+        binding.rcvPlanMain1Recyclerview.adapter= adapter
 
 
 
@@ -93,12 +93,20 @@ class Plan_tab_main01Fragment : Fragment() {
                                     itemList.add(item)
                                 }
                             }
+                            if(itemList.isEmpty()){
+                                binding.tvPlanTabMain1None.visibility = View.VISIBLE
+                            }
+                            else{
+                                binding.tvPlanTabMain1None.visibility = View.GONE
+                            }
                             adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
                         }
                         .addOnFailureListener {
 
                         }
+
                 }
+
             }
             .addOnFailureListener {
             }

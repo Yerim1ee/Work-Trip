@@ -129,6 +129,9 @@ class Plan_workshop_plus_Activity : AppCompatActivity(){
                                         .collection("date")
                                         .document(curDate_Local.format(formatter))
                                         .set(workshopdata)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "워크숍이 추가되었습니다.",Toast.LENGTH_LONG).show()
+                                        }
 
                                     curDate_Local = curDate_Local.plusDays(1)
 

@@ -29,6 +29,7 @@ import com.example.worktrip.Community.commuListUserID
 import com.example.worktrip.Community.commuListWritingID
 import com.example.worktrip.Community.data_card_community
 import com.example.worktrip.Community.list_card_community
+import com.example.worktrip.DataClass.PlanWorkShopData
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
 import com.example.worktrip.SignUp.LoginActivity
@@ -37,6 +38,7 @@ import com.example.worktrip.databinding.FragmentMyBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 
 
@@ -67,13 +69,26 @@ class MyFragment : Fragment() {
             .document(mAuth.uid.toString())
             .collection("workshop_list")
             .get()
-            .addOnSuccessListener {
-                result ->
+            .addOnSuccessListener { result ->
                 var tvMyWorkshopNum =0
-                for(document in result){
-                    tvMyWorkshopNum = tvMyWorkshopNum + 1
+                for (document in result) {
+                    db.collection("workshop")
+                        .document(document.id)
+                        .get()
+                        .addOnSuccessListener {document_workshop->
+                            // 리사이클러 뷰 아이템 설정 및 추가
+                            tvMyWorkshopNum = tvMyWorkshopNum + 1
+
+                        }
+                        .addOnFailureListener {
+
+                        }
+
                 }
                 binding.tvMyWorkshopNum.setText(tvMyWorkshopNum.toString())
+
+            }
+            .addOnFailureListener {
             }
 
         // 작성한 글 개수
@@ -96,6 +111,11 @@ class MyFragment : Fragment() {
         }
         binding.layoutMyEditInformation.setOnClickListener {
             val intent = Intent(activity, My_change_info_Activity::class.java)
+            startActivity(intent)
+        }
+
+        binding.layoutMyFaq.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://work-trip.notion.site/FAQ-ac323e8b21e04781b8459bb7c69c6f92?pvs=4"))
             startActivity(intent)
         }
 

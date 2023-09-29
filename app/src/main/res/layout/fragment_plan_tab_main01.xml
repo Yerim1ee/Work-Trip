@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Plan.Plan_tab_main02Fragment">
+    tools:context=".Plan.Plan_tab_main01Fragment">
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -24,4 +25,18 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_plan_tab_main1_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="워크숍을 추가해보세요:)"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/gray2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

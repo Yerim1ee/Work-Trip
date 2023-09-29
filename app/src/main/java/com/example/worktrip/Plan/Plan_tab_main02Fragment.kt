@@ -1,6 +1,7 @@
 package com.example.worktrip.Plan
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,10 +61,18 @@ class Plan_tab_main02Fragment : Fragment() {
                                 }
                             }
                             adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                            if(itemList.isEmpty()){
+                                binding.tvPlanTabMain2None.visibility = View.VISIBLE
+                            }
+                            else{
+                                binding.tvPlanTabMain2None.visibility = View.GONE
+
+                            }
                         }
                         .addOnFailureListener {
 
                         }
+
                 }
             }
             .addOnFailureListener {

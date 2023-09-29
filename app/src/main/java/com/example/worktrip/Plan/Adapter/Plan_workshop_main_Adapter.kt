@@ -3,6 +3,7 @@ package com.example.worktrip.Plan.Adapter
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -90,6 +91,7 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
 
     fun firestore_delete(workshop_docID:String)
     {
+        Log.d("Aaa", workshop_docID)
         db.collection("workshop")
             .document(workshop_docID)
             .collection("date")
@@ -116,6 +118,7 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .addOnSuccessListener {
             }
 
+
         db.collection("workshop")
             .document(workshop_docID)
             .delete()
@@ -127,8 +130,6 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             .collection("workshop_list")
             .document(workshop_docID)
             .delete()
-            .addOnSuccessListener {
-            }
 
     }
 }

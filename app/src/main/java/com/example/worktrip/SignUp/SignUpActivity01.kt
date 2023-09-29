@@ -66,13 +66,12 @@ class SignUpActivity01 : Activity() {
 
             }
             else{
-
-                        if(!(binding.tvSignupIdError.text.toString().equals("해당 아이디가 존재합니다."))){
-                            var intent: Intent = Intent(this, SignUpActivity02::class.java)
-                            intent.putExtra("id", binding.etSignupId.text.toString())
-                            intent.putExtra("password", binding.etSignupPassword.text.toString())
-                            startActivity(intent)
-                        }
+                if(!(binding.tvSignupIdError.text.toString().equals("해당 아이디가 존재합니다."))){
+                    var intent: Intent = Intent(this, SignUpActivity02::class.java)
+                    intent.putExtra("id", binding.etSignupId.text.toString())
+                    intent.putExtra("password", binding.etSignupPassword.text.toString())
+                    startActivity(intent)
+                }
             }
 
 
