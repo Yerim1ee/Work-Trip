@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Gallery
 import android.widget.ImageView
 import android.widget.TextView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.R
 import com.google.firebase.auth.FirebaseAuth
@@ -84,8 +85,10 @@ class fragment_plus_2 : Fragment() {
                 nullText1.visibility = View.GONE
                 commuImage1= editImg1
 
-                Glide.with(this).load(commuImage1).centerInside()
-                    .into(image1)
+                // Glide.with(this).load(commuImage1).centerInside()
+                    // .into(image1)
+                image1.load(commuImage1)
+
                 countImg.text="1/3"
 
             }
@@ -96,8 +99,9 @@ class fragment_plus_2 : Fragment() {
                 nullText2.visibility = View.GONE
                 commuImage2= editImg2
 
-                Glide.with(this).load(commuImage2).centerInside()
-                    .into(image2)
+                // Glide.with(this).load(commuImage2).centerInside()
+                  //  .into(image2)
+                image2.load(commuImage2)
                 countImg.text="2/3"
 
             }
@@ -109,8 +113,9 @@ class fragment_plus_2 : Fragment() {
                 nullText3.visibility = View.GONE
                 commuImage3= editImg3
 
-                Glide.with(this).load(commuImage3).centerInside()
-                    .into(image3)
+                // Glide.with(this).load(commuImage3).centerInside()
+                   // .into(image3)
+                image3.load(commuImage3)
                 countImg.text="3/3"
 
             }

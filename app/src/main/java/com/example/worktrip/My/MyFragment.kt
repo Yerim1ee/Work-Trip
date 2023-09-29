@@ -4,12 +4,31 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.worktrip.Community.commuListCompany
+import com.example.worktrip.Community.commuListContent
+import com.example.worktrip.Community.commuListDate
+import com.example.worktrip.Community.commuListDepature
+import com.example.worktrip.Community.commuListDestination
+import com.example.worktrip.Community.commuListGoal
+import com.example.worktrip.Community.commuListImg1
+import com.example.worktrip.Community.commuListImg2
+import com.example.worktrip.Community.commuListImg3
+import com.example.worktrip.Community.commuListKeyword
+import com.example.worktrip.Community.commuListMoney
+import com.example.worktrip.Community.commuListPeople
+import com.example.worktrip.Community.commuListPeriod
+import com.example.worktrip.Community.commuListTitle
+import com.example.worktrip.Community.commuListUserID
+import com.example.worktrip.Community.commuListWritingID
+import com.example.worktrip.Community.data_card_community
+import com.example.worktrip.Community.list_card_community
 import com.example.worktrip.DataClass.UserBaseData
 import com.example.worktrip.R
 import com.example.worktrip.SignUp.LoginActivity
@@ -37,10 +56,39 @@ class MyFragment : Fragment() {
         binding.ibMyLogout.setOnClickListener {
             signOut()
             Toast.makeText(getActivity(), "로그아웃 되었습니다.", Toast.LENGTH_LONG).show()
+            getActivity()?.finish()
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
 
         }
+
+        // 만든 워크샵 개수
+        db.collection("user_workshop")
+            .document(mAuth.uid.toString())
+            .collection("workshop_list")
+            .get()
+            .addOnSuccessListener {
+                result ->
+                var tvMyWorkshopNum =0
+                for(document in result){
+                    tvMyWorkshopNum = tvMyWorkshopNum + 1
+                }
+                binding.tvMyWorkshopNum.setText(tvMyWorkshopNum.toString())
+            }
+
+        // 작성한 글 개수
+        db.collection("community")
+            .get()
+            .addOnSuccessListener {result ->
+                var tvMyWriteNum =0
+            for(document in result){
+                var commuListUserID = document.data["userID"].toString() //필드 데이터
+                if(commuListUserID.equals(mAuth.uid.toString())){
+                    tvMyWriteNum = tvMyWriteNum + 1
+                }
+            }
+                binding.tvMyWriteNum.setText(tvMyWriteNum.toString())
+            }
 
         binding.layoutMySystemInformation.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/work-trip-c01ab.appspot.com/o/setting%2F%EC%9A%B4%EC%98%81-%EC%A0%95%EC%B1%85.html?alt=media&token=8ebc728d-94fe-49ac-a153-7f626c58232e"))
@@ -62,6 +110,7 @@ class MyFragment : Fragment() {
             okButton.setOnClickListener {
                 revokeAccess()
                 Toast.makeText(getActivity(), "탈퇴 되었습니다.", Toast.LENGTH_LONG).show()
+                getActivity()?.finish()
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
 

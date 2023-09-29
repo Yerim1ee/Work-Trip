@@ -4,13 +4,15 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import com.example.worktrip.MainActivity
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityLoginBinding
-import com.example.worktrip.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -46,7 +48,17 @@ class LoginActivity :  Activity() {
             startActivity(nextIntent)
         }
 
+        var click = false
 
+        binding.ivLoginVisibility.setOnClickListener{
+            click = !click
+            if(click){
+                binding.etLoginPassword.setInputType(InputType.TYPE_CLASS_TEXT)
+            }
+            else{
+                binding.etLoginPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT)
+            }
+        }
 
         binding.tvMissingPassword.setOnClickListener {
             // Dialog만들기
@@ -112,6 +124,7 @@ class LoginActivity :  Activity() {
     fun moveMainPage(user: FirebaseUser?){
         if(user !=null){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 

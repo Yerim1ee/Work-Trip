@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.R
@@ -47,7 +48,12 @@ class RecyclerAdapter_card_list_people (private val items: ArrayList<data_card_l
         mAuth =FirebaseAuth.getInstance()
 
         //viewHolder.binding.ivCardListPeopleImg.setImageBitmap(items[position].img)
-        Glide.with(viewHolder.binding.ivCardListPeopleImg).load(items[position].img).centerInside().into(viewHolder.binding.ivCardListPeopleImg)
+        /*Glide.with(viewHolder.binding.ivCardListPeopleImg).load(items[position].img)
+            .centerInside().into(viewHolder.binding.ivCardListPeopleImg)
+
+         */
+        viewHolder.binding.ivCardListPeopleImg.load(items[position].img)
+
         viewHolder.binding.tvCardListPeopleTitle.text = items[position].title
         viewHolder.binding.tvCardListPeoplePeople.text = items[position].people
         //viewHolder.binding.tvCardListLocation.text = items[position].id

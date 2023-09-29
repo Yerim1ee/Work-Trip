@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.Home.RecyclerAdapter_detail_course
@@ -183,7 +184,9 @@ class DetailCourseActivity : AppCompatActivity(){
         titleTextView.text = detail_contentTitle
         locationTextView.text = detail_contentLocation
         //imgImageView.setImageBitmap(detail_bitmap)
-        Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        // Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        imgImageView.load(detail_imgURL)
+
         if (!(detail_imgURL.equals("")))
         {
             findViewById<ImageView>(R.id.iv_activity_detail_course_nullImage).visibility= View.GONE

@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.My.firestore_bookmark_list
@@ -189,7 +190,9 @@ class DetailLodgingActivity : AppCompatActivity() {
         titleTextView.text = detail_contentTitle
         locationTextView.text = detail_contentLocation
         //imgImageView.setImageBitmap(detail_bitmap)
-        Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        // Glide.with(this).load(detail_imgURL).centerInside().into(imgImageView)
+        imgImageView.load(detail_imgURL)
+
         if (!(detail_imgURL.equals("")))
         {
             findViewById<ImageView>(R.id.iv_activity_detail_lodging_nullImage).visibility= View.GONE

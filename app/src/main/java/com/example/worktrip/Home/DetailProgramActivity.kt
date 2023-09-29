@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.My.bookmarkImg
@@ -112,7 +113,9 @@ class DetailProgramActivity : AppCompatActivity() {
                         titleTextView.text = programTitle
                         peopleTextView.text = programPeople
                         //imgImageView.setImageBitmap(bitmap)
-                        Glide.with(this).load(programImg).centerInside().into(imgImageView)
+                        // Glide.with(this).load(programImg).centerInside().into(imgImageView)
+                        imgImageView.load(programImg)
+
                         if (!(programImg.equals("")) || !(programImg.equals("null"))) {
                             findViewById<ImageView>(R.id.iv_activity_detail_program_nullImage).visibility =
                                 View.GONE

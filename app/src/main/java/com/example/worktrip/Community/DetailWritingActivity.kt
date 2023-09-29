@@ -11,11 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.BottomsheetShareUrl
 import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.R
 import com.example.worktrip.databinding.ActivityDetailWritingBinding
+import com.example.worktrip.detail_imgURL
 import com.google.firebase.auth.FirebaseAuth
 import com.makeramen.roundedimageview.RoundedImageView
 
@@ -183,20 +185,26 @@ class DetailWritingActivity  : AppCompatActivity() {
                             findViewById<ImageView>(R.id.iv_activity_detail_writing_null1).visibility =
                                 View.GONE
                             img1ImageView.visibility = View.VISIBLE
-                            Glide.with(this).load(writingImg1).centerInside().into(img1ImageView)
+                            //Glide.with(this).load(writingImg1).centerInside().into(img1ImageView)
+                            img1ImageView.load(writingImg1)
+
                         }
 
                         if (!(writingImg2.equals("없음"))) {
                             img2ImageView.visibility = View.VISIBLE
 
-                            Glide.with(this).load(writingImg2).centerInside().into(img2ImageView)
+                            // Glide.with(this).load(writingImg2).centerInside().into(img2ImageView)
+                            img2ImageView.load(writingImg2)
+
                         }
 
 
                         if (!(writingImg3.equals("없음"))) {
                             img3ImageView.visibility = View.VISIBLE
 
-                            Glide.with(this).load(writingImg3).centerInside().into(img3ImageView)
+                            // Glide.with(this).load(writingImg3).centerInside().into(img3ImageView)
+                            img3ImageView.load(writingImg3)
+
                         }
 
                         periodTextView.text = writingPeriod

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.My.bookmarkId
 import com.example.worktrip.My.bookmarkTypeId
@@ -41,7 +42,11 @@ class RecyclerAdapter_list_image_title_overview (private val items: ArrayList<da
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         //viewHolder.binding.ivListImageTitleOverviewImg.setImageBitmap(items[position].img)
-        Glide.with(viewHolder.binding.ivListImageTitleOverviewImg).load(items[position].img).centerInside().into(viewHolder.binding.ivListImageTitleOverviewImg)
+        /*Glide.with(viewHolder.binding.ivListImageTitleOverviewImg).load(items[position].img)
+            .centerInside().into(viewHolder.binding.ivListImageTitleOverviewImg)
+         */
+        viewHolder.binding.ivListImageTitleOverviewImg.load(items[position].img)
+
         viewHolder.binding.tvListImageTitleOverviewTitle.text=items[position].title
 
         var contentID="&contentId="+items[position].id

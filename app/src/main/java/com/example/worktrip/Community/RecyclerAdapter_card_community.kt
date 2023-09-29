@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.worktrip.My.firestore_bookmark_list
 import com.example.worktrip.R
@@ -53,7 +54,9 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
         mAuth = FirebaseAuth.getInstance()
 
         var img1=items[position].img1.toUri()
-        Glide.with(viewHolder.binding.ivCardCommunityImg).load(img1).centerInside().into(viewHolder.binding.ivCardCommunityImg)
+       // Glide.with(viewHolder.binding.ivCardCommunityImg)
+          //  .load(img1).centerInside().into(viewHolder.binding.ivCardCommunityImg)
+        viewHolder.binding.ivCardCommunityImg.load(img1)
 
         viewHolder.binding.tvCardCommunityTitle.text = items[position].title
         viewHolder.binding.tvCardCommunityDeparture.text = items[position].depature
