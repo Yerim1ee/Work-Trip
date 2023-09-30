@@ -14,7 +14,52 @@
       },
       "oauth_client": [
         {
-          "client_id": "847188732318-7vdv9o9hekqvblq8ce39dlr6gr1vudnr.apps.googleusercontent.com",
+          "client_id": "847188732318-rgiqen7ik4i4edm5kp0jph2426f2ko0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.worktrip",
+            "certificate_hash": "582eb84b096e6348c54377d9ca63773d759e7b2a"
+          }
+        },
+        {
+          "client_id": "847188732318-mee9ng8hakhbd7v2qa3md889nu8b8i0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQXSnzciAegrT9CQYAXOOwcxxM92dFWzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847188732318-7vdv9o9hekqvblq8ce39dlr6gr1vudnr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847188732318:android:135e0d70a2830142ebce8f",
+        "android_client_info": {
+          "package_name": "com.worktrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847188732318-63fm5223ikvikrm723p1ue1oi7eosv81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.worktrip",
+            "certificate_hash": "582eb84b096e6348c54377d9ca63773d759e7b2a"
+          }
+        },
+        {
+          "client_id": "847188732318-mee9ng8hakhbd7v2qa3md889nu8b8i0m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

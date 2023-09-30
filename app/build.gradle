@@ -12,10 +12,10 @@ plugins {
 
 
 android {
-    namespace 'com.example.worktrip'
+    namespace 'com.worktrip'
     compileSdk 33
     defaultConfig {
-        applicationId "com.example.worktrip"
+        applicationId "com.worktrip"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -28,7 +28,10 @@ android {
         }
     }
 
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -85,6 +88,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    implementation 'com.google.firebase:firebase-analytics'
 
     // firebase
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
