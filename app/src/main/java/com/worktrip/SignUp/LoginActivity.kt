@@ -111,7 +111,7 @@ class LoginActivity :  Activity() {
                         moveMainPage(auth?.currentUser)
                     } else {
                         Toast.makeText(
-                            baseContext, "로그인에 실패 하였습니다.",
+                            baseContext, "로그인에 실패 하였습니다. 정보/인터넷 연결을 확인하세요.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

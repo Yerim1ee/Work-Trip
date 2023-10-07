@@ -118,6 +118,87 @@ class Plan_detail_timeline_Adapter(val context: Context, val itemList: MutableLi
             tvPlanDetailItemTitle.setText(data.plan_title)
             tvPlanDetailItemPlace.setText(data.plan_place)
             tvPlanDetailItemPresenter.setText(data.plan_presenter)
+
+            //날씨 추가
+            if (data.plan_place.equals(""))
+            {
+                llPlanDetailItemWeather.visibility=View.GONE
+            }
+            else
+            {
+                if (data.plan_place.toString().contains("서울"))
+                {
+                    tvPlanDetailItemWeather.setText("서울")
+                }
+                else if (data.plan_place.toString().contains("인천"))
+                {
+                    tvPlanDetailItemWeather.setText("인천")
+                }
+                else if (data.plan_place.toString().contains("대전"))
+                {
+                    tvPlanDetailItemWeather.setText("대전")
+                }
+                else if (data.plan_place.toString().contains("대구"))
+                {
+                    tvPlanDetailItemWeather.setText("대구")
+                }
+                else if (data.plan_place.toString().contains("광주광역시"))
+                {
+                    tvPlanDetailItemWeather.setText("광주광역시")
+                }
+                else if (data.plan_place.toString().contains("부산"))
+                {
+                    tvPlanDetailItemWeather.setText("부산")
+                }
+                else if (data.plan_place.toString().contains("울산"))
+                {
+                    tvPlanDetailItemWeather.setText("울산")
+                }
+                else if (data.plan_place.toString().contains("세종특별자치시"))
+                {
+                    tvPlanDetailItemWeather.setText("세종특별자치시")
+                }
+                else if (data.plan_place.toString().contains("경기도"))
+                {
+                    tvPlanDetailItemWeather.setText("경기도")
+                }
+                else if (data.plan_place.toString().contains("강원"))
+                {
+                    tvPlanDetailItemWeather.setText("강원")
+                }
+                else if (data.plan_place.toString().contains("충청북도"))
+                {
+                    tvPlanDetailItemWeather.setText("충청북도")
+                }
+                else if (data.plan_place.toString().contains("충청남도"))
+                {
+                    tvPlanDetailItemWeather.setText("충청남도")
+                }
+                else if (data.plan_place.toString().contains("경상북도"))
+                {
+                    tvPlanDetailItemWeather.setText("경상북도")
+                }
+                else if (data.plan_place.toString().contains("경상남도"))
+                {
+                    tvPlanDetailItemWeather.setText("경상남도")
+                }
+                else if (data.plan_place.toString().contains("전라북도"))
+                {
+                    tvPlanDetailItemWeather.setText("전라북도")
+                }
+                else if (data.plan_place.toString().contains("전라남도"))
+                {
+                    tvPlanDetailItemWeather.setText("전라남도")
+                }
+                else if (data.plan_place.toString().contains("제주"))
+                {
+                    tvPlanDetailItemWeather.setText("제주")
+                }
+                else
+                {
+                    llPlanDetailItemWeather.visibility=View.GONE
+                }
+            }
         }
 
     }

@@ -18,8 +18,8 @@ android {
         applicationId "com.worktrip"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         // src 이미지 삽입
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -106,7 +106,6 @@ dependencies {
 
     //coil
     implementation("io.coil-kt:coil:0.10.0")
-
 
     // materialDatePicker
     implementation 'com.google.android.material:material:1.2.1'
