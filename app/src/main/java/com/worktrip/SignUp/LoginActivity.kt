@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -221,8 +220,7 @@ class LoginActivity :  Activity() {
                     }
                 }
                 ?.addOnFailureListener{
-                    e->
-                    Log.d("Aaa", e.toString())
+
                 }
         }
 
@@ -274,8 +272,7 @@ class LoginActivity :  Activity() {
                         }
                     }
                     .addOnFailureListener {
-                        e ->
-                        Log.d("Aaa",e.toString())
+
                     }
 
             }
@@ -334,7 +331,7 @@ class LoginActivity :  Activity() {
                 }
             }
             .addOnFailureListener {e ->
-                Log.d("aaa", e.toString())
+
 
             }
     }
