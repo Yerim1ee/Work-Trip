@@ -18,7 +18,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.worktrip.NetworkThread_detailCommon1
+import com.worktrip.NetworkThread_weather
+import com.worktrip.string
 import kotlinx.android.synthetic.main.card_plan_detail_item.view.ib_plan_detail_timeline_plus
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 
 class PlanDetailTimeLineViewHolder(val binding: CardPlanDetailItemBinding)
@@ -120,79 +128,309 @@ class Plan_detail_timeline_Adapter(val context: Context, val itemList: MutableLi
             tvPlanDetailItemPresenter.setText(data.plan_presenter)
 
             //날씨 추가
-            if (data.plan_place.equals(""))
+            //날짜
+            val formatter0 = DateTimeFormatter.ofPattern("HH")
+            val formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd")
+            val formatter2 = SimpleDateFormat("yyyy.MM.dd")
+
+            var timelinedateString =data.plan_date.toString()
+            var timelinedate=formatter2.parse(timelinedateString) //일정
+            var timelinedateApi=timelinedateString.replace(".", "")
+
+
+            var today =  Calendar.getInstance().apply { //오늘
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time
+
+            var todayString=LocalDateTime.now().format(formatter1)
+            var timeInt=LocalDateTime.now().format(formatter0).toInt()
+
+            //예정 일정 시간
+            var timelineTimeApi=data.plan_time_start.toString().substring(0 until 2)+"00"
+
+            var isWeather=false
+            if (timelinedate.time>=today.time) //등록된 일정이 예정된 일정일 때만 예보를 보여줄 수 있도록
+            {
+                if (((timelinedate.time - today.time) / (24 * 60 * 60 * 1000)<=2))
+                {
+                    isWeather=true
+                }
+            }
+            else{ //지남
+                llPlanDetailItemWeather.visibility=View.GONE
+            }
+
+
+            if (data.plan_place.equals("")) //주소 정보 없음
             {
                 llPlanDetailItemWeather.visibility=View.GONE
             }
             else
             {
-                if (data.plan_place.toString().contains("서울"))
+                if (isWeather==true)
                 {
-                    tvPlanDetailItemWeather.setText("서울")
-                }
-                else if (data.plan_place.toString().contains("인천"))
-                {
-                    tvPlanDetailItemWeather.setText("인천")
-                }
-                else if (data.plan_place.toString().contains("대전"))
-                {
-                    tvPlanDetailItemWeather.setText("대전")
-                }
-                else if (data.plan_place.toString().contains("대구"))
-                {
-                    tvPlanDetailItemWeather.setText("대구")
-                }
-                else if (data.plan_place.toString().contains("광주광역시"))
-                {
-                    tvPlanDetailItemWeather.setText("광주광역시")
-                }
-                else if (data.plan_place.toString().contains("부산"))
-                {
-                    tvPlanDetailItemWeather.setText("부산")
-                }
-                else if (data.plan_place.toString().contains("울산"))
-                {
-                    tvPlanDetailItemWeather.setText("울산")
-                }
-                else if (data.plan_place.toString().contains("세종특별자치시"))
-                {
-                    tvPlanDetailItemWeather.setText("세종특별자치시")
-                }
-                else if (data.plan_place.toString().contains("경기도"))
-                {
-                    tvPlanDetailItemWeather.setText("경기도")
-                }
-                else if (data.plan_place.toString().contains("강원"))
-                {
-                    tvPlanDetailItemWeather.setText("강원")
-                }
-                else if (data.plan_place.toString().contains("충청북도"))
-                {
-                    tvPlanDetailItemWeather.setText("충청북도")
-                }
-                else if (data.plan_place.toString().contains("충청남도"))
-                {
-                    tvPlanDetailItemWeather.setText("충청남도")
-                }
-                else if (data.plan_place.toString().contains("경상북도"))
-                {
-                    tvPlanDetailItemWeather.setText("경상북도")
-                }
-                else if (data.plan_place.toString().contains("경상남도"))
-                {
-                    tvPlanDetailItemWeather.setText("경상남도")
-                }
-                else if (data.plan_place.toString().contains("전라북도"))
-                {
-                    tvPlanDetailItemWeather.setText("전라북도")
-                }
-                else if (data.plan_place.toString().contains("전라남도"))
-                {
-                    tvPlanDetailItemWeather.setText("전라남도")
-                }
-                else if (data.plan_place.toString().contains("제주"))
-                {
-                    tvPlanDetailItemWeather.setText("제주")
+                    string="" //초기화
+                    //키 값
+                    var key = "599o%2FfnKg8hgR51clnKMjz0ZVncf2Gg%2FahikrqN3gDaUMlsAfyA80I%2BDNj40Q%2FKYQv66DOcIZ9OvOMg%2Fuq86IA%3D%3D"
+                    //페이지 번호
+                    var pageNo = "&pageNo=1"
+                    //한 페이지 결과 수
+                    var numOfRows = "&numOfRows=1200"
+                    //type (xml/json)
+                    var dataType = "&dataType=XML"
+                    //발표일
+                    var base_date = "&base_date=" + todayString
+                    //발표 시간
+                    var base_time = "&base_time=" +"0200" //제일 첫 예측 시간
+
+                    //각 지역의 중심 좌표로 설정 (매우 대략적임)
+                    if (data.plan_place.toString().contains("서울")||data.plan_place.toString().contains("인천"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=37"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=126"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+
+                    else if (data.plan_place.toString().contains("대전")||data.plan_place.toString().contains("세종특별자치시"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=36"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=127"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("대구"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=35"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=128"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("광주광역시"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=35"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=126"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("부산")||data.plan_place.toString().contains("울산"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=35"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=129"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+
+                    else if (data.plan_place.toString().contains("경기도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=37"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=127"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("강원"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=37"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=128"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("충청북도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=36"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=127"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("충청남도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=36"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=126"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("경상북도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=36"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=128"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("경상남도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=35"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=128"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("전라북도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=35"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=127"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("전라남도"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=34"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=126"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else if (data.plan_place.toString().contains("제주"))
+                    {
+                        //예보 지점의 x좌표
+                        var nx = "&nx=33"
+                        //예보 지점의 y좌표
+                        var ny = "&ny=126"
+
+                        //API 정보를 가지고 있는 주소
+                        var url_weather =
+                            "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=" + key + pageNo + numOfRows + dataType + base_date + base_time + nx + ny
+                        //쓰레드 생성
+                        val thread_weather = Thread(NetworkThread_weather(url_weather, timelinedateApi, timelineTimeApi)) //url, 예정 일정 날짜, 예정 일정 시간
+                        thread_weather.start() // 쓰레드 시작
+                        thread_weather.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+                        tvPlanDetailItemWeather.setText(string)
+                    }
+                    else
+                    {
+                        llPlanDetailItemWeather.visibility=View.GONE
+                    }
                 }
                 else
                 {

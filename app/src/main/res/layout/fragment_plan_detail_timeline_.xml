@@ -59,11 +59,30 @@
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_plan_detail_cal_pick">
+
+        <TextView
+            android:id="@+id/tv_plan_detail_timeline_weather_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="일정 2일 전~당일까지 주소 기반의 날씨 정보가 표시됩니다."
+            android:textColor="@color/main_blue"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_plan_detail_timeline_weather_copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:text="기상청 제공"
+            android:textColor="@color/gray5"
+            android:textSize="8sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_plan_detail_timeline_recyclerview"

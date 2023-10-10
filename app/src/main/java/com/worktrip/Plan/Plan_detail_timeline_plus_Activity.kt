@@ -127,7 +127,8 @@ class Plan_detail_timeline_plus_Activity : AppCompatActivity() {
                     time_start,
                     time_end,
                     time_start_ampm,
-                    time_end_ampm
+                    time_end_ampm,
+                    timeline_docId //날짜 추가
 
                 ) // 데이터 구조
 

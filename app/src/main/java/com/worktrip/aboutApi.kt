@@ -561,6 +561,85 @@ class NetworkThread_searchKeyword1(var url: String, var areaCode: String): Runna
     }
 }
 
+var TMP="" //1시간 기온
+var SKY="" //하늘상태, 맑음(1), 구름많음(3), 흐림(4)
+var PTY="" //강수형태, 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
+var string=""
+
+//단기예보조회
+class NetworkThread_weather(var url: String, var timelineDate: String, var timelineTime: String): Runnable {
+    override fun run() {
+        try {
+            val xml : Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url)
+            xml.documentElement.normalize()
+
+            //찾고자 하는 데이터가 어느 노드 아래에 있는지 확인
+            val list: NodeList = xml.getElementsByTagName("item")
+
+            //list.length-1 만큼 얻고자 하는 태그의 정보를 가져온다
+            for(i in 0..list.length-1){
+                val n: Node = list.item(i)
+
+                if(n.getNodeType() == Node.ELEMENT_NODE){
+                    val elem = n as Element
+                    val map = mutableMapOf<String,String>()
+
+                    for(j in 0..elem.attributes.length - 1) {
+                        map.putIfAbsent(elem.attributes.item(j).nodeName, elem.attributes.item(j).nodeValue)
+                    }
+                    if ("${elem.getElementsByTagName("fcstDate").item(0).textContent}".equals(timelineDate)&&"${elem.getElementsByTagName("fcstTime").item(0).textContent}".equals(timelineTime)) //해당 날짜 탐색
+                    {
+                        if ("${elem.getElementsByTagName("category").item(0).textContent}".equals("TMP"))
+                        {
+                            TMP="${elem.getElementsByTagName("fcstValue").item(0).textContent}" //기온
+                            string+=TMP + "도"
+                        }
+                        if ("${elem.getElementsByTagName("category").item(0).textContent}".equals("SKY"))
+                        {
+                            SKY="${elem.getElementsByTagName("fcstValue").item(0).textContent}" //기온
+                            if (SKY.equals("1"))
+                            {
+                                string+=", 맑음"
+                            }
+                            else if (SKY.equals("3"))
+                            {
+                                string+=", 구름"
+                            }
+                            else if (SKY.equals("4"))
+                            {
+                                string+=", 흐림"
+                            }
+                        }
+                        if ("${elem.getElementsByTagName("category").item(0).textContent}".equals("PTY"))
+                        {
+                            PTY="${elem.getElementsByTagName("fcstValue").item(0).textContent}" //기온
+                            if (PTY.equals("1"))
+                            {
+                                string+=", 비"
+                            }
+                            else if (PTY.equals("2"))
+                            {
+                                string+=", 비/눈"
+                            }
+                            else if (PTY.equals("3"))
+                            {
+                                string+=", 눈"
+                            }
+                            else if (PTY.equals("4"))
+                            {
+                                string+=", 소나기"
+                            }
+                        }
+                    }
+
+                }
+            }
+        } catch (e: Exception) {
+            //.d("TTT", "오픈API 에러: "+e.toString())
+        }
+    }
+}
+
 //-----------------------------------------------------------------------------------
 //url->bitmap
 /*
