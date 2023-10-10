@@ -98,6 +98,7 @@ class SignUpActivity03 : Activity() {
             link_check.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://firebasestorage.googleapis.com/v0/b/work-trip-c01ab.appspot.com/o/setting%2F%EC%9A%B4%EC%98%81-%EC%A0%95%EC%B1%85.html?alt=media&token=8ebc728d-94fe-49ac-a153-7f626c58232e"))
                 startActivity(intent)
+                finish()
             }
 
         }

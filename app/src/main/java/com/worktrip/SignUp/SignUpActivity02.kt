@@ -37,6 +37,7 @@ class SignUpActivity02 : Activity() {
                 intent.putExtra("date", binding.etSignupBirth.text.toString())
                 intent.putExtra("company",binding.etSignupCompany.text.toString())
                 startActivity(intent)
+                finish()
             }
 
         }

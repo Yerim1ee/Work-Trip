@@ -69,6 +69,7 @@ class SignUpActivity01 : Activity() {
                     intent.putExtra("id", binding.etSignupId.text.toString())
                     intent.putExtra("password", binding.etSignupPassword.text.toString())
                     startActivity(intent)
+                    finish()
                 }
             }
 

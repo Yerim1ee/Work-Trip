@@ -25,6 +25,7 @@ class SignUpActivity04 : Activity() {
         binding.btSingupStart.setOnClickListener {
             val nextIntent = Intent(this, LoginActivity::class.java)
             startActivity(nextIntent)
+            finish()
 
         }
 
