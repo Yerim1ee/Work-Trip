@@ -145,6 +145,10 @@ class ListProgramActivity: AppCompatActivity() {
                 startActivity(intent)
                 return super.onOptionsItemSelected(item)
             }
+            android.R.id.home -> {
+                finish()
+                return super.onOptionsItemSelected(item)
+            }
 
             else -> return super.onOptionsItemSelected(item)
         }

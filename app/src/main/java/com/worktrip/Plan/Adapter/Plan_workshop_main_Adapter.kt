@@ -48,6 +48,7 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
                 if (item_result != null) {
                     if(item_result.part.toString().equals("참가자")){
                         binding.ibPlanBtn2.visibility = View.GONE
+                        binding.ibPlanBtn1.setBackgroundResource(R.drawable.plan_item_button_long)
                     }
                     else{
                         binding.ibPlanBtn2.visibility = View.VISIBLE

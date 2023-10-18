@@ -302,6 +302,11 @@ class ListRecommendedActivity  : AppCompatActivity() {
                 return super.onOptionsItemSelected(item)
             }
 
+            android.R.id.home -> {
+                finish()
+                return super.onOptionsItemSelected(item)
+            }
+
             else -> return super.onOptionsItemSelected(item)
         }
 

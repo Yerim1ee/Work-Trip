@@ -1,9 +1,14 @@
 package com.worktrip.Plan
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.worktrip.DataClass.PlanWorkShopUserData
 import com.worktrip.DataClass.UserBaseData
 import com.worktrip.R
@@ -12,8 +17,34 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.worktrip.Home.DetailCourseActivity
+import com.worktrip.Home.RecyclerAdapter_card_image_title
+import com.worktrip.Home.data_card_list
+import com.worktrip.NetworkThread_list
+import com.worktrip.list_card_list
+import com.worktrip.list_contentId
 import org.eazegraph.lib.models.PieModel
 
+private val key="599o%2FfnKg8hgR51clnKMjz0ZVncf2Gg%2FahikrqN3gDaUMlsAfyA80I%2BDNj40Q%2FKYQv66DOcIZ9OvOMg%2Fuq86IA%3D%3D"
+//한 페이지 결과 수
+private val numOfRows ="&numOfRows=50"
+//페이지번호
+//private val pageNo="&pageNo=1"
+//AND(안드로이드)
+private val mobileOS = "&MobileOS=AND"
+//서비스명 = 어플명
+private val mobileApp = "&MobileApp=WorkTrip"
+//type (xml/json)
+private val _type="&_type=xml"
+//목록구분(Y=목록, N=개수)
+private val listYN="&listYN=Y"
+//정렬구분 (A=제목순, C=수정일순, D=생성일순) 대표 이미지가 반드시 있는 정렬(O=제목순, Q=수정일순, R=생성일순)
+private val arrange="&arrange=Q"
+//관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
+private var contentTypeId=""
+//카테고리
+private var contentCat1="&cat1=C01"
+private var contentCat2=""
 
 class PlanStaticActivity : AppCompatActivity() {
 
@@ -28,6 +59,9 @@ class PlanStaticActivity : AppCompatActivity() {
     var family: Double = 0.0
     var walk: Double = 0.0
     var whole: Double = 0.0
+
+    //리사이클러뷰 추가
+    val list_course: ArrayList<data_card_list> = ArrayList()
 
     lateinit var docID:String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +83,7 @@ class PlanStaticActivity : AppCompatActivity() {
 
         get_static()
 
+        Toast.makeText(applicationContext, "통계를 불러오는 중입니다.", Toast.LENGTH_LONG).show()
     }
 
 
@@ -91,8 +126,6 @@ class PlanStaticActivity : AppCompatActivity() {
                     family = (family/whole)*100
                     binding.tvStaticFamily.setText((family).toInt().toString())
 
-
-
             // Set the data and color to the pie chart
             binding.pcStaticPiechart
                 .addPieSlice(
@@ -130,9 +163,220 @@ class PlanStaticActivity : AppCompatActivity() {
                     )
                 )
 
+            //추가
+            var max=arrayOf(healed, walk, eat, camping, family).max()
+            var maxKeyword=""
+
+            if (max==healed)
+            {
+                list_course.clear()
+                list_card_list.clear()
+
+                maxKeyword+="#힐링코스 "
+                binding.llPlanStaticHealed.visibility= View.VISIBLE
+
+                contentCat2 = "&cat2=C0114"
+                get_course(contentCat2)
+                contentCat2=""
+
+                var adapter_healedCourse=RecyclerAdapter_card_image_title(list_course)
+                lateinit var recyclerView_healedCourse: RecyclerView
+
+                recyclerView_healedCourse=binding.rvActivityPlanStaticHealedCourse as RecyclerView
+                recyclerView_healedCourse.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView_healedCourse.adapter=adapter_healedCourse
+
+                adapter_healedCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
+                    override fun onClick(view: View, position: Int) {
+                        var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
+
+                        intent_course.putExtra("contentTypeId", "&contentTypeId=25")
+                        intent_course.putExtra("contentId", list_course[position].id)
+
+                        startActivity(intent_course)
+                        list_contentId =""
+                        contentTypeId =""
+                    }
+                })
+            }
+            if (max==walk)
+            {
+                list_course.clear()
+                list_card_list.clear()
+
+
+
+                maxKeyword+="#도보코스 "
+                binding.llPlanStaticWalk.visibility= View.VISIBLE
+
+                contentCat2 = "&cat2=C0115"
+                get_course(contentCat2)
+                contentCat2=""
+
+                var adapter_walkCourse=RecyclerAdapter_card_image_title(list_course)
+                lateinit var recyclerView_walkCourse: RecyclerView
+
+                recyclerView_walkCourse=binding.rvActivityPlanStaticWalkCourse as RecyclerView
+                recyclerView_walkCourse.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView_walkCourse.adapter=adapter_walkCourse
+
+                adapter_walkCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
+                    override fun onClick(view: View, position: Int) {
+                        var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
+
+                        intent_course.putExtra("contentTypeId", "&contentTypeId=25")
+                        intent_course.putExtra("contentId", list_course[position].id)
+
+                        startActivity(intent_course)
+                        list_contentId =""
+                        contentTypeId =""
+                    }
+                })
+            }
+            if (max==eat)
+            {
+                list_course.clear()
+                list_card_list.clear()
+
+                var adapter_eatCourse=RecyclerAdapter_card_image_title(list_course)
+                lateinit var recyclerView_eatCourse: RecyclerView
+
+                maxKeyword+="#맛코스 "
+                binding.llPlanStaticEat.visibility= View.VISIBLE
+
+                contentCat2 = "&cat2=C0117"
+                get_course(contentCat2)
+                contentCat2=""
+
+                recyclerView_eatCourse=binding.rvActivityPlanStaticEatCourse as RecyclerView
+                recyclerView_eatCourse.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView_eatCourse.adapter=adapter_eatCourse
+
+                adapter_eatCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
+                    override fun onClick(view: View, position: Int) {
+                        var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
+
+                        intent_course.putExtra("contentTypeId", "&contentTypeId=25")
+                        intent_course.putExtra("contentId", list_course[position].id)
+
+                        startActivity(intent_course)
+                        list_contentId =""
+                        contentTypeId =""
+                    }
+                })
+
+            }
+            if (max==camping)
+            {
+                list_course.clear()
+                list_card_list.clear()
+
+                var adapter_campCourse=RecyclerAdapter_card_image_title(list_course)
+                lateinit var recyclerView_campCourse: RecyclerView
+
+                maxKeyword+="#캠핑코스 "
+                binding.llPlanStaticCamping.visibility= View.VISIBLE
+
+                contentCat2 = "&cat2=C0116"
+                get_course(contentCat2)
+                contentCat2=""
+
+                recyclerView_campCourse=binding.rvActivityPlanStaticCampingCourse as RecyclerView
+                recyclerView_campCourse.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView_campCourse.adapter=adapter_campCourse
+
+                adapter_campCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
+                    override fun onClick(view: View, position: Int) {
+                        var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
+
+                        intent_course.putExtra("contentTypeId", "&contentTypeId=25")
+                        intent_course.putExtra("contentId", list_course[position].id)
+
+                        startActivity(intent_course)
+                        list_contentId =""
+                        contentTypeId =""
+                    }
+                })
+            }
+            if (max==family)
+            {
+                list_course.clear()
+                list_card_list.clear()
+
+                var adapter_familyCourse=RecyclerAdapter_card_image_title(list_course)
+                lateinit var recyclerView_familyCourse: RecyclerView
+
+                maxKeyword+="#가족코스 "
+                binding.llPlanStaticFamily.visibility= View.VISIBLE
+
+                contentCat2 = "&cat2=C0112"
+                get_course(contentCat2)
+                contentCat2=""
+
+                recyclerView_familyCourse=binding.rvActivityPlanStaticFamilyCourse as RecyclerView
+                recyclerView_familyCourse.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView_familyCourse.adapter=adapter_familyCourse
+
+                adapter_familyCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
+                    override fun onClick(view: View, position: Int) {
+                        var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
+
+                        intent_course.putExtra("contentTypeId", "&contentTypeId=25")
+                        intent_course.putExtra("contentId", list_course[position].id)
+
+                        startActivity(intent_course)
+                        list_contentId =""
+                        contentTypeId =""
+                    }
+                })
+            }
+
+            //가장 많은 코스
+            binding.tvStaticKeyword.setText(maxKeyword)
         }
 
 
+    }
+
+    private fun get_course(cat2: String){
+        //API 정보를 가지고 있는 주소
+        var url_list = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + key + numOfRows + mobileOS + mobileApp + _type + listYN + arrange + "&contentTypeId=25" + contentCat1 + cat2
+
+        //쓰레드 생성
+        val threadList = Thread(NetworkThread_list(url_list))
+        threadList.start() // 쓰레드 시작
+        threadList.join() // 멀티 작업 안되게 하려면 start 후 join 입력
+
+        if (list_course.isEmpty()==false)
+        {
+            list_course.clear()
+        }
+        var i=0
+        while (i <= 2)
+        {
+            var randomCourse= list_card_list.random()
+
+            if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+            {
+                list_card_list.remove(randomCourse)
+                --i
+                continue
+            }
+
+            list_course.add(randomCourse)
+            list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+            if (list_course.lastOrNull()==null)
+            {
+                list_course.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+            }
+            ++i
+        }
     }
 
     private fun get_static(){
@@ -207,6 +451,13 @@ class PlanStaticActivity : AppCompatActivity() {
                 }
 
             }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //초기화
+        list_card_list.clear()
+        list_course.clear()
     }
 
 }

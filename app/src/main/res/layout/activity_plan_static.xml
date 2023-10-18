@@ -28,274 +28,476 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/background_code2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/tb_static">
 
-    <org.eazegraph.lib.charts.PieChart
-        android:id="@+id/pc_static_piechart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
-        android:padding="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_static" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/ll_plan_static_keyword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:adjustViewBounds="true"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_static_healed_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="힐링 코스"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_healed"
-        app:layout_constraintStart_toEndOf="@+id/view12"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_healed" />
+                <TextView
+                    android:id="@+id/tv_static_keyword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_blue"
+                    android:text="#코스 타입"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-    <View
-        android:id="@+id/view12"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/main_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_healed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_healed" />
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="키워드가 가장 선호되고 있어요!"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_static_healed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="0"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_static_healed_percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pc_static_piechart" />
-
-    <TextView
-        android:id="@+id/tv_static_healed_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pc_static_piechart" />
-
-    <TextView
-        android:id="@+id/tv_static_walk_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="도보 코스"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_walk"
-        app:layout_constraintStart_toEndOf="@+id/view13"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_walk" />
-
-    <View
-        android:id="@+id/view13"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/sub_blue_1"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_walk"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_walk" />
-
-    <TextView
-        android:id="@+id/tv_static_walk"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="0"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentRight="true"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_static_walk_percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_static_healed" />
-
-    <TextView
-        android:id="@+id/tv_static_walk_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_walk"/>
-
-    <TextView
-        android:id="@+id/tv_static_eat_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="맛 코스"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_eat"
-        app:layout_constraintStart_toEndOf="@+id/view13"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_eat" />
-
-    <View
-        android:id="@+id/view14"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/sub_blue_2"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_eat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_eat" />
-
-    <TextView
-        android:id="@+id/tv_static_eat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="0"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentRight="true"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_static_eat_percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_static_walk" />
+            <org.eazegraph.lib.charts.PieChart
+                android:id="@+id/pc_static_piechart"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="20dp"
+                android:padding="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_plan_static_keyword" />
 
 
-    <TextView
-        android:id="@+id/tv_static_eat_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_eat"/>
-    <TextView
-        android:id="@+id/tv_static_camping_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="캠핑 코스"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_camping"
-        app:layout_constraintStart_toEndOf="@+id/view15"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_camping" />
+            <TextView
+                android:id="@+id/tv_static_healed_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="힐링 코스"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_healed"
+                app:layout_constraintStart_toEndOf="@+id/view12"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_healed" />
 
-    <View
-        android:id="@+id/view15"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/sub_pink_1"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_camping"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_camping" />
+            <View
+                android:id="@+id/view12"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/main_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_healed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_healed" />
 
-    <TextView
-        android:id="@+id/tv_static_camping"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentRight="true"
-        android:textAlignment="textEnd"
-        android:text="0"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_static_camping_percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_static_eat" />
+            <TextView
+                android:id="@+id/tv_static_healed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_static_healed_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pc_static_piechart" />
 
-    <TextView
-        android:id="@+id/tv_static_camping_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_camping"/>
-    <TextView
-        android:id="@+id/tv_static_family_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="가족 코스"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_family"
-        app:layout_constraintStart_toEndOf="@+id/view16"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_family" />
+            <TextView
+                android:id="@+id/tv_static_healed_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="20dp"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pc_static_piechart" />
 
-    <View
-        android:id="@+id/view16"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/sub_pink_2"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_static_family"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_family" />
+            <TextView
+                android:id="@+id/tv_static_walk_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="도보 코스"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_walk"
+                app:layout_constraintStart_toEndOf="@+id/view13"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_walk" />
 
-    <TextView
-        android:id="@+id/tv_static_family"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="0"
-        android:layout_alignParentRight="true"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tv_static_family_percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_static_camping" />
+            <View
+                android:id="@+id/view13"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/sub_blue_1"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_walk"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_walk" />
+
+            <TextView
+                android:id="@+id/tv_static_walk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_static_walk_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_healed" />
+
+            <TextView
+                android:id="@+id/tv_static_walk_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_walk" />
+
+            <TextView
+                android:id="@+id/tv_static_eat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="맛 코스"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_eat"
+                app:layout_constraintStart_toEndOf="@+id/view13"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_eat" />
+
+            <View
+                android:id="@+id/view14"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/sub_blue_2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_eat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_eat" />
+
+            <TextView
+                android:id="@+id/tv_static_eat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_static_eat_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_walk" />
 
 
-    <TextView
-        android:id="@+id/tv_static_family_percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="%"
-        android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_static_family"/>
+            <TextView
+                android:id="@+id/tv_static_eat_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_eat" />
 
+            <TextView
+                android:id="@+id/tv_static_camping_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="캠핑 코스"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_camping"
+                app:layout_constraintStart_toEndOf="@+id/view15"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_camping" />
+
+            <View
+                android:id="@+id/view15"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/sub_pink_1"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_camping"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_camping" />
+
+            <TextView
+                android:id="@+id/tv_static_camping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_static_camping_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_eat" />
+
+            <TextView
+                android:id="@+id/tv_static_camping_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_camping" />
+
+            <TextView
+                android:id="@+id/tv_static_family_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="가족 코스"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_family"
+                app:layout_constraintStart_toEndOf="@+id/view16"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_family" />
+
+            <View
+                android:id="@+id/view16"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/sub_pink_2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_static_family"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_family" />
+
+            <TextView
+                android:id="@+id/tv_static_family"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_static_family_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_camping" />
+
+
+            <TextView
+                android:id="@+id/tv_static_family_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:text="%"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_static_family" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="4dp"
+                android:layout_marginVertical="32dp"
+                android:background="@color/gray10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_family_percent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_static_family"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="20dp"
+                android:paddingBottom="20dp"
+                >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:text="통계에 따른 관광 코스를 추천 드려요."
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_static_keyword2" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_plan_static_healed"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/sub_blue_1"
+                    android:textSize="16dp"
+                    android:text="#힐링코스"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_activity_plan_static_healedCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/card_image_title" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/ll_plan_static_walk"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/sub_blue_1"
+                        android:textSize="16dp"
+                        android:text="#도보코스"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_activity_plan_static_walkCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/card_image_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/ll_plan_static_eat"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/sub_blue_1"
+                        android:textSize="16dp"
+                        android:text="#맛코스"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_activity_plan_static_eatCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/card_image_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/ll_plan_static_camping"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/sub_blue_1"
+                        android:textSize="16dp"
+                        android:text="#캠핑코스"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_activity_plan_static_campingCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/card_image_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/ll_plan_static_family"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/sub_blue_1"
+                        android:textSize="16dp"
+                        android:text="#가족코스"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_activity_plan_static_familyCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/card_image_title" />
+                </LinearLayout>
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

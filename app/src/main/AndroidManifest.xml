@@ -118,12 +118,10 @@
 
         <activity
             android:name=".Home.ListRecommendedActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false" />
         <activity
             android:name=".Home.ListProgramActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:exported="false" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true"
@@ -191,8 +189,7 @@
         </activity>
         <activity
             android:name=".Home.DetailLodgingActivity"
-            android:exported="true"
-            android:parentActivityName=".Home.ListRecommendedActivity">
+            android:exported="true">
             <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
                 <action android:name="android.intent.action.VIEW" />
 
@@ -243,8 +240,7 @@
         </activity>
         <activity
             android:name=".Home.DetailProgramActivity"
-            android:exported="true"
-            android:parentActivityName=".Home.ListProgramActivity">
+            android:exported="true" >
             <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
                 <action android:name="android.intent.action.VIEW" />
 
@@ -295,8 +291,7 @@
         </activity>
         <activity
             android:name=".Home.DetailFoodActivity"
-            android:exported="true"
-            android:parentActivityName=".Home.ListRecommendedActivity">
+            android:exported="true">
             <intent-filter android:autoVerify="true"> <!-- 스킴 딥링크: 앱이 없을 경우, 앱스토어로 이동하며 데이터는 유실 된다 -->
                 <action android:name="android.intent.action.VIEW" />
 
