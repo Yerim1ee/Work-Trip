@@ -10,7 +10,6 @@ plugins {
 
 }
 
-
 android {
     namespace 'com.worktrip'
     compileSdk 33
@@ -18,8 +17,8 @@ android {
         applicationId "com.worktrip"
         minSdk 24
         targetSdk 33
-        versionCode 4
-        versionName "2.1"
+        versionCode 5
+        versionName "3.0"
         // src 이미지 삽입
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
