@@ -44,6 +44,7 @@ class PlanTimlineEditActivity : AppCompatActivity() {
 
         // 넘겼던 데이터 가져오기
         val data = intent.getParcelableExtra<PlanTimeLineData>("data")
+        val date = intent.getStringExtra("date")
 
         time_start = data?.plan_time_start.toString()
         time_end = data?.plan_time_end.toString()
@@ -143,6 +144,11 @@ class PlanTimlineEditActivity : AppCompatActivity() {
                 Toast.makeText(this, "진행자를 입력해주세요", Toast.LENGTH_LONG).show()
             } else {
 
+                 var now_date = SocketApplication.prefs.getString(
+                    "now_timeline_date",
+                    date.toString()
+                ) // 몇일자 타임라인 불러오는 것인지 파악
+
                 var datetimelineData = PlanTimeLineData(
                     data?.docID,
                     binding.etPlanDetailTimelinePlusTitle.text.toString(),
@@ -152,9 +158,8 @@ class PlanTimlineEditActivity : AppCompatActivity() {
                     time_end,
                     time_start_ampm,
                     time_end_ampm,
-                    data?.plan_date
+                    now_date
                 ) // 데이터 구조
-
 
                 // workshop 문서 생성
                 db.collection("workshop")

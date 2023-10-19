@@ -47,6 +47,13 @@ class Plan_tab_main02Fragment : Fragment() {
             .orderBy("start_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
+
+                if(result.isEmpty){
+                    binding.tvPlanTabMain2None.visibility = View.GONE
+                }
+                else{
+                    binding.tvPlanTabMain2None.visibility = View.VISIBLE
+                }
                 itemList.clear()
                 for (document in result) {
                     val item_user = document.toObject(PlanWorkShopUserData::class.java)

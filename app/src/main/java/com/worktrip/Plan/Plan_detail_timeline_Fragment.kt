@@ -130,11 +130,23 @@ class Plan_detail_timeline_Fragment : Fragment() {
 
             if(currentdate.plusDays(1).isAfter(enddate)){
                 binding.tvPlanDetailTimelineDate.setText(startdate.format(formatter))
+
+                SocketApplication.prefs.setString(
+                    "now_timeline_date",
+                    binding.tvPlanDetailTimelineDate.text.toString()
+                ) // 몇일자 타임라인 불러오는 것인지 파악
+
                 firestore_get()
             }
             else{
                 currentdate = currentdate.plusDays(1)
                 binding.tvPlanDetailTimelineDate.setText(currentdate.format(formatter))
+
+                SocketApplication.prefs.setString(
+                    "now_timeline_date",
+                    binding.tvPlanDetailTimelineDate.text.toString()
+                ) // 몇일자 타임라인 불러오는 것인지 파악
+
                 firestore_get()
             }
 
@@ -148,11 +160,23 @@ class Plan_detail_timeline_Fragment : Fragment() {
 
             if(currentdate.minusDays(1).isBefore(startdate) ){
                 binding.tvPlanDetailTimelineDate.setText(enddate.format(formatter))
+
+                SocketApplication.prefs.setString(
+                    "now_timeline_date",
+                    binding.tvPlanDetailTimelineDate.text.toString()
+                ) // 몇일자 타임라인 불러오는 것인지 파악
+
                 firestore_get()
             }
             else{
                 currentdate = currentdate.minusDays(1)
                 binding.tvPlanDetailTimelineDate.setText(currentdate.format(formatter))
+
+                SocketApplication.prefs.setString(
+                    "now_timeline_date",
+                    binding.tvPlanDetailTimelineDate.text.toString()
+                ) // 몇일자 타임라인 불러오는 것인지 파악
+
                 firestore_get()
             }
 

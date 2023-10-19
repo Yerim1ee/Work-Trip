@@ -161,6 +161,7 @@ class fragment_community : Fragment() {
         return view
     }
 
+
     //toolbar
     //툴바 메뉴 연결
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

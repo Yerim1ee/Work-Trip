@@ -79,6 +79,28 @@ class Plan_detail_notice_Fragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        db.collection("user_workshop")
+            .document(auth.uid.toString())
+            .collection("workshop_list")
+            .document(workshop_docID)
+            .get()
+            .addOnSuccessListener {
+                    result -> // 성공
+                val item_result = result.toObject(PlanWorkShopUserData::class.java)
+                if (item_result != null) {
+                    if(item_result.part.toString().equals("참가자")){
+                        binding.btPlanDetailNoticePlus.visibility = View.GONE
+                        // 초반 리스트 설정
+                        firestore_get(item_result.part.toString())
+                    }
+                    else{
+                        binding.btPlanDetailNoticePlus.visibility = View.VISIBLE
+                        // 초반 리스트 설정
+                        firestore_get(item_result.part.toString())
+
+                    }
+                }
+            }
 
     }
     fun firestore_get(part:String){

@@ -74,6 +74,8 @@ class PlanDetailTimeLineViewHolder(val binding: CardPlanDetailItemBinding)
                     R.id.edit -> {
                         val intent = Intent(context, PlanTimlineEditActivity::class.java)
                         intent.putExtra("data", item)
+                        intent.putExtra("date", item.plan_date.toString())
+                        Log.d("aaa123", item.plan_date.toString())
                         intent.run {
                             context.startActivity(this)
                         }
@@ -103,7 +105,8 @@ class PlanDetailTimeLineViewHolder(val binding: CardPlanDetailItemBinding)
 }
 
 
-class Plan_detail_timeline_Adapter(val context: Context, val itemList: MutableList<PlanTimeLineData>): RecyclerView.Adapter<PlanDetailTimeLineViewHolder>()  {
+class Plan_detail_timeline_Adapter(val context: Context, val itemList: MutableList<PlanTimeLineData>):
+    RecyclerView.Adapter<PlanDetailTimeLineViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanDetailTimeLineViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

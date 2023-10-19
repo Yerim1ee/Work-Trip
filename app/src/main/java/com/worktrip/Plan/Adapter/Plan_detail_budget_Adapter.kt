@@ -31,6 +31,7 @@ class PlanDetailBudgetViewHolder(val binding: CardItemBudgetBinding)
 
     private val context = binding.root.context
     fun bind(item: PlanBudgetData) {
+
         db.collection("user_workshop")
             .document(auth.uid.toString())
             .collection("workshop_list")
@@ -87,6 +88,7 @@ class PlanDetailBudgetViewHolder(val binding: CardItemBudgetBinding)
                 .collection("budget")
                 .document(docID)
                 .delete()
+
         }
     }
 

@@ -39,10 +39,6 @@ class Plan_tab_main01Fragment : Fragment() {
         binding.rcvPlanMain1Recyclerview.adapter= adapter
 
 
-
-
-
-
         return binding.root
     }
 
@@ -81,6 +77,12 @@ class Plan_tab_main01Fragment : Fragment() {
             .orderBy("start_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
+                if(result.isEmpty){
+                    binding.tvPlanTabMain1None.visibility = View.GONE
+                }
+                else{
+                    binding.tvPlanTabMain1None.visibility = View.VISIBLE
+                }
                 itemList.clear()
                 for (document in result) {
                     val item_user = document.toObject(PlanWorkShopUserData::class.java)
