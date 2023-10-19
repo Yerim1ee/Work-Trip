@@ -56,7 +56,7 @@ class Plan_detail_timeline_plus_Activity : AppCompatActivity() {
 
         binding.ibPlanDetailTimelinePlusDate.setOnClickListener {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+            TimePickerDialog(this,  R.style.timePickerStyle,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
                 var hour = h
 
                 when {
@@ -74,7 +74,7 @@ class Plan_detail_timeline_plus_Activity : AppCompatActivity() {
 
         binding.ibPlanDetailTimelinePlusDateEnd.setOnClickListener {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+            TimePickerDialog(this, R.style.timePickerStyle, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
                 var hour = h
                 when {
                     checkAmPm(h) == "PM" ->
@@ -129,7 +129,6 @@ class Plan_detail_timeline_plus_Activity : AppCompatActivity() {
                     time_start_ampm,
                     time_end_ampm,
                     timeline_docId //날짜 추가
-
                 ) // 데이터 구조
 
 

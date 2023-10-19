@@ -37,4 +37,16 @@
         <item name="colorPrimary">#2757FF</item>
         <item name="colorPrimaryDark">#000000</item>
     </style>
+
+    <style name="timePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <!-- 상단 색 변경 -->
+        <item name="colorAccent">@color/main_blue</item>
+        <!-- dialog의 배경 변경 -->
+        <item name="background">@color/main_blue</item>
+        <!-- 선택한 날짜를 표시할 색상 -->
+        <item name="colorControlActivated">@color/main_blue</item>
+        <item name="colorControlHighlight">@color/main_blue</item>
+        <!-- 취소/확인버튼 색상 -->
+        <item name="android:textColor">@color/main_blue</item>
+    </style>
 </resources>

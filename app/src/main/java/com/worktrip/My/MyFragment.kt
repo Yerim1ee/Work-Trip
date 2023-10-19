@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.worktrip.DataClass.PlanWorkShopData
 
 
 class MyFragment : Fragment() {
@@ -42,6 +44,7 @@ class MyFragment : Fragment() {
             startActivity(intent)
 
         }
+        var tvMyWorkshopNum =0
 
         // 만든 워크샵 개수
         db.collection("user_workshop")
@@ -49,22 +52,21 @@ class MyFragment : Fragment() {
             .collection("workshop_list")
             .get()
             .addOnSuccessListener { result ->
-                var tvMyWorkshopNum =0
                 for (document in result) {
                     db.collection("workshop")
                         .document(document.id)
                         .get()
-                        .addOnSuccessListener {document_workshop->
-                            // 리사이클러 뷰 아이템 설정 및 추가
-                            tvMyWorkshopNum = tvMyWorkshopNum + 1
+                        .addOnSuccessListener {result->
+                            var result_data = result.toObject(PlanWorkShopData::class.java)
 
+                            if (result_data != null) {
+                                tvMyWorkshopNum = tvMyWorkshopNum + 1
+                                binding.tvMyWorkshopNum.setText(tvMyWorkshopNum.toString())
+                            }
                         }
                         .addOnFailureListener {
-
                         }
-
                 }
-                binding.tvMyWorkshopNum.setText(tvMyWorkshopNum.toString())
 
             }
             .addOnFailureListener {

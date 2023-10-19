@@ -2,6 +2,7 @@ package com.worktrip.Community
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,10 +13,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import coil.api.load
+import com.bumptech.glide.Glide
 import com.worktrip.My.firestore_bookmark_list
 import com.worktrip.R
 import com.worktrip.databinding.ActivityDetailWritingBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import com.makeramen.roundedimageview.RoundedImageView
 
 private lateinit var binding: ActivityDetailWritingBinding
@@ -178,31 +181,7 @@ class DetailWritingActivity  : AppCompatActivity() {
                         dateTextView.text = writingDate
                         companyTextView.text = writingCompany
 
-                        if (!(writingImg1.equals("없음"))) {
-                            findViewById<ImageView>(R.id.iv_activity_detail_writing_null1).visibility =
-                                View.GONE
-                            img1ImageView.visibility = View.VISIBLE
-                            //Glide.with(this).load(writingImg1).centerInside().into(img1ImageView)
-                            img1ImageView.load(writingImg1)
 
-                        }
-
-                        if (!(writingImg2.equals("없음"))) {
-                            img2ImageView.visibility = View.VISIBLE
-
-                            // Glide.with(this).load(writingImg2).centerInside().into(img2ImageView)
-                            img2ImageView.load(writingImg2)
-
-                        }
-
-
-                        if (!(writingImg3.equals("없음"))) {
-                            img3ImageView.visibility = View.VISIBLE
-
-                            // Glide.with(this).load(writingImg3).centerInside().into(img3ImageView)
-                            img3ImageView.load(writingImg3)
-
-                        }
 
                         periodTextView.text = writingPeriod
                         keywordTextView.text = writingKeyword
@@ -236,6 +215,26 @@ class DetailWritingActivity  : AppCompatActivity() {
 
                         dbWritingUserID = document.data["userID"].toString() //필드 데이터
 
+                        if (!(writingImg1.equals("없음"))) {
+                            findViewById<ImageView>(R.id.iv_activity_detail_writing_null1).visibility =
+                                View.GONE
+                            img1ImageView.visibility = View.VISIBLE
+                            imageShow(dbWritingUserID, dbWritingID, 1)
+
+                        }
+
+                        if (!(writingImg2.equals("없음"))) {
+                            img2ImageView.visibility = View.VISIBLE
+                            imageShow(dbWritingUserID, dbWritingID, 2)
+
+                        }
+
+
+                        if (!(writingImg3.equals("없음"))) {
+                            img3ImageView.visibility = View.VISIBLE
+                            imageShow(dbWritingUserID, dbWritingID, 3)
+
+                        }
                         break
                     }
                 }
@@ -466,4 +465,34 @@ class DetailWritingActivity  : AppCompatActivity() {
                 }
             isSaved = false
         }
+
+
+    private fun imageShow( auth:String, title:String, num:Int) {
+        val storage = FirebaseStorage.getInstance("gs://work-trip-c01ab.appspot.com/")
+        val storageRef = storage.reference
+        storageRef.child("community/${auth}/${title}_${num}.png").downloadUrl
+            .addOnSuccessListener { uri -> //이미지 로드 성공시
+                when(num){
+                    1->{
+                        Glide.with(applicationContext)
+                            .load(uri)
+                            .into(binding.ivActivityDetailWriting1)
+                    }
+                    2->{
+                        Glide.with(applicationContext)
+                            .load(uri)
+                            .into(binding.ivActivityDetailWriting2)
+                    }
+                    3->{
+                        Glide.with(applicationContext)
+                            .load(uri)
+                            .into(binding.ivActivityDetailWriting3)
+                    }
+                }
+
+            }.addOnFailureListener { //이미지 로드 실패시
+                Toast.makeText(applicationContext, "이미지 로드를 실패하였습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 }

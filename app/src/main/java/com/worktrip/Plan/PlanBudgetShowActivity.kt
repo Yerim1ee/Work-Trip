@@ -24,7 +24,6 @@ class PlanBudgetShowActivity : AppCompatActivity() {
     lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
-    private var uri: Uri? = null
     lateinit var workshop_docID:String
 
     //DecimalFormat 객체 선언 실시 (소수점 표시 안함)

@@ -2,11 +2,14 @@ package com.worktrip.Plan.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.worktrip.DataClass.PlanTimeLineData
 import com.worktrip.DataClass.PlanWorkShopUserData
@@ -113,6 +116,7 @@ class Plan_detail_timeline_Adapter(val context: Context, val itemList: MutableLi
         return itemList.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: PlanDetailTimeLineViewHolder, position: Int) {
         val data = itemList.get(position)
 

@@ -15,6 +15,7 @@ import com.worktrip.databinding.FragmentPlanTabMain01Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.worktrip.DataClass.PlanWorkShopUserData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -77,11 +78,13 @@ class Plan_tab_main01Fragment : Fragment() {
         db.collection("user_workshop")
             .document(auth.uid.toString())
             .collection("workshop_list")
-            .orderBy("start_date", Query.Direction.ASCENDING)
+            .orderBy("start_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 itemList.clear()
                 for (document in result) {
+                    val item_user = document.toObject(PlanWorkShopUserData::class.java)
+                    if(!(item_user.name.isNullOrEmpty())){
                     db.collection("workshop")
                         .document(document.id)
                         .get()
@@ -104,6 +107,7 @@ class Plan_tab_main01Fragment : Fragment() {
                         .addOnFailureListener {
 
                         }
+                    }
 
                 }
 

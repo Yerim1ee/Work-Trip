@@ -2,8 +2,10 @@ package com.worktrip.Community
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +13,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import coil.api.load
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.worktrip.R
+import java.text.SimpleDateFormat
 
 var commuTitle=""
 var commuContent=""
@@ -144,16 +153,18 @@ class fragment_plus_2 : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==RESULT_OK)
         {
+
+
             when (requestCode){
                 GALLERY_CODE->{
                         data?.data?.let { uri ->
                             if (isImage==1) {
-                            image1.setImageURI(uri)
-                            commuImage1 = uri.toString()
-                            //commuImageUri1=uri
+                                image1.setImageURI(uri)
+                                commuImage1 = uri.toString()
+                                //commuImageUri1=uri
 
-                            nullImage1.visibility = View.GONE
-                            nullText1.visibility = View.GONE
+                                nullImage1.visibility = View.GONE
+                                nullText1.visibility = View.GONE
                                 countImg.text="1/3"
 
                             }
@@ -178,4 +189,7 @@ class fragment_plus_2 : Fragment() {
                     }
 
                     } } } }
+
+
+
 }

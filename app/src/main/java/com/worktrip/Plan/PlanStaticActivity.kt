@@ -124,6 +124,8 @@ class PlanStaticActivity : AppCompatActivity() {
                     family = (family/whole)*100
                     binding.tvStaticFamily.setText((family).toInt().toString())
 
+
+
             // Set the data and color to the pie chart
             binding.pcStaticPiechart
                 .addPieSlice(

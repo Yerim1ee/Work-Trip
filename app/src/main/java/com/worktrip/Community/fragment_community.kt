@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.worktrip.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -79,6 +80,7 @@ class fragment_community : Fragment() {
                 }
                 //게시글 불러오기
                 firestore_community.collection("community")
+                    .orderBy("date", Query.Direction.DESCENDING)
                     .get()
                     .addOnSuccessListener { task ->
                         for (document in task) {

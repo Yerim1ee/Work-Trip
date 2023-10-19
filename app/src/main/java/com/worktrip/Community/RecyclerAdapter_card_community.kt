@@ -1,6 +1,7 @@
 package com.worktrip.Community
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,12 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.bumptech.glide.Glide
 import com.worktrip.My.firestore_bookmark_list
 import com.worktrip.R
 import com.worktrip.databinding.CardCommunityBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 
 data class data_card_community(
     var img1: String, //Bitmap?
@@ -36,6 +39,10 @@ data class data_card_community(
 class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_community>)
     : RecyclerView.Adapter<RecyclerAdapter_card_community.ViewHolder>() {
     lateinit var mAuth: FirebaseAuth
+
+    val storage = FirebaseStorage.getInstance("gs://work-trip-c01ab.appspot.com/")
+    val storageRef = storage.reference
+
     // 각 항목에 필요한 기능을 구현
     class ViewHolder(val binding: CardCommunityBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -52,10 +59,11 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
     override fun onBindViewHolder(viewHolder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         mAuth = FirebaseAuth.getInstance()
 
-        var img1=items[position].img1.toUri()
-       // Glide.with(viewHolder.binding.ivCardCommunityImg)
-          //  .load(img1).centerInside().into(viewHolder.binding.ivCardCommunityImg)
-        viewHolder.binding.ivCardCommunityImg.load(img1)
+
+        storageRef.child("community/${items[position].userid}/${items[position].writingid}_1.png")
+            .downloadUrl
+            .addOnSuccessListener { uri -> //이미지 로드 성공시
+                    viewHolder.binding.ivCardCommunityImg.load(uri) }
 
         viewHolder.binding.tvCardCommunityTitle.text = items[position].title
         viewHolder.binding.tvCardCommunityDeparture.text = items[position].depature
@@ -117,7 +125,8 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
             itemClickListner.onClick(it, position)
         }
 
-        firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}").collection("community").get()
+        firestore_bookmark_list.collection("user_bookmark").document("${mAuth.currentUser?.uid.toString()}")
+            .collection("community").get()
             .addOnSuccessListener { task ->
                 for (document in task) {
                     var id = document.data["writingID"].toString() //필드 데이터
@@ -190,5 +199,7 @@ class RecyclerAdapter_card_community  (private val items: ArrayList<data_card_co
             notifyDataSetChanged()
         }
     }
+
+
 
 }

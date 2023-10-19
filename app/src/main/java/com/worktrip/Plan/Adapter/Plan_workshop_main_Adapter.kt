@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.worktrip.Plan.Plan_static_base_Activity
 import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_btn1
 import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_btn2
 import kotlinx.android.synthetic.main.card_plan_item.view.ib_plan_plus
@@ -64,7 +65,7 @@ class PlanWorkshopViewHolder(val binding: CardPlanItemBinding) :
             intent.run { context.startActivity(this) }
         }
         itemView.ib_plan_btn1.setOnClickListener {
-            val intent = Intent(context, PlanStaticActivity::class.java)
+            val intent = Intent(context, Plan_static_base_Activity::class.java)
             intent.putExtra("docID", item.docID);
             intent.run{context.startActivity(this)}
         }

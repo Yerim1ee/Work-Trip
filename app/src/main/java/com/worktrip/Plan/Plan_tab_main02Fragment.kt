@@ -13,6 +13,7 @@ import com.worktrip.databinding.FragmentPlanTabMain02Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.worktrip.DataClass.PlanWorkShopUserData
 
 
 class Plan_tab_main02Fragment : Fragment() {
@@ -43,34 +44,38 @@ class Plan_tab_main02Fragment : Fragment() {
         db.collection("user_workshop")
             .document(auth.uid.toString())
             .collection("workshop_list")
-            .orderBy("start_date", Query.Direction.ASCENDING)
+            .orderBy("start_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 itemList.clear()
                 for (document in result) {
-                    db.collection("workshop")
-                        .document(document.id)
-                        .get()
-                        .addOnSuccessListener {document_workshop->
-                            // 리사이클러 뷰 아이템 설정 및 추가
-                            val item = document_workshop.toObject(PlanWorkShopData::class.java)
-                            if (item != null) {
-                                if(!(item.now)){
-                                    itemList.add(item)
+                    val item_user = document.toObject(PlanWorkShopUserData::class.java)
+                    if(!(item_user.name.isNullOrEmpty())){
+                        db.collection("workshop")
+                            .document(document.id)
+                            .get()
+                            .addOnSuccessListener {document_workshop->
+                                // 리사이클러 뷰 아이템 설정 및 추가
+                                val item = document_workshop.toObject(PlanWorkShopData::class.java)
+                                if (item != null) {
+                                    if(!(item.now)){
+                                        itemList.add(item)
+                                    }
+                                }
+                                adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                                if(itemList.isEmpty()){
+                                    binding.tvPlanTabMain2None.visibility = View.VISIBLE
+                                }
+                                else{
+                                    binding.tvPlanTabMain2None.visibility = View.GONE
+
                                 }
                             }
-                            adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
-                            if(itemList.isEmpty()){
-                                binding.tvPlanTabMain2None.visibility = View.VISIBLE
-                            }
-                            else{
-                                binding.tvPlanTabMain2None.visibility = View.GONE
+                            .addOnFailureListener {
 
                             }
-                        }
-                        .addOnFailureListener {
+                    }
 
-                        }
 
                 }
             }

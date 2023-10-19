@@ -1,8 +1,10 @@
 package com.worktrip.Community
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,12 +14,16 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.viewpager2.widget.ViewPager2
 import com.worktrip.R
 import com.worktrip.databinding.ActivityCommuPlusBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.worktrip.My.TabAdapter_bookmark
 import java.text.SimpleDateFormat
 
@@ -51,12 +57,17 @@ var editContent=""
 var editGoal=""
 
 class CommuPlusActivity : AppCompatActivity() {
+    val mAuth = FirebaseAuth.getInstance()
+    private var uri1: Uri? = null
+    private var uri2: Uri? = null
+    private var uri3: Uri? = null
+
+    private lateinit var writingID:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCommuPlusBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val mAuth = FirebaseAuth.getInstance()
 
         //toolbar 설정
         setSupportActionBar(findViewById(R.id.tb_activity_commu_plus))
@@ -199,18 +210,6 @@ class CommuPlusActivity : AppCompatActivity() {
                                 commuTitle=findViewById<EditText>(R.id.et_fragment_plus_2_title).text.toString()
                                 commuContent = findViewById<EditText>(R.id.et_fragment_plus_2_content).text.toString()
 
-                                if (commuTitle.equals(""))
-                                {
-                                    //button.setBackgroundResource(R.drawable.chips_keyword3)
-                                    //Toast.makeText(applicationContext, "제목을 입력해 주세요.", Toast.LENGTH_LONG).show()
-                                    commuTitle="제목 없음"
-                                }
-                                if (commuContent.equals(""))
-                                {
-                                    //Toast.makeText(applicationContext, "내용을 입력해 주세요.", Toast.LENGTH_LONG).show()
-                                    commuContent="내용 없음"
-                                }
-
                                 if (commuImage1.equals(""))
                                 {
                                     //Toast.makeText(applicationContext, "이미지를 입력해 주세요.", Toast.LENGTH_LONG).show()
@@ -227,59 +226,62 @@ class CommuPlusActivity : AppCompatActivity() {
                                     commuImage3="없음"
                                 }
 
-                                // 오늘 날짜 받아오기
-                                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                                //val today = LocalDate.now()
-                                val todayDate_format = formatter.format(System.currentTimeMillis()) // 형식 지정
-
-                                var writingID=firestore_community.collection("community").document().id
-                                if (editWriting.equals("editWriting"))
-                                {
-                                    writingID= editWritingID
+                                if(commuImage1.equals("없음") && commuImage2.equals("없음") && commuImage3.equals("없음")){
+                                    Toast.makeText(this@CommuPlusActivity, "사진을 추가해주세요",Toast.LENGTH_LONG).show()
                                 }
-                                //정보를 파이어베이스에 저장
-                                val data_community= hashMapOf(
-                                    "writingID" to writingID,
-                                    "date" to todayDate_format,
-                                    "company" to cb_company_isChecked,
-                                    "depature" to depature,
-                                    "destination" to destination,
-                                    "people" to people,
-                                    "period" to period,
-                                    "goal" to goal,
-                                    "keyword" to keyword,
-                                    "money" to money,
-                                    "img1" to commuImage1,
-                                    "img2" to commuImage2,
-                                    "img3" to commuImage3,
-                                    "title" to commuTitle,
-                                    "content" to commuContent,
-                                    "userID" to "${mAuth.currentUser?.uid.toString()}"
-                                )
-                                firestore_community.collection("community").document(writingID)
-                                    .set(data_community)
+                                else if(commuTitle.equals("")){
+                                    Toast.makeText(this@CommuPlusActivity, "제목을 추가해주세요",Toast.LENGTH_LONG).show()
 
-                                /*// storage 인스턴스 생성--------------------------------------------
-                                val storage = Firebase.storage
-                                // storage 참조
-                                val storageRef = storage.getReference("image")
-                                // 파일 경로와 이름으로 참조 변수 생성
-                                val mountainsRef = storageRef.child("${writingID}.png")
-
-                                val uploadTask = mountainsRef.putFile(commuImageUri1)
-                                uploadTask.addOnSuccessListener { taskSnapshot ->
-                                    // 파일 업로드 성공
-                                    //Toast.makeText(this@CommuPlusActivity, "사진 업로드 성공", Toast.LENGTH_SHORT).show();
-                                }.addOnFailureListener {
-                                    // 파일 업로드 실패
-                                    //Toast.makeText(this@CommuPlusActivity, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
                                 }
-                                //------------------------------------------------------------------*/
-                                val intent = Intent(this@CommuPlusActivity, DetailWritingActivity::class.java)
+                                else if(commuContent.equals("")){
+                                    Toast.makeText(this@CommuPlusActivity, "내용을 입력해주세요",Toast.LENGTH_LONG).show()
 
-                                intent.putExtra("writingID", writingID)
-                                startActivity(intent)
-                                //finish()
+                                }
+                                else {
+                                    // 오늘 날짜 받아오기
+                                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                    //val today = LocalDate.now()
+                                    val todayDate_format =
+                                        formatter.format(System.currentTimeMillis()) // 형식 지정
+
+                                    writingID =
+                                        firestore_community.collection("community").document().id
+                                    if (editWriting.equals("editWriting")) {
+                                        writingID = editWritingID
+                                    }
+                                    //정보를 파이어베이스에 저장
+                                    val data_community = hashMapOf(
+                                        "writingID" to writingID,
+                                        "date" to todayDate_format,
+                                        "company" to cb_company_isChecked,
+                                        "depature" to depature,
+                                        "destination" to destination,
+                                        "people" to people,
+                                        "period" to period,
+                                        "goal" to goal,
+                                        "keyword" to keyword,
+                                        "money" to money,
+                                        "img1" to commuImage1,
+                                        "img2" to commuImage2,
+                                        "img3" to commuImage3,
+                                        "title" to commuTitle,
+                                        "content" to commuContent,
+                                        "userID" to "${mAuth.currentUser?.uid.toString()}"
+                                    )
+                                    uri1 = commuImage1.toUri()
+                                    uri2 = commuImage2.toUri()
+                                    uri3 = commuImage3.toUri()
+
+                                    // 스토리지에 올리기
+                                    uri1?.let { imageUpload(it, writingID + "_1") }
+                                    uri2?.let { imageUpload(it, writingID + "_2") }
+                                    uri3?.let { imageUpload(it, writingID + "_3") }
+
+
+
+                                    firestore_community.collection("community").document(writingID)
+                                        .set(data_community)
+                                }
 
                             }
                     }
@@ -300,5 +302,33 @@ class CommuPlusActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         finish()
         return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun imageUpload(uri: Uri, title:String) {
+        // storage 인스턴스 생성
+        val storage = Firebase.storage
+        // storage 참조
+        val storageRef = storage.getReference("community/${mAuth.uid}")
+        // 파일 경로와 이름으로 참조 변수 생성
+        val mountainsRef = storageRef.child("${title}.png")
+
+
+        val uploadTask = mountainsRef.putFile(uri)
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            // 파일 업로드 성공
+
+            val intent_detail = Intent(this@CommuPlusActivity, DetailWritingActivity::class.java)
+
+            intent_detail.putExtra("writingID", writingID)
+            startActivity(intent_detail)
+            finish()
+
+        }.addOnFailureListener {e ->
+            // 파일 업로드 실패
+            if(!(uri.toString().equals("없음"))){
+                Toast.makeText(this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

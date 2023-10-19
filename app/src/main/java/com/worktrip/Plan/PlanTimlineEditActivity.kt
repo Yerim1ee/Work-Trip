@@ -3,6 +3,7 @@ package com.worktrip.Plan
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.worktrip.DataClass.PlanTimeLineData
@@ -44,15 +45,30 @@ class PlanTimlineEditActivity : AppCompatActivity() {
         // 넘겼던 데이터 가져오기
         val data = intent.getParcelableExtra<PlanTimeLineData>("data")
 
+        time_start = data?.plan_time_start.toString()
+        time_end = data?.plan_time_end.toString()
+        time_start_ampm = data?.plan_time_start_ampm.toString()
+        time_end_ampm = data?.plan_time_end_ampm.toString()
+
+        val time_start_h_m = data?.plan_time_start?.split(":")
+        val time_end_h_m = data?.plan_time_end?.split(":")
+
+        if (time_start_h_m != null && time_end_h_m!=null) {
+
+            binding.tvPlanDetailTimelinePlusTime.setText(checkAmPm(time_start_h_m.get(0).toInt())
+                    + " %02d : %02d".format(time_start_h_m.get(0).toInt(),time_start_h_m.get(1).toInt()))
+            binding.tvPlanDetailTimelinePlusTimeEnd.setText(checkAmPm(time_end_h_m.get(0).toInt())
+                    + " %02d : %02d".format(time_end_h_m.get(0).toInt(),time_end_h_m.get(1).toInt()))
+
+        }
+
         binding.etPlanDetailTimelinePlusTitle.setText(data?.plan_title)
         binding.tvPlanDetailTimelinePlusPlace.setText(data?.plan_place)
-        binding.tvPlanDetailTimelinePlusTime.setText(data?.plan_time_start)
-        binding.tvPlanDetailTimelinePlusTimeEnd.setText(data?.plan_time_end)
         binding.tvPlanDetailTimelinePlusPresenter.setText(data?.plan_presenter)
 
         binding.ibPlanDetailTimelinePlusDate.setOnClickListener {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+            TimePickerDialog(this,  R.style.timePickerStyle,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
                 var hour = h
 
                 when {
@@ -75,7 +91,7 @@ class PlanTimlineEditActivity : AppCompatActivity() {
 
         binding.ibPlanDetailTimelinePlusDateEnd.setOnClickListener {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+            TimePickerDialog(this, R.style.timePickerStyle,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
                 var hour = h
                 when {
                     checkAmPm(h) == "PM" ->
@@ -135,8 +151,8 @@ class PlanTimlineEditActivity : AppCompatActivity() {
                     time_start,
                     time_end,
                     time_start_ampm,
-                    time_end_ampm
-
+                    time_end_ampm,
+                    data?.plan_date
                 ) // 데이터 구조
 
 
