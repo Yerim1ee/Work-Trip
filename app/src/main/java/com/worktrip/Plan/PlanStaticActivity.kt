@@ -60,10 +60,8 @@ class PlanStaticActivity : AppCompatActivity() {
     var walk: Double = 0.0
     var whole: Double = 0.0
 
-    //리사이클러뷰 추가
-    val list_course: ArrayList<data_card_list> = ArrayList()
-
     lateinit var docID:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlanStaticBinding.inflate(layoutInflater)
@@ -167,10 +165,15 @@ class PlanStaticActivity : AppCompatActivity() {
             var max=arrayOf(healed, walk, eat, camping, family).max()
             var maxKeyword=""
 
+            lateinit var recyclerView_course: RecyclerView
+
             if (max==healed)
             {
-                list_course.clear()
                 list_card_list.clear()
+
+                val list_healedCourse: ArrayList<data_card_list> = ArrayList()
+                var adapter_healedCourse=RecyclerAdapter_card_image_title(list_healedCourse)
+                //lateinit var recyclerView_healedCourse: RecyclerView
 
                 maxKeyword+="#힐링코스 "
                 binding.llPlanStaticHealed.visibility= View.VISIBLE
@@ -179,20 +182,39 @@ class PlanStaticActivity : AppCompatActivity() {
                 get_course(contentCat2)
                 contentCat2=""
 
-                var adapter_healedCourse=RecyclerAdapter_card_image_title(list_course)
-                lateinit var recyclerView_healedCourse: RecyclerView
+                var i=0
+                while (i <= 2)
+                {
+                    var randomCourse= list_card_list.random()
 
-                recyclerView_healedCourse=binding.rvActivityPlanStaticHealedCourse as RecyclerView
-                recyclerView_healedCourse.layoutManager=
+                    if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+                    {
+                        list_card_list.remove(randomCourse)
+                        --i
+                        continue
+                    }
+
+                    list_healedCourse.add(randomCourse)
+                    list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+                    if (list_healedCourse.lastOrNull()==null)
+                    {
+                        list_healedCourse.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+                    }
+                    ++i
+                }
+
+                recyclerView_course=binding.rvActivityPlanStaticHealedCourse as RecyclerView
+                recyclerView_course.layoutManager=
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView_healedCourse.adapter=adapter_healedCourse
+                recyclerView_course.adapter=adapter_healedCourse
 
                 adapter_healedCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
                     override fun onClick(view: View, position: Int) {
                         var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
 
                         intent_course.putExtra("contentTypeId", "&contentTypeId=25")
-                        intent_course.putExtra("contentId", list_course[position].id)
+                        intent_course.putExtra("contentId", list_healedCourse[position].id)
 
                         startActivity(intent_course)
                         list_contentId =""
@@ -202,10 +224,11 @@ class PlanStaticActivity : AppCompatActivity() {
             }
             if (max==walk)
             {
-                list_course.clear()
                 list_card_list.clear()
 
-
+                val list_walkCourse: ArrayList<data_card_list> = ArrayList()
+                var adapter_walkCourse=RecyclerAdapter_card_image_title(list_walkCourse)
+                //lateinit var recyclerView_walkCourse: RecyclerView
 
                 maxKeyword+="#도보코스 "
                 binding.llPlanStaticWalk.visibility= View.VISIBLE
@@ -214,20 +237,39 @@ class PlanStaticActivity : AppCompatActivity() {
                 get_course(contentCat2)
                 contentCat2=""
 
-                var adapter_walkCourse=RecyclerAdapter_card_image_title(list_course)
-                lateinit var recyclerView_walkCourse: RecyclerView
+                var i=0
+                while (i <= 2)
+                {
+                    var randomCourse= list_card_list.random()
 
-                recyclerView_walkCourse=binding.rvActivityPlanStaticWalkCourse as RecyclerView
-                recyclerView_walkCourse.layoutManager=
+                    if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+                    {
+                        list_card_list.remove(randomCourse)
+                        --i
+                        continue
+                    }
+
+                    list_walkCourse.add(randomCourse)
+                    list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+                    if (list_walkCourse.lastOrNull()==null)
+                    {
+                        list_walkCourse.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+                    }
+                    ++i
+                }
+
+                recyclerView_course=binding.rvActivityPlanStaticWalkCourse as RecyclerView
+                recyclerView_course.layoutManager=
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView_walkCourse.adapter=adapter_walkCourse
+                recyclerView_course.adapter=adapter_walkCourse
 
                 adapter_walkCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
                     override fun onClick(view: View, position: Int) {
                         var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
 
                         intent_course.putExtra("contentTypeId", "&contentTypeId=25")
-                        intent_course.putExtra("contentId", list_course[position].id)
+                        intent_course.putExtra("contentId", list_walkCourse[position].id)
 
                         startActivity(intent_course)
                         list_contentId =""
@@ -237,11 +279,11 @@ class PlanStaticActivity : AppCompatActivity() {
             }
             if (max==eat)
             {
-                list_course.clear()
                 list_card_list.clear()
 
-                var adapter_eatCourse=RecyclerAdapter_card_image_title(list_course)
-                lateinit var recyclerView_eatCourse: RecyclerView
+                val list_eatCourse: ArrayList<data_card_list> = ArrayList()
+                var adapter_eatCourse=RecyclerAdapter_card_image_title(list_eatCourse)
+                //lateinit var recyclerView_eatCourse: RecyclerView
 
                 maxKeyword+="#맛코스 "
                 binding.llPlanStaticEat.visibility= View.VISIBLE
@@ -250,17 +292,39 @@ class PlanStaticActivity : AppCompatActivity() {
                 get_course(contentCat2)
                 contentCat2=""
 
-                recyclerView_eatCourse=binding.rvActivityPlanStaticEatCourse as RecyclerView
-                recyclerView_eatCourse.layoutManager=
+                var i=0
+                while (i <= 2)
+                {
+                    var randomCourse= list_card_list.random()
+
+                    if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+                    {
+                        list_card_list.remove(randomCourse)
+                        --i
+                        continue
+                    }
+
+                    list_eatCourse.add(randomCourse)
+                    list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+                    if (list_eatCourse.lastOrNull()==null)
+                    {
+                        list_eatCourse.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+                    }
+                    ++i
+                }
+
+                recyclerView_course=binding.rvActivityPlanStaticEatCourse as RecyclerView
+                recyclerView_course.layoutManager=
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView_eatCourse.adapter=adapter_eatCourse
+                recyclerView_course.adapter=adapter_eatCourse
 
                 adapter_eatCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
                     override fun onClick(view: View, position: Int) {
                         var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
 
                         intent_course.putExtra("contentTypeId", "&contentTypeId=25")
-                        intent_course.putExtra("contentId", list_course[position].id)
+                        intent_course.putExtra("contentId", list_eatCourse[position].id)
 
                         startActivity(intent_course)
                         list_contentId =""
@@ -271,11 +335,11 @@ class PlanStaticActivity : AppCompatActivity() {
             }
             if (max==camping)
             {
-                list_course.clear()
                 list_card_list.clear()
 
-                var adapter_campCourse=RecyclerAdapter_card_image_title(list_course)
-                lateinit var recyclerView_campCourse: RecyclerView
+                val list_campingCourse: ArrayList<data_card_list> = ArrayList()
+                var adapter_campCourse=RecyclerAdapter_card_image_title(list_campingCourse)
+                //lateinit var recyclerView_campCourse: RecyclerView
 
                 maxKeyword+="#캠핑코스 "
                 binding.llPlanStaticCamping.visibility= View.VISIBLE
@@ -284,17 +348,39 @@ class PlanStaticActivity : AppCompatActivity() {
                 get_course(contentCat2)
                 contentCat2=""
 
-                recyclerView_campCourse=binding.rvActivityPlanStaticCampingCourse as RecyclerView
-                recyclerView_campCourse.layoutManager=
+                var i=0
+                while (i <= 2)
+                {
+                    var randomCourse= list_card_list.random()
+
+                    if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+                    {
+                        list_card_list.remove(randomCourse)
+                        --i
+                        continue
+                    }
+
+                    list_campingCourse.add(randomCourse)
+                    list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+                    if (list_campingCourse.lastOrNull()==null)
+                    {
+                        list_campingCourse.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+                    }
+                    ++i
+                }
+
+                recyclerView_course=binding.rvActivityPlanStaticCampingCourse as RecyclerView
+                recyclerView_course.layoutManager=
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView_campCourse.adapter=adapter_campCourse
+                recyclerView_course.adapter=adapter_campCourse
 
                 adapter_campCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
                     override fun onClick(view: View, position: Int) {
                         var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
 
                         intent_course.putExtra("contentTypeId", "&contentTypeId=25")
-                        intent_course.putExtra("contentId", list_course[position].id)
+                        intent_course.putExtra("contentId", list_campingCourse[position].id)
 
                         startActivity(intent_course)
                         list_contentId =""
@@ -304,11 +390,11 @@ class PlanStaticActivity : AppCompatActivity() {
             }
             if (max==family)
             {
-                list_course.clear()
                 list_card_list.clear()
 
-                var adapter_familyCourse=RecyclerAdapter_card_image_title(list_course)
-                lateinit var recyclerView_familyCourse: RecyclerView
+                val list_familyCourse: ArrayList<data_card_list> = ArrayList()
+                var adapter_familyCourse=RecyclerAdapter_card_image_title(list_familyCourse)
+                //lateinit var recyclerView_familyCourse: RecyclerView
 
                 maxKeyword+="#가족코스 "
                 binding.llPlanStaticFamily.visibility= View.VISIBLE
@@ -317,17 +403,39 @@ class PlanStaticActivity : AppCompatActivity() {
                 get_course(contentCat2)
                 contentCat2=""
 
-                recyclerView_familyCourse=binding.rvActivityPlanStaticFamilyCourse as RecyclerView
-                recyclerView_familyCourse.layoutManager=
+                var i=0
+                while (i <= 2)
+                {
+                    var randomCourse= list_card_list.random()
+
+                    if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
+                    {
+                        list_card_list.remove(randomCourse)
+                        --i
+                        continue
+                    }
+
+                    list_familyCourse.add(randomCourse)
+                    list_card_list.remove(randomCourse) //중복 방지용 삭제
+
+                    if (list_familyCourse.lastOrNull()==null)
+                    {
+                        list_familyCourse.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
+                    }
+                    ++i
+                }
+
+                recyclerView_course=binding.rvActivityPlanStaticFamilyCourse as RecyclerView
+                recyclerView_course.layoutManager=
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView_familyCourse.adapter=adapter_familyCourse
+                recyclerView_course.adapter=adapter_familyCourse
 
                 adapter_familyCourse.setOnClickListener( object : RecyclerAdapter_card_image_title.ItemClickListener{
                     override fun onClick(view: View, position: Int) {
                         var intent_course = Intent(this@PlanStaticActivity, DetailCourseActivity::class.java)
 
                         intent_course.putExtra("contentTypeId", "&contentTypeId=25")
-                        intent_course.putExtra("contentId", list_course[position].id)
+                        intent_course.putExtra("contentId", list_familyCourse[position].id)
 
                         startActivity(intent_course)
                         list_contentId =""
@@ -340,7 +448,6 @@ class PlanStaticActivity : AppCompatActivity() {
             binding.tvStaticKeyword.setText(maxKeyword)
         }
 
-
     }
 
     private fun get_course(cat2: String){
@@ -351,32 +458,6 @@ class PlanStaticActivity : AppCompatActivity() {
         val threadList = Thread(NetworkThread_list(url_list))
         threadList.start() // 쓰레드 시작
         threadList.join() // 멀티 작업 안되게 하려면 start 후 join 입력
-
-        if (list_course.isEmpty()==false)
-        {
-            list_course.clear()
-        }
-        var i=0
-        while (i <= 2)
-        {
-            var randomCourse= list_card_list.random()
-
-            if (!(randomCourse.typeid.equals("25"))) //혹시 코스 외 다른 카테고리의 데이터가 들어온다면
-            {
-                list_card_list.remove(randomCourse)
-                --i
-                continue
-            }
-
-            list_course.add(randomCourse)
-            list_card_list.remove(randomCourse) //중복 방지용 삭제
-
-            if (list_course.lastOrNull()==null)
-            {
-                list_course.add(data_card_list("null", "목록을 로드하지 못했습니다.", "", "", ""))
-            }
-            ++i
-        }
     }
 
     private fun get_static(){
@@ -457,7 +538,6 @@ class PlanStaticActivity : AppCompatActivity() {
         super.onDestroy()
         //초기화
         list_card_list.clear()
-        list_course.clear()
     }
 
 }
